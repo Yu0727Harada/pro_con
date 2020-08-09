@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="Atcoder" targetName="048_d" />
+      <config projectName="Atcoder" targetName="048_c" />
+      <config projectName="Atcoder" targetName="048_b" />
+      <config projectName="Atcoder" targetName="048_a" />
+      <config projectName="Atcoder" targetName="Atcoder" />
+      <config projectName="Atcoder" targetName="048_f" />
+      <config projectName="Atcoder" targetName="048_e" />
+      <config projectName="Atcoder" targetName="apgb" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b34c642f-8e1b-4dbe-a095-22a315baab10" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ProjectId" id="1S0D7MvSGwUGT1igVD8Yir15RCB" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="CMake Application.048_b">
+    <configuration name="048_a" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="048_a" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="048_a">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="048_b" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="048_b" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="048_b">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="048_c" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="048_c" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="048_c">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="048_d" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="048_d" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="048_d">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="048_e" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="048_e" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="048_e">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="048_f" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="048_f" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="048_f">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Atcoder" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="Atcoder" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="Atcoder">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="apgb" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Atcoder" TARGET_NAME="apgb" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Atcoder" RUN_TARGET_NAME="apgb">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.048_a" />
+      <item itemvalue="CMake Application.048_b" />
+      <item itemvalue="CMake Application.048_c" />
+      <item itemvalue="CMake Application.048_d" />
+      <item itemvalue="CMake Application.048_e" />
+      <item itemvalue="CMake Application.048_f" />
+      <item itemvalue="CMake Application.apgb" />
+      <item itemvalue="CMake Application.Atcoder" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b34c642f-8e1b-4dbe-a095-22a315baab10" name="Default Changelist" comment="" />
+      <created>1570691450279</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1570691450279</updated>
+      <workItem from="1570691451370" duration="636000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>
