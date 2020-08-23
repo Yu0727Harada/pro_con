@@ -62,11 +62,17 @@ int main() {
     int max_v = 0;
     int h_max = h_que.rbegin()->first;
     int w_max = w_que.rbegin()->first;
+    bool find = false;
     for(auto th : h_que[h_max]){
         for (auto tw : w_que[w_max]) {
-            chmax(max_v,h_max + w_max - bom_list[{th,tw}]);
-
+            if(bom_list[{th,tw}] == 0){
+                chmax(max_v,h_max + w_max - bom_list[{th,tw}]);
+                find = true;
+            }else{
+                chmax(max_v,h_max + w_max - bom_list[{th,tw}]);
+            }
         }
+        if(find)break;
     }
     cout<<max_v<<endl;
     return 0;
