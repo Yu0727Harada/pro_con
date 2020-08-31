@@ -39,20 +39,30 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    vector<pair<int,int>>edge(n);
+    vector<vector<pair<int,int>>>edge(n,vector<pair<int,int>>());
+    vector<pair<int,int>>x_edge(n);
+    vector<pair<int,int>>y_edge(n);
     vector<int>color(n);
-    vector<priority_queue<pair<int,int>, vector<pair<int,int> >,greater< pair<int,int> > > >v_p(n);
     for (int i = 0; i < n; ++i) {
         int x,y;
         cin>>x>>y;
-        edge[i] = {x,y};
-        for (int j = 0; j < i; ++j) {
-            int u = j;
-            int d = abs(min(abs(edge[u].first - edge[i].first), abs(edge[u].second - edge[i].second)));
-            v_p[j].push({d, i});
-            v_p[i].push({d, j});
-        }
+        x_edge[i] = {x,i};
+        y_edge[i] = {y,i};
     }
+    sort(all(x_edge));
+    sort(all(y_edge));
+
+    for (int i = 1; i < n; ++i) {
+        int d = abs(x_edge[i].first - x_edge[i - 1].first);
+        edge[x_edge[i].second].push_back({d,x_edge[i-1].second});
+        edge[x_edge[i-1].second].push_back({d,x_edge[i].second});
+    }
+    for (int i = 1; i < n; ++i) {
+        int d = abs(y_edge[i].first - y_edge[i - 1].first);
+        edge[y_edge[i].second].push_back({d,y_edge[i-1].second});
+        edge[y_edge[i - 1].second].push_back({d,y_edge[i].second});
+    }
+
     priority_queue<pair<int,int>,vector<pair<int,int> >,greater< pair<int,int> >>p_q;
     p_q.push({0,0});
     ll ans = 0;
@@ -66,13 +76,11 @@ int main() {
         color[u] = 2;
         ans += d;
         sum_c += 2;
-        while(!v_p[u].empty()){
-            int next_d = v_p[u].top().first;
-            int next_u = v_p[u].top().second;
-            v_p[u].pop();
+        for (int i = 0; i < edge[u].size(); ++i) {
+            int next_d = edge[u][i].first;
+            int next_u = edge[u][i].second;
             if(color[next_u] == 2) continue;
             p_q.push({next_d, next_u});
-            break;
         }
     }
     cout<<ans<<endl;
