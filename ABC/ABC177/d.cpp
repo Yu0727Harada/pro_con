@@ -34,45 +34,45 @@ using namespace std;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+struct UnionFind {
+    vector<int>d;//リンクの情報,子の場合は親の番号、親の場合は連結成分のsize*(-1)
+    UnionFind(int n=0):d(n,-1){} //structの初期化。デフォルトのnを0に設定してdを-1(すなわち全ての成分は親であり、サイズは1にする
+    int find(int x) {//根を探す
+        if(d[x] < 0) return x;
+        else  return d[x] = find(d[x]);//根じゃなかったら根を探しに行ってメモ化する。
+    }
+    bool unite(int x,int y) {//成分を連結する
+        x = find(x);
+        y = find(y);
+        if (x == y) return false;//すでに同じ連結成分
+        if(d[x] < d[y]) swap(x,y);//大きいのに小さいのをつける。x←y
+        //x.size > y.size
+        d[x] += d[y];//xのサイズをふやす
+        d[y] = x;//yの根をxにする
+        return true;
+    }
+    bool same(int x,int y) {return find(x)==find(y);}
+    int size(int x) {return -d[find(x)];}
 
+};
 
 int main() {
     int n;
     cin>>n;
     int m;
     cin>>m;
-    vector<vector<int>>friendship(n,vector<int>());
-
+    UnionFind friends(n);
     for (int i = 0; i < m; ++i) {
         int a,b;
         cin>>a>>b;
-        a--;b--;
-        friendship[a].push_back(b);
-        friendship[b].push_back(a);
+        friends.unite(a,b);
     }
-    queue<pair<int,int>>q;
-    for (int i = 0; i < n; ++i) {
 
-        q.push({i,1});
-    }
     int ans = 0;
-    int sum = 0;
-    vector<bool>check(n,false);
-    while(!q.empty()){
-        int v = q.front().first;
-        int cnt = q.front().second;
-        q.pop();
-        if(!check[v]){
-            check[v] =true;
-        }
-        chmax(ans,cnt);
-        for (int i = 0; i < friendship[v].size(); ++i) {
-            if(!check[friendship[v][i]]){
-                q.push({friendship[v][i],cnt+1});
-                check[friendship[v][i]] = true;
-            }
-        }
+    for (int i = 0; i < n; ++i) {
+        chmax(ans,friends.size(i));
     }
+
     cout<<ans<<endl;
 
     return 0;
