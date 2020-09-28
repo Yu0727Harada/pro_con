@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/09/26.
 //
 
 
@@ -37,11 +37,11 @@ const int INF = 1e9;
 
 
 int main() {
-    int n = 300000;
-
-    for (int i = 0; i < n; ++i) {
-        int a = rand()%300000;
-        cout<<a<<endl;
+    int k;
+    cin>>k;
+    for (int i = 0; i < k; ++i) {
+        cout<<"ACL";
     }
+    cout<<endl;
     return 0;
 }

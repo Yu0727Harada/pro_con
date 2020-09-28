@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/09/26.
 //
 
 
@@ -37,11 +37,46 @@ const int INF = 1e9;
 
 
 int main() {
-    int n = 300000;
+    int n,k;
+    cin>>n>>k;
 
-    for (int i = 0; i < n; ++i) {
-        int a = rand()%300000;
-        cout<<a<<endl;
+    vector<vector<int>>g(n+1,vector<int>());
+    vector<int>A(n+1);
+    for (int i = 1; i <= n; ++i) {
+        int a;
+        cin>>a;
+        A[i] = a;
+        for (int j = 1; j < i; ++j) {
+            if(abs(A[j] - a) <= k){
+                g[j].push_back(i);
+            }
+        }
     }
+    int ans = 0;
+    stack<pair<int,int>>q;
+    vector<int>cnt(n+1,-1);
+    for (int i = 1; i <= n; ++i) {
+        if(cnt[i] == -1){
+            q.push({i,1});
+        }
+        while(!q.empty()){
+            int v = q.top().first;
+            int c = q.top().second;
+            q.pop();
+            if(cnt[v] < c){
+                cnt[v] = c;
+                for (int j = 0; j < g[v].size(); ++j) {
+                    if(cnt[v] < c + 1){
+                        q.push({g[v][j],c+1});
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i <= n; ++i) {
+        chmax(ans,cnt[i]);
+    }
+
+    cout<<ans<<endl;
     return 0;
 }

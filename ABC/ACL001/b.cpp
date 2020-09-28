@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/09/26.
 //
 
 
@@ -37,11 +37,16 @@ const int INF = 1e9;
 
 
 int main() {
-    int n = 300000;
 
-    for (int i = 0; i < n; ++i) {
-        int a = rand()%300000;
-        cout<<a<<endl;
+    ll a,b,c,d;
+    cin>>a>>b>>c>>d;
+    int lower = max(a,c);
+    int upper = min(b,d);
+    if(lower <= upper){
+        cout<<"Yes"<<endl;
+    }else{
+        cout<<"No"<<endl;
     }
+
     return 0;
 }

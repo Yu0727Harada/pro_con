@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/09/28.
 //
 
 
@@ -37,11 +37,29 @@ const int INF = 1e9;
 
 
 int main() {
-    int n = 300000;
-
+    int n;
+    cin>>n;
+    vector<int>l(n);
+    int max = 0;
+    int index = 0;
     for (int i = 0; i < n; ++i) {
-        int a = rand()%300000;
-        cout<<a<<endl;
+        int t;
+        cin>>t;
+        l[i]=t;
+        if(max < t){
+            index = i;
+            chmax(max,t);
+        }
+    }
+    int sum = 0;
+    for (int i = 0; i < n; ++i) {
+        if(index == i)continue;
+        sum += l[i];
+    }
+    if(sum > max){
+        cout<<"Yes"<<endl;
+    }else{
+        cout<<"No"<<endl;
     }
     return 0;
 }

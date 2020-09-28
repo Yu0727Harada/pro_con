@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/09/27.
 //
 
 
@@ -37,11 +37,15 @@ const int INF = 1e9;
 
 
 int main() {
-    int n = 300000;
-
-    for (int i = 0; i < n; ++i) {
-        int a = rand()%300000;
-        cout<<a<<endl;
+    int n;
+    cin>>n;
+    if(n == 1){
+        cout<<"Hello World"<<endl;
+        return 0;
+    }else{
+        int a,b;
+        cin>>a>>b;
+        cout<<a+b<<endl;
     }
     return 0;
 }

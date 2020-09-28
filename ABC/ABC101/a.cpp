@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/09/25.
 //
 
 
@@ -37,11 +37,29 @@ const int INF = 1e9;
 
 
 int main() {
-    int n = 300000;
+    int n;
+    cin>>n;
+    int k;
+    cin>>k;
 
-    for (int i = 0; i < n; ++i) {
-        int a = rand()%300000;
-        cout<<a<<endl;
+    if(n == k){
+        cout<<1<<endl;
+        return 0;
     }
+
+    int one_index;
+    for (int i = 0; i < n; ++i) {
+        int temp;
+        cin>>temp;
+        if(temp == 1){
+            one_index = i;
+        }
+    }
+
+    int ans = 1;
+//    ans += (one_index - 1 + (k-1) - 1 ) / (k-1);
+//    ans += (((n-1)-one_index - 1) + (k-1) - 1) / (k - 1);
+    ans += (n - k + (k - 1) -1) / (k - 1);
+    cout<<ans<<endl;
     return 0;
 }
