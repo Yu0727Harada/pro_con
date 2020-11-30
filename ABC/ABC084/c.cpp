@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/11/27.
 //
 
 
@@ -39,22 +39,28 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    vector<ll>a;
-    vector<ll>b;
-    for (int i = 0; i < n; ++i) {
-        ll x,y;
-        cin>>x>>y;
-        ll t_a = x- y;//斜め上にいく座標
-        ll t_b = x+y;//斜め下の座標
-        a.push_back(t_a);
-        b.push_back(t_b);
+    vector<int>c(n+1);
+    vector<int>s(n+1);
+    vector<int>f(n+1);
+
+    for (int i = 1; i < n; ++i) {
+        cin>>c[i];
+        cin>>s[i];
+        cin>>f[i];
     }
-    sort(all(a));
-    sort(all(b));
-    ll ans = max(abs(a[n-1]-a[0]),abs(b[n-1]-b[0]));
-    //マンハッタン距離の最大値はaとbそれぞれの最大値のmax。aとbの差の最大値はそれぞれの最小値と最大値の差
-    cout<<ans<<endl;
+    for (int i = 1; i <= n; ++i) {
+        int t = 0;
+        for (int j = i; j < n; ++j) {
+            if(t <= s[j]){
+                t = s[j] + c[j];
+            }else if(t % f[j] == 0){
+                t += c[j];
+            }else{
+                t +=(f[j] - (t % f[j])) + c[j];
+            }
+        }
+        cout<<t<<endl;
+    }
 
     return 0;
 }
-//マンハッタン距離

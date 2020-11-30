@@ -1,5 +1,5 @@
 //
-// Created on 2020/09/13.
+// Created on 2020/11/30.
 //
 
 
@@ -37,24 +37,34 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    vector<ll>a;
-    vector<ll>b;
-    for (int i = 0; i < n; ++i) {
-        ll x,y;
-        cin>>x>>y;
-        ll t_a = x- y;//斜め上にいく座標
-        ll t_b = x+y;//斜め下の座標
-        a.push_back(t_a);
-        b.push_back(t_b);
-    }
-    sort(all(a));
-    sort(all(b));
-    ll ans = max(abs(a[n-1]-a[0]),abs(b[n-1]-b[0]));
-    //マンハッタン距離の最大値はaとbそれぞれの最大値のmax。aとbの差の最大値はそれぞれの最小値と最大値の差
-    cout<<ans<<endl;
+    string s;
+    cin>>s;
 
+    int a_cnt = 0;
+    int b_cnt = 0;
+    int c_cnt = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] == 'a'){
+            a_cnt ++;
+        }else if(s[i] == 'b'){
+            b_cnt ++;
+        }else{
+            c_cnt ++;
+        }
+    }
+
+    int min_cnt = min(a_cnt,min(b_cnt,c_cnt));
+    a_cnt -= min_cnt;
+    b_cnt -= min_cnt;
+    c_cnt -= min_cnt;
+    if(a_cnt >= 2){
+        cout<<"NO"<<endl;
+    }else if(b_cnt >= 2){
+        cout<<"NO"<<endl;
+    }else if(c_cnt >= 2){
+        cout<<"NO"<<endl;
+    }else{
+        cout<<"YES"<<endl;
+    }
     return 0;
 }
-//マンハッタン距離
