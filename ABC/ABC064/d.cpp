@@ -41,26 +41,34 @@ int main() {
     cin>>n;
     string s;
     cin>>s;
+
+
+    stack<int>st;
     int f_cnt = 0;
-    int b_cnt = 0;
     for (int i = 0; i < n; ++i) {
         if(s[i] == '('){
-            f_cnt ++;
+            st.push(i);
+            //左かっこがきたらプッシュ
         }else{
-            b_cnt ++;
+            if(st.empty()){
+                f_cnt ++;
+                //右かっこの時にスタックがからなら前にひだりかっこを足さなければいけない
+            }else{
+                st.pop();
+                //スタックがあるなら整合しているのでポップ
+            }
         }
     }
-    int m = min(f_cnt,b_cnt);
-    f_cnt -= m;
-    b_cnt -= m;
-
-    for (int i = 0; i < b_cnt; ++i) {
+    for (int i = 0; i < f_cnt; ++i) {
         cout<<"(";
     }
     cout<<s;
-    for (int i = 0; i < f_cnt; ++i) {
+    while(!st.empty()){
         cout<<")";
+        st.pop();
+        //閉じ忘れを閉じる
     }
     cout<<endl;
+
     return 0;
 }
