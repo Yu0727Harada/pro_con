@@ -1,5 +1,5 @@
 //
-// Created on 2020/11/08.
+// Created on 2020/12/19.
 //
 
 
@@ -35,64 +35,30 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 
-bool light[1510][1510];
-bool wall[1510][1510];
-bool ok[1510][1510];
-vector<vector<bool>> memo(1510,vector<bool>(1510,false));
-vector<vector<bool>> visited(1510,vector<bool>(1510,false));
-int h,w;
-
-
-bool f(int v,int j,int k){
-    const vector<pair<int,int>> move = {
-            {0,  1},
-            {1,  0},
-            {-1, 0},
-            {0,  -1},
-    };
-
-    if(j < 0 || j >= h || k < 0 || k >= w) return false;
-    if(light[j][k]) return true;
-    if(wall[j][k]) return false;
-    if(visited[j][k])return memo[j][k];
-    visited[j][k] = true;
-    return memo[j][k] = f(v,j+move[v].first,k+move[v].second);
-
-}
 
 int main() {
-    int n,m;
-    cin>>h>>w>>n>>m;
-    for (int i = 0; i < n; ++i) {
-        int r,c;
-        cin>>r>>c;
-        r--;
-        c--;
-        light[r][c] = true;
-    }
-    for (int i = 0; i < m; ++i) {
-        int r,c;
-        cin>>r>>c;
-        r--;
-        c--;
-        wall[r][c] = true;
-    }
-    for (int i = 0; i < 4; ++i) {
-        memo = vector<vector<bool>>(1510,vector<bool>(1510,false));
-        visited = vector<vector<bool>>(1510,vector<bool>(1510,false));
-        for (int j = 0; j < h; ++j) {
-            for (int k = 0; k < w; ++k) {
-                if(f(i,j,k))ok[j][k] = true;
+    int h,w;
+    cin>>h>>w;
+    vector<vector<int>>b(h,vector<int>(w,0));
+    int min_v = INF;
+    for (int i = 0; i < h; ++i) {
+        for (int j = 0; j < w; ++j) {
+            int a;
+            cin>>a;
+            b[i][j] = a;
+            if(min_v > a){
+                min_v = a;
             }
         }
     }
     int ans = 0;
-
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
-            if(ok[i][j]) ans ++;
+            ans +=  b[i][j] - min_v;
         }
     }
     cout<<ans<<endl;
+
+
     return 0;
 }
