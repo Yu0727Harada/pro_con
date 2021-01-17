@@ -1,5 +1,5 @@
 //
-// Created on 2021/01/10.
+// Created on 2021/01/12.
 //
 
 
@@ -40,60 +40,26 @@ const int INF = 1e9;
 
 
 int main() {
-
-    int n,m;
-    cin>>n>>m;
-    vl price(n);
-    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>>p_que;
-
+    int n;
+    int sum = 0;
+    cin>>n;
+    vi s(n);
     for (int i = 0; i < n; ++i) {
-        cin>>price[i];
-        p_que.push({price[i],i});
+        cin>>s[i];
+        sum += s[i];
     }
 
-    vvi edge (n,vi());
-
-    for (int i = 0; i < m; ++i) {
-        int x,y;
-        cin>>x>>y;
-        x--;y--;
-        edge[x].push_back(y);
-    }
-
-    ll ans = -INF;
-    queue<vector<ll>> q;
-    vector<bool> visit(n);
-
-    while (!p_que.empty()) {
-        ll now_price = p_que.top().first;
-        int i = p_que.top().second;
-        p_que.pop();
-        if(visit[i])continue;
-        q.push({i,now_price});
-
-        while(!q.empty()){
-            int v = q.front()[0];
-            q.pop();
-
-            int next_v;
-            int next_buy_price;
-
-            for (int j = 0; j < edge[v].size(); ++j) {
-                next_v = edge[v][j];
-                next_buy_price = price[edge[v][j]];
-                if(next_v > v && !visit[next_v]){
-                    q.push({next_v,next_buy_price});
-                    chmax(ans,next_buy_price - now_price);
-                    visit[next_v] = true;
-                }
+    if(sum % 10 != 0){
+        cout<<sum<<endl;
+    }else{
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            if((sum - s[i]) % 10 != 0){
+                chmax(ans,sum - s[i]);
             }
-
         }
-
-
-
+        cout<<ans<<endl;
     }
-    cout<<ans<<endl;
 
     return 0;
 }
