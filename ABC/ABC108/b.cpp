@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/04/13.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,42 +40,27 @@ const int INF = 1e9;
 
 
 int main() {
+    pair<int,int> a;
+    pair<int,int> b;
+    cin>>a.first>>a.second>>b.first>>b.second;
 
-    int n;
-    cin>>n;
+    int d1 = (b.first - a.first);
+    int d2 = (b.second - a.second);
 
-    vi a(n);
-    for (int i = 0; i < n; ++i) {
-        cin>>a[i];
-    }
-    if(n == 1){
-        cout<<a[0]<<endl;
-        return 0;
-    }
-    int ans = INF;
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<(n -1)); ++bit) {
-        int t = a[0];
-        int f_t = -1;
-        for (int i = 0; i < n - 1; ++i) {
-            if(bit & (1<<i)){
-                //i個目の要素にフラグが立っていた時の処理
-                if(f_t == -1){
-                    f_t = t;
-                    t = a[i + 1];
-                }else{
-                    f_t = f_t ^ t;
-                    t = a[i + 1];
-                }
-            }else{
-                t = t | a[i + 1];
 
-            }
-        }
-        if(f_t == -1) f_t = t;
-        else f_t = f_t ^ t;
-        chmin(ans,f_t);
-    }
-    cout<<ans<<endl;
+    pair<int,int>c;
+    pair<int,int>d;
+
+    c.first = b.first - d2;
+    c.second = b.second + d1;
+
+    d1 = (c.first - b.first);
+    d2 = (c.second - b.second);
+
+    d.first = c.first - d2;
+    d.second = c.second + d1;
+
+    cout<<c.first<<" "<<c.second<<" "<<d.first<<" "<<d.second<<endl;
+
     return 0;
 }

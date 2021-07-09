@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/04/07.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,42 +40,42 @@ const int INF = 1e9;
 
 
 int main() {
+    int w,h;
+    cin>>w>>h;
 
     int n;
     cin>>n;
 
-    vi a(n);
+    int min_x = 0;
+    int max_x = w;
+    int min_y = 0;
+    int max_y = h;
+
     for (int i = 0; i < n; ++i) {
-        cin>>a[i];
+        int x,y,a;
+        cin>>x>>y>>a;
+        if(a == 1){
+            min_x = max(x,min_x);
+        }else if(a == 2){
+            max_x = min(x,max_x);
+        }else if(a == 3){
+            min_y = max(y,min_y);
+        }else if(a == 4){
+            max_y = min(y,max_y);
+        }
     }
-    if(n == 1){
-        cout<<a[0]<<endl;
+
+    if(max_x < min_x){
+        cout<<0<<endl;
         return 0;
     }
-    int ans = INF;
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<(n -1)); ++bit) {
-        int t = a[0];
-        int f_t = -1;
-        for (int i = 0; i < n - 1; ++i) {
-            if(bit & (1<<i)){
-                //i個目の要素にフラグが立っていた時の処理
-                if(f_t == -1){
-                    f_t = t;
-                    t = a[i + 1];
-                }else{
-                    f_t = f_t ^ t;
-                    t = a[i + 1];
-                }
-            }else{
-                t = t | a[i + 1];
-
-            }
-        }
-        if(f_t == -1) f_t = t;
-        else f_t = f_t ^ t;
-        chmin(ans,f_t);
+    if(max_y < min_y){
+        cout<<0<<endl;
+        return 0;
     }
-    cout<<ans<<endl;
+    int ans = (max_x - min_x) * (max_y - min_y);
+
+    cout<<max(0,ans)<<endl;
+
     return 0;
 }

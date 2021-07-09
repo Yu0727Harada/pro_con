@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/05/07.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,42 +40,20 @@ const int INF = 1e9;
 
 
 int main() {
-
     int n;
     cin>>n;
+    string s = to_string(n);
+    int f_x = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        f_x += s[i] - '0';
+    }
 
-    vi a(n);
-    for (int i = 0; i < n; ++i) {
-        cin>>a[i];
+    if(n % f_x == 0){
+        cout<<"Yes"<<endl;
+    }else{
+        cout<<"No"<<endl;
     }
-    if(n == 1){
-        cout<<a[0]<<endl;
-        return 0;
-    }
-    int ans = INF;
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<(n -1)); ++bit) {
-        int t = a[0];
-        int f_t = -1;
-        for (int i = 0; i < n - 1; ++i) {
-            if(bit & (1<<i)){
-                //i個目の要素にフラグが立っていた時の処理
-                if(f_t == -1){
-                    f_t = t;
-                    t = a[i + 1];
-                }else{
-                    f_t = f_t ^ t;
-                    t = a[i + 1];
-                }
-            }else{
-                t = t | a[i + 1];
 
-            }
-        }
-        if(f_t == -1) f_t = t;
-        else f_t = f_t ^ t;
-        chmin(ans,f_t);
-    }
-    cout<<ans<<endl;
+
     return 0;
 }

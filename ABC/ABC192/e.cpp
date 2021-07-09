@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/07/08.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -33,45 +37,64 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+class train{
+public:
+    int to;
+    int k;
+    int time;
+
+};
 
 
 int main() {
 
-    int n;
-    cin>>n;
+    ll n,m;
+    cin>>n>>m;
+    ll x,y;
+    cin>>x>>y;
+    x--;y--;
+    vector<vector<train>> mp(n,vector<train>());
+    vector<ll>cost(n,LINF);
+    for (int i = 0; i < m; ++i) {
+        ll a,b,t,k;
+        cin>>a>>b>>t>>k;
+        train temp;
+        a--;b--;
+        temp.to = b;
+        temp.k = k;
+        temp.time = t;
+        mp[a].push_back(temp);
+        temp.to = a;
+        mp[b].push_back(temp);
+    }
 
-    vi a(n);
-    for (int i = 0; i < n; ++i) {
-        cin>>a[i];
-    }
-    if(n == 1){
-        cout<<a[0]<<endl;
-        return 0;
-    }
-    int ans = INF;
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<(n -1)); ++bit) {
-        int t = a[0];
-        int f_t = -1;
-        for (int i = 0; i < n - 1; ++i) {
-            if(bit & (1<<i)){
-                //i個目の要素にフラグが立っていた時の処理
-                if(f_t == -1){
-                    f_t = t;
-                    t = a[i + 1];
-                }else{
-                    f_t = f_t ^ t;
-                    t = a[i + 1];
+     priority_queue<pair<ll,ll>, vector<pair<ll,ll>>, greater<pair<ll,ll>>>p_que;
+    p_que.push({0,x});
+
+    while(!p_que.empty()){
+        ll c = p_que.top().first;
+        ll v = p_que.top().second;
+        p_que.pop();
+        if(cost[v] > c){
+            cost[v] = c;
+
+            for (int i = 0; i < mp[v].size(); ++i) {
+                ll next_cost = c + (mp[v][i].k - c % mp[v][i].k)%mp[v][i].k + mp[v][i].time;
+                ll next_u = mp[v][i].to;
+                if(cost[next_u] > next_cost){
+                    p_que.push({next_cost,next_u});
                 }
-            }else{
-                t = t | a[i + 1];
-
             }
+
         }
-        if(f_t == -1) f_t = t;
-        else f_t = f_t ^ t;
-        chmin(ans,f_t);
+
     }
-    cout<<ans<<endl;
+
+    if(cost[y] == LINF){
+        cout<<-1<<endl;
+    }else{
+        cout<<cost[y]<<endl;
+    }
+
     return 0;
 }

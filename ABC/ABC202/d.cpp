@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/05/24.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,41 +41,42 @@ const int INF = 1e9;
 
 int main() {
 
-    int n;
-    cin>>n;
+    ll a,b,k;
+    cin>>a>>b>>k;
 
-    vi a(n);
-    for (int i = 0; i < n; ++i) {
-        cin>>a[i];
-    }
-    if(n == 1){
-        cout<<a[0]<<endl;
-        return 0;
-    }
-    int ans = INF;
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<(n -1)); ++bit) {
-        int t = a[0];
-        int f_t = -1;
-        for (int i = 0; i < n - 1; ++i) {
-            if(bit & (1<<i)){
-                //i個目の要素にフラグが立っていた時の処理
-                if(f_t == -1){
-                    f_t = t;
-                    t = a[i + 1];
-                }else{
-                    f_t = f_t ^ t;
-                    t = a[i + 1];
-                }
-            }else{
-                t = t | a[i + 1];
-
+    vector<vector<ll>> dp(a+1,vl(b+1,0));
+    dp[0][0] = 1;
+    for (int i = 0; i <= a; ++i) {
+        for (int j = 0; j <= b; ++j) {
+            if(i > 0){
+                dp[i][j] += dp[i - 1][j];
+            }
+            if(j > 0){
+                dp[i][j] += dp[i][j - 1];
             }
         }
-        if(f_t == -1) f_t = t;
-        else f_t = f_t ^ t;
-        chmin(ans,f_t);
     }
-    cout<<ans<<endl;
+
+    while(a > 0 && b > 0){
+        if(k <= dp[a - 1][b]){
+            a--;
+            cout<<'a';
+        }else{
+            k-=dp[a-1][b];
+            b--;
+            cout<<'b';
+        }
+    }
+    while(a){
+        cout<<'a';
+        a--;
+    }
+    while(b){
+        cout<<'b';
+        b--;
+    }
+    cout<<endl;
+
+
     return 0;
 }
