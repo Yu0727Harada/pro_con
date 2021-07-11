@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/11.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,19 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int n;
+    cin>>n;
+    vi ans;
+    while(n > 1){
+        ans.push_back(2);
+        n -= 2;
+    }
+    if(n == 1)ans.push_back(1);
+
+    cout<<ans.size()<<endl;
+    for (int i = 0; i < ans.size(); ++i) {
+        cout<<ans[i]<<endl;
+    }
+
     return 0;
 }
-

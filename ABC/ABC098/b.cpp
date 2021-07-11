@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/21.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,27 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int n;
+    string s;
+    cin>>n>>s;
+
+    int out_ans = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        int ans = 0;
+        map<char,int>mp;
+        for (int j = 0; j < i; ++j) {
+            mp[s[j]] = 1;
+        }
+        for (int j = i; j < s.size(); ++j) {
+            if(mp[s[j]] == 1){
+                ans ++;
+                mp[s[j]]++;
+            }
+        }
+        chmax(out_ans,ans);
+    }
+
+    cout<<out_ans<<endl;
+
     return 0;
 }
-

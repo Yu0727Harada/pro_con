@@ -1,3 +1,7 @@
+//
+// Created on 2021/04/06.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,35 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    string a;
+    string b;
+    cin>>a>>b;
+
+    if(a.size() != b.size()){
+        if(a.size() > b.size()){
+            cout<<"GREATER"<<endl;
+            return 0;
+        }else if(a.size() < b.size()){
+            cout<<"LESS"<<endl;
+            return 0;
+        }
+    }else{
+
+        for (int i = 0; i < a.size(); ++i) {
+            if(a[i] > b[i]){
+                cout<<"GREATER"<<endl;
+                return 0;
+            }else if(a[i] < b[i]){
+                cout<<"LESS"<<endl;
+                return 0;
+            }else{
+                continue;
+            }
+        }
+
+
+
+    }
+cout<<"EQUAL"<<endl;
     return 0;
 }
-

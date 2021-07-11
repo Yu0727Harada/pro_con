@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/13.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,15 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    double a;
+    double b;
+    cin>>a>>b;
+    double ans = b * a/100;
+        printf("%.10f\n", ans);
+            //10は桁数fはfloat
+            //%d int
+            //%c char
+            //スペース区切り出力
+
     return 0;
 }
-

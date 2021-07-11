@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/20.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -33,16 +37,53 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+class hanjo{
+public:
+    vvi g;
+    int cnt;
+}
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    int h,w,a,b;
+    cin>>h>>w>>a>>b;
+
+    vvi g(h + 1,vi(w + 1,0));
+    //0 -no 1-part 2-dame
+
+    for (int i = 0; i <= w; ++i) {
+        g[0][i] = 2;
+        g[h][i] = 2;
+    }
+    for (int i = 0; i <= h; ++i) {
+        g[i][0] = 2;
+        g[i][w] = 2;
+    }
+
+
+    hanjo init;
+    init.g = g;
+    init.cnt = 0;
+
+    queue<hanjo> que;
+    que.push(init);
+    int ans = 0;
+    while(!que.empty()){
+        hanjo gr = que.front();
+        que.pop();
+        if(gr.cnt == a){
+            ans ++;
+        }
+        for (int i = 0; i <= h; ++i) {
+
+            if(gr[i]
+        }
+
+
+    }
+
+
+
     return 0;
 }
-

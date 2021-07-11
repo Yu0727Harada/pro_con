@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/01.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,18 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    string s;
+    cin>>s;
+    vector<string> a = {"Do","Do","Re","Re","Mi","Fa","Fa","So","So","La","La","Si","Do"};
+    string t = "WBWBWWBWBWBWWBWBWWBWBWBWWBWBWWBWBWBWWBWBWWBWBWBWWBWBWWBWBWBW";
+    for (int i = 0; i < s.size() ; ++i) {
+
+        string p = t.substr(i,20);
+        if(p == s){
+            cout<<a[i]<<endl;
+            return 0;
+        }
+    }
+
     return 0;
 }
-

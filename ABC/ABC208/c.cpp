@@ -1,3 +1,7 @@
+//
+// Created on 2021/07/04.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,30 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    ll n,k;
+    cin>>n>>k;
+
+    vl a(n);
+    vl a_b(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
+        a_b[i] = a[i];
+    }
+
+    ll same = k / n;
+    k -= same * n;
+    sort(all(a_b));
+
+    ll max = a_b[k];
+
+    for (int i = 0; i < n; ++i) {
+        if(a[i] < max){
+            cout<<same+1<<endl;
+        }else{
+            cout<<same<<endl;
+        }
+    }
+
+
     return 0;
 }
-

@@ -1,3 +1,7 @@
+//
+// Created on 2021/07/04.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,14 +39,53 @@ const int INF = 1e9;
 
 
 
+
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    ll n,m;
+    cin>>n>>m;
+
+    vector<vector<pair<ll,ll>>> e(n + 1,vector<pair<ll,ll>>());
+    vector<vector<pair<ll,ll>>> e_back(n + 1,vector<pair<ll,ll>>());
+
+    vector<vector<ll>> cost_table(n + 1,vector<ll>(n + 1,INF));
+
+    for (int i = 0; i < m; ++i) {
+        ll a,b,c;
+        cin>>a>>b>>c;
+
+
+        e[a].push_back({b,c});
+        cost_table[a][b] = c;
+        e_back[b].push_back({a,c});
+
+    }
+    for (int i = 1; i <= n; ++i) {
+        cost_table[i][i] = 0;
+    }
+    ll ans = 0;
+    for (int k = 1; k <= n; ++k) {
+
+        for (int s = 1; s <= n ; ++s) {
+            for (int t = 1; t <= n; ++t) {
+
+                if(cost_table[s][t] > cost_table[s][k] + cost_table[k][t]){
+                    cost_table[s][t] = cost_table[s][k] + cost_table[k ][t];
+                }
+            }
+        }
+
+        for (int s = 1; s <= n; ++s) {
+            for (int t = 1; t <= n; ++t) {
+                if(cost_table[s][t] != INF && s != t){
+
+                    ans += cost_table[s][t];
+                }
+            }
+        }
+
+    }
+
+
     cout<<ans<<endl;
     return 0;
 }
-

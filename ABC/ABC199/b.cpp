@@ -1,3 +1,7 @@
+//
+// Created on 2021/04/24.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,25 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int min_v = 0;
+    int max_v = INF;
+
+    int n ;
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        int a;
+        cin>>a;
+
+        min_v = max(min_v,a);
+
+    }
+    for (int i = 0; i < n; ++i) {
+        int b;
+        cin>>b;
+        max_v = min(max_v,b);
+    }
+
+    cout<<max(0,max_v - (min_v - 1))<<endl;
+
     return 0;
 }
-

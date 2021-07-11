@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/26.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,44 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int n;
+    cin>>n;
+    vector<pair<int,int>>s(n);
+    vector<pair<int,int>>t(n);
+
+    vector<vector<int>>s_dis(n,vector<int>());
+    vector<vector<int>>t_dis(n,vector<int>());
+    for (int i = 0; i < n; ++i) {
+        int a,b;
+        cin>>a>>b;
+        s[i] = {a,b};
+    }
+    for (int i = 0; i < n; ++i) {
+        int c,d;
+        cin>>c>>d;
+        t[i] ={c,d};
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            s_dis[i].push_back(pow(abs(s[i].first - s[j].first),2) + pow(abs(s[i].second - s[j].second),2));
+        }
+        sort(all(s_dis[i]));
+    }
+    sort(all(s_dis));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            t_dis[i].push_back(pow(abs(t[i].first - t[j].first),2) + pow(abs(t[i].second - t[j].second),2));
+        }
+        sort(all(t_dis[i]));
+    }
+    sort(all(t_dis));
+    if(s_dis == t_dis){
+        cout<<"Yes"<<endl;
+    }else{
+        cout<<"No"<<endl;
+    }
+
+
     return 0;
 }
-

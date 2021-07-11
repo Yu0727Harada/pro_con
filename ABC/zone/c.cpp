@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/01.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,52 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    int n;
+    cin>>n;
+    vector<pair<int,int>> a(n);
+    vector<pair<int,int>> b(n);
+    vector<pair<int,int>> c(n);
+    vector<pair<int,int>> d(n);
+    vector<pair<int,int>> e(n);
+
+    vvi status(n,vi());
+
+    for (int i = 0; i < n; ++i) {
+        int A,B,C,D,E;
+        cin>>A>>B>>C>>D>>E;
+        status[i] = {A,B,C,D,E};
+        a[i] = {A,i};
+        b[i] = {B,i};
+        c[i] = {C,i};
+        d[i] = {D,i};
+        e[i] = {E,i};
+    }
+
+    sort(all(a));
+    sort(all(b));
+    sort(all(c));
+    sort(all(d));
+    sort(all(e));
+
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            vi maxl(5);
+            int min_v = INF;
+            int min_index = -1;
+            for (int k = 0; k < 5; ++k) {
+                maxl[k] = max(status[i][k],status[j][k]);
+                if(min_v > maxl[k]){
+                    min_v = maxl[k];
+                    min_index = k;
+                }
+            }
+
+
+
+        }
+    }
+
     return 0;
 }
-

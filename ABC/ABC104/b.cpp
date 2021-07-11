@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/05.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,39 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+
+    string s;
+    cin>>s;
+
+    if(s[0] == 'A'){
+        bool c = false;
+        for (int i = 2; i < s.size() - 1; ++i) {
+            if(s[i] == 'C'){
+                if(c){
+                    cout<<"WA"<<endl;
+                    return 0;
+                }
+                c = true;
+            }
+        }
+        if(!c){
+            cout<<"WA"<<endl;
+            return 0;
+        }
+
+        for (int i = 1; i < s.size(); ++i) {
+            if(('a' <= s[i] && s[i] <= 'z')|| s[i] == 'C'){
+                continue;
+            } else{
+                cout<<"WA"<<endl;
+                return 0;
+            }
+        }
+        cout<<"AC"<<endl;
+        return 0;
+    }
+
+    cout<<"WA"<<endl;
     return 0;
 }
-

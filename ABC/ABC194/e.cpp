@@ -1,3 +1,7 @@
+//
+// Created on 2021/07/03.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,28 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int n;
+    int m;
+    cin>>n>>m;
+    vvi dic(n + 10,vi(1,0));
+    for (int i = 1; i <= n; ++i) {
+        int a;
+        cin>>a;
+        dic[a].push_back(i);
+    }
+    for (int i = 0; i <= n + 2; ++i) {
+        dic[i].push_back(n+1);
+    }
+
+    for (int i = 0; i <= n + 1; ++i) {
+        for (int j = 1; j < dic[i].size(); ++j) {
+            if(dic[i][j] - dic[i][j-1] > m){
+                cout<<i<<endl;
+                return 0;
+            }
+        }
+    }
+
+
     return 0;
 }
-

@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/22.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,20 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    string s;
+    cin>>s;
+    reverse(all(s));
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i]-'0' == 6){
+            cout<<9;
+        }else if(s[i] - '0' == 9){
+            cout<<6;
+        }else{
+            cout<<s[i];
+        }
+    }
+    cout<<endl;
+
     return 0;
 }
-

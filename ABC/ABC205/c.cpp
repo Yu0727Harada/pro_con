@@ -1,3 +1,6 @@
+//
+// Created on 2021/06/13.
+//
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +39,46 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int a,b,c;
+    cin>>a>>b>>c;
+
+    if(a > 0 && b > 0){
+        if(a > b){
+            cout<<">"<<endl;
+        }else if(a < b){
+            cout<<"<"<<endl;
+        }else{
+            cout<<"="<<endl;
+        }
+    }else{
+        int mod = c % 2;
+        if(mod == 1){
+            if(a > b){
+                cout<<">"<<endl;
+            }else if(a < b){
+                cout<<"<"<<endl;
+            }else{
+                cout<<"="<<endl;
+            }
+        }else{
+            if(a < 0){
+                a *= -1;
+            }
+            if(b < 0){
+                b *= -1;
+            }
+            if(a > b){
+                cout<<">"<<endl;
+            }else if(a < b){
+                cout<<"<"<<endl;
+            }else{
+                cout<<"="<<endl;
+            }
+
+        }
+
+    }
+
     return 0;
 }
 

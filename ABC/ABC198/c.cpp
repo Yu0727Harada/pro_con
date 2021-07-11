@@ -1,3 +1,7 @@
+//
+// Created on 2021/04/11.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,39 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    double r;
+    double x;
+    double y;
+    cin>>r>>x>>y;
+
+    double dis = (x * x) + (y * y);
+    double ans;
+
+    if(x == 0 && y == 0){
+        cout<<0<<endl;
+        return 0;
+    }
+    if(dis < (r * r) ){
+        cout<<2<<endl;
+        return 0;
+    }
+
+    if((ll)dis % (ll)(r * r) == 0){
+        ans = sqrt(dis/(r*r));
+    }else{
+        ans = sqrt(dis/(r*r));
+        ans += 1;
+    }
+
+    string s = to_string(ans);
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] =='.'){
+            cout<<endl;
+            return 0;
+        }else{
+            cout<<s[i];
+        }
+    }
     return 0;
 }
-

@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/06.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -33,16 +37,26 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-
-
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int n;
+    cin>>n;
+    vl a(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
+    }
+
+    sort(rall(a));
+    vl one;
+    vl two;
+
+
+
+
+
+
+
+
+
+    cout<<max(one,two)<<endl;
     return 0;
 }
-

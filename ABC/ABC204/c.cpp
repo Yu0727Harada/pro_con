@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/06.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,47 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int n;
+    int m;
+    cin>>n>>m;
+
+    vector<vector<int>> e(n,vector<int>());
+    for (int i = 0; i < m; ++i) {
+        int a,b;
+        cin>>a>>b;
+        a--;b--;
+        e[a].push_back(b);
+    }
+
+    vi cont(n,0);
+    for (int i = 0; i < n; ++i) {
+        int cnt = 0;
+        vi visit(n,0);
+        queue<int>q;
+        q.push(i);
+        visit[i] = 1;
+        cnt++;
+        while(!q.empty()){
+            int n_v = q.front();
+            q.pop();
+
+            for(auto item:e[n_v]){
+                if(visit[item] == 0) {
+                    visit[item] = 1;
+                    cnt ++;
+                    q.push(item);
+                }else{
+//                    cnt += cont[item];
+                }
+            }
+        }
+        cont[i] = cnt;
+    }
+
+    ll ans = 0;
+    for (int i = 0; i < n; ++i) {
+        ans += cont[i] ;
+    }
     cout<<ans<<endl;
     return 0;
 }
-

@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/01.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,20 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+
+    string s;
+    cin>>s;
+    int ans = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] == 'Z'){
+            string t = s;
+            t = t.substr(i,4);
+            if(t == "ZONe"){
+                ans ++;
+            }
+        }
+    }
+
     cout<<ans<<endl;
     return 0;
 }
-

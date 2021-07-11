@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/01.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,45 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    int n;
+    int d;
+    int h;
+    cin>>n>>d>>h;
+    vector<pair<int,int>> bill(n);
+    for (int i = 0; i < n; ++i) {
+        int a,b;
+        cin>>a>>b;
+        bill[i] = {a,b};
+    }
+
+    double ok = h;
+    double ng = 0;
+    int q = 100000;
+    while(q){
+        q--;
+        double mid = (ok + ng) / 2;
+        double katamuki = (h - mid) / d;
+        double seppen = mid;
+
+        bool go = true;
+
+        for (int i = 0; i < n; ++i) {
+            double v = bill[i].first * katamuki + mid;
+            if(v < bill[i].second){
+                go = false;
+            }
+        }
+        if(go){
+            ok = mid;
+        }else{
+            ng = mid;
+        }
+
+    }
+
+    printf("%.10f\n", ok);
+
+
     return 0;
 }
-

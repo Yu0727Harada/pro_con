@@ -1,3 +1,7 @@
+//
+// Created on 2021/04/11.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,54 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int n;
+    cin>>n;
+
+    if(n == 0){
+        cout<<"Yes"<<endl;
+        return 0;
+    }
+
+
+    while(true){
+        if(n % 10 == 0){
+            n /= 10;
+        }else{
+            break;
+        }
+    }
+
+    string s;
+    s = to_string(n);
+
+
+
+    string t = s;
+    reverse(all(t));
+
+
+
+    bool ok = true;
+    int i = 0;
+    int j = 0;
+    while(true){
+        if(s[j] == t[i]){
+            if(i == t.size() - 1){
+                break;
+            }
+            i++;
+            j++;
+            continue;
+        }else{
+            ok = false;
+            break;
+        }
+
+    }
+    if(ok){
+        cout<<"Yes"<<endl;
+    }else{
+        cout<<"No"<<endl;
+    }
     return 0;
 }
-

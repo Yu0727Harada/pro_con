@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/26.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,25 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    ll a,b,c,d;
+    cin>>a>>b>>c>>d;
+
+
+    ll blue = a;
+    ll red = 0;
+    int cnt = 0;
+    while(blue > red * d){
+        blue += b;
+        red += c;
+        cnt++;
+        if(cnt > 150000){
+            cout<<-1<<endl;
+            return 0;
+        }
+
+    }
+    cout<<cnt<<endl;
+
+
     return 0;
 }
-
