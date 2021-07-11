@@ -41,38 +41,49 @@ const int INF = 1e9;
 
 int main() {
 
-    int n,m;
-    cin>>n>>m;
+    int n, m;
+    cin >> n >> m;
     int q;
-    cin>>q;
-    vector<pair<int,int>>load(n);
-    vector<int>box(m + 1);
+    cin >> q;
+    vector<pair<ll, ll>> load(n);
+    vl box(m);
+
     for (int i = 0; i < n; ++i) {
-        int w,v;
-        cin>>w>>v;
-        load[i] = {w,v};
+        cin>>load[i].second>>load[i].first;
     }
-    for (int i = 1; i <= m; ++i) {
-        int x;
-        cin>>x;
-        box[i] = x;
+    for (int i = 0; i < m; ++i) {
+        cin>>box[i];
     }
-    vvi se (m,vi(n));
-    for (int i = 0; i < n; ++i) {
-        se[0][i] = 0;
-    }
-    for (int i = 0; i < q; ++i) {
+    sort(rall(load));
+    while(q){
         int l,r;
         cin>>l>>r;
-        for (int j = 1; j <= m; ++j) {
-            for (int k = 0; k < n; ++k) {
-                if(l <= j && j <= r){
-                    se[j][k] = se[j - 1][k];
-                }
+        l--;
+        r--;
+        vector<pair<ll,ll>>box_l(m,{-1,0});//荷物のid,価値
 
+        for (int i = 0; i < n; ++i) {
+            int min_box_id = -1;
+            int min_box_size = INF;
+
+            for (int j = 0; j < m; ++j) {
+                if(load[i].second <= box[j] && (j < l || r < j)){
+                    if(min_box_size > box[j] && box_l[j].first == -1){
+                        min_box_id = j;
+                        min_box_size = box[j];
+                    }
+                }
             }
+            if(min_box_id == -1)continue;
+            box_l[min_box_id] = {i,load[i].first};
+        }
+        ll ans = 0;
+        for (int i = 0; i < m; ++i) {
+            ans += box_l[i].second;
         }
 
+        cout<<ans<<endl;
+        q--;
     }
 
     return 0;

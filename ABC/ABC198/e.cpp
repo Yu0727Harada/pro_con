@@ -33,45 +33,48 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+int st[100005];
+vvi edge;
+int c[100005];
+vi ans;
+void dfs(int v, int p_v) {
 
+    st[c[v]]++;
+    if (st[c[v]] == 1) {
+        ans.push_back(v);
+    }
+    for (auto item:edge[v]) {
+        if (item == p_v)continue;
+
+        dfs(item, v);
+    }
+    st[c[v]]--;
+}
 
 int main() {
 
     int n;
     cin>>n;
 
-    vi a(n);
     for (int i = 0; i < n; ++i) {
-        cin>>a[i];
+        cin>>c[i];
     }
-    if(n == 1){
-        cout<<a[0]<<endl;
-        return 0;
-    }
-    int ans = INF;
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<(n -1)); ++bit) {
-        int t = a[0];
-        int f_t = -1;
-        for (int i = 0; i < n - 1; ++i) {
-            if(bit & (1<<i)){
-                //i個目の要素にフラグが立っていた時の処理
-                if(f_t == -1){
-                    f_t = t;
-                    t = a[i + 1];
-                }else{
-                    f_t = f_t ^ t;
-                    t = a[i + 1];
-                }
-            }else{
-                t = t | a[i + 1];
+    edge.resize(n);
 
-            }
-        }
-        if(f_t == -1) f_t = t;
-        else f_t = f_t ^ t;
-        chmin(ans,f_t);
+    for (int i = 0; i < n - 1; ++i) {
+        int a;
+        int b;
+        cin>>a>>b;
+        a--;b--;
+        edge[a].push_back(b);
+        edge[b].push_back(a);
     }
-    cout<<ans<<endl;
+
+    dfs(0,-1);
+
+    sort(all(ans));
+    for (int i = 0; i < ans.size(); ++i) {
+        cout<<ans[i]+1<<endl;
+    }
     return 0;
 }

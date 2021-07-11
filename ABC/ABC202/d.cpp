@@ -1,6 +1,7 @@
 //
-// Created on 2021/05/22.
+// Created by 原田 on 2021/05/24.
 //
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -40,6 +41,42 @@ const int INF = 1e9;
 
 int main() {
 
+    ll a,b,k;
+    cin>>a>>b>>k;
+
+    vector<vector<ll>> dp(a+1,vl(b+1,0));
+    dp[0][0] = 1;
+    for (int i = 0; i <= a; ++i) {
+        for (int j = 0; j <= b; ++j) {
+            if(i > 0){
+                dp[i][j] += dp[i - 1][j];
+            }
+            if(j > 0){
+                dp[i][j] += dp[i][j - 1];
+            }
+        }
+    }
+
+    while(a > 0 && b > 0){
+        if(k <= dp[a - 1][b]){
+            a--;
+            cout<<'a';
+        }else{
+            k-=dp[a-1][b];
+            b--;
+            cout<<'b';
+        }
+    }
+    while(a){
+        cout<<'a';
+        a--;
+    }
+    while(b){
+        cout<<'b';
+        b--;
+    }
+    cout<<endl;
+
+
     return 0;
 }
-

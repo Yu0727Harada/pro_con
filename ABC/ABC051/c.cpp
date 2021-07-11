@@ -1,3 +1,6 @@
+//
+// Created by 原田 on 2021/04/12.
+//
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,42 +39,68 @@ const int INF = 1e9;
 
 
 int main() {
+    int sx,sy;
+    cin>>sx>>sy;
+    int tx,ty;
+    cin>>tx>>ty;
 
-    int n;
-    cin>>n;
+    int nx = sx;
+    int ny = sy;
+    string ans = "";
+    while(true){
+        if(ny >= ty)break;
+        ny ++;
+        ans += 'U';
+    }
 
-    vi a(n);
-    for (int i = 0; i < n; ++i) {
-        cin>>a[i];
+    while(true){
+        if(nx >= tx)break;
+        nx++;
+        ans += 'R';
     }
-    if(n == 1){
-        cout<<a[0]<<endl;
-        return 0;
-    }
-    int ans = INF;
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<(n -1)); ++bit) {
-        int t = a[0];
-        int f_t = -1;
-        for (int i = 0; i < n - 1; ++i) {
-            if(bit & (1<<i)){
-                //i個目の要素にフラグが立っていた時の処理
-                if(f_t == -1){
-                    f_t = t;
-                    t = a[i + 1];
-                }else{
-                    f_t = f_t ^ t;
-                    t = a[i + 1];
-                }
-            }else{
-                t = t | a[i + 1];
 
-            }
-        }
-        if(f_t == -1) f_t = t;
-        else f_t = f_t ^ t;
-        chmin(ans,f_t);
+    while(true){
+        if(ny <= sy)break;
+        ny--;
+        ans += 'D';
     }
+
+    while(true){
+        if(nx <= sx)break;
+        nx --;
+        ans += 'L';
+    }
+
+    ans += 'L';
+    nx --;
+
+    while(true){
+        if(ny >= ty + 1) break;
+        ny ++;
+        ans += 'U';
+    }
+    while(true){
+        if(nx >= tx)break;
+        nx ++;
+        ans += 'R';
+    }
+    ny--;
+    ans += 'D';
+
+    nx += 1;
+    ans += 'R';
+    while(true){
+        if(ny <= sy - 1)break;
+        ny --;
+        ans += 'D';
+    }
+    while(true){
+        if(nx <= sx)break;
+        nx --;
+        ans += 'L';
+    }
+    ny += 1;
+    ans += 'U';
     cout<<ans<<endl;
     return 0;
 }

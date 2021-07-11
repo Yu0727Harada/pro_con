@@ -1,5 +1,5 @@
 //
-// Created on 2021/03/27.
+// Created by 原田 on 2021/04/09.
 //
 
 
@@ -24,6 +24,7 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
+#include <complex>
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -40,6 +41,30 @@ const int INF = 1e9;
 
 
 int main() {
+
+    complex<double> P_zero;
+    complex<double> P;
+
+    int n;
+    cin>>n;
+
+    int a,b;
+    cin>>a>>b;
+    P_zero.real(a);
+    P_zero.imag(b);
+    int c,d;
+    cin>>c>>d;
+    P.real(c);
+    P.imag(d);
+
+    complex<double> m = (P_zero + P) / 2.0;
+
+    double PI = acos(-1);
+    double rad = 2 * PI / n;
+    complex<double> r(cos(rad),sin(rad));
+    complex<double> ans = m + (P_zero - m) * r;
+
+    printf("%.10f %.10f\n",ans.real(),ans.imag() );
 
     return 0;
 }

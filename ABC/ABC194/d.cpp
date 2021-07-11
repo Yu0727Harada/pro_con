@@ -40,6 +40,14 @@ const int INF = 1e9;
 
 
 int main() {
+    double n;
+    cin>>n;
+    double ans = 0;
+    for (int i = 1; i < n; ++i) {
+        ans += n/(n-i);
+    }
+
+    printf("%.10f\n", ans);
 
     return 0;
 }
