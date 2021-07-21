@@ -36,13 +36,20 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int n,k,x,y;
+    cin>>n>>k>>x>>y;
+
+    int ans = 0;
+
+    int paku = 1;
+    while(paku <= n){
+        if(paku <= k){
+            ans += x;
+        }else{
+            ans +=y;
+        }
+        paku++;
+    }
     cout<<ans<<endl;
     return 0;
 }
-

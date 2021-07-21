@@ -1,3 +1,7 @@
+//
+// Created on 2021/07/17.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,36 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
-    return 0;
-}
+    int h,w;
+    cin>>h>>w;
+    ll c;
+    cin>>c;
 
+    ll min_v = LINF;
+    pair<int,int> min_index = {-1,-1};
+    vector<vector<ll>> a(h,vl(w,0));
+    for (int i = 0; i < h; ++i) {
+        for (int j = 0; j < w; ++j) {
+            cin>>a[i][j];
+            if(a[i][j] < min_v){
+                min_v = a[i][j];
+                min_index = {i,j};
+            }
+        }
+    }
+    ll cost = LINF;
+
+    for (int i = 0; i < h; ++i) {
+        for (int j = 0; j < w; ++j) {
+            ll dis = abs(min_index.first - i)+abs(min_index.second - j);
+            if(dis == 0)continue;
+            ll temp_cost = dis * c;
+            temp_cost += a[i][j] + min_v;
+            chmin(cost,temp_cost);
+        }
+    }
+
+    cout<<cost<<endl;
+    return 0;
+
+}

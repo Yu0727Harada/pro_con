@@ -33,16 +33,17 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+const int MAX = 510000;//nCkのn,kの取りうるMAX
+const int MOD = 1000000007;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int n;
+    cin>>n;
+
+    int ans = n - 1;
     cout<<ans<<endl;
+
+
     return 0;
 }
-

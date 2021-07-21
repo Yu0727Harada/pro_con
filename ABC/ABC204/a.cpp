@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/06.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,21 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int x;
+    int y;
+    cin>>x>>y;
+    vector<int>mp(3,0);
+    mp[x]++;
+    mp[y]++;
+    if(x == y){
+        cout<<x<<endl;
+        return 0;
+    }
+    for (int i = 0; i < 3; ++i) {
+        if(mp[i]==0){
+            cout<<i<<endl;
+            return 0;
+        }
+    }
     return 0;
 }
-

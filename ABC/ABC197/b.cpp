@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/27.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,75 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int h,w;
+    cin>>h>>w;
+    int x,y;
+    cin>>y>>x;
+    x--;
+    y--;
+    vector<string> g(h);
+    for (int i = 0; i < h; ++i) {
+        cin>>g[i];
+    }
+
+    int ans = 0;
+    int n_x;
+    int n_y;
+
+    if(g[y][x] == '.'){
+        ans++;
+    }else{
+        cout<<ans<<endl;
+        return 0;
+    }
+
+
+    n_x = x - 1;
+    n_y = y;
+    while(n_x >= 0){
+        if(g[n_y][n_x] == '.'){
+            ans ++;
+        }else{
+            break;
+        }
+        n_x --;
+    }
+
+    n_x = x + 1;
+    n_y = y;
+    while(n_x < w){
+        if(g[n_y][n_x] =='.'){
+            ans++;
+        }else{
+            break;
+        }
+        n_x ++;
+    }
+
+
+    n_y = y - 1;
+    n_x = x;
+    while(n_y >= 0){
+        if(g[n_y][n_x] == '.'){
+            ans ++;
+        }else{
+            break;
+        }
+        n_y --;
+    }
+
+    n_y = y + 1;
+    n_x = x;
+    while(n_y < h){
+        if(g[n_y][n_x] =='.'){
+            ans++;
+        }else{
+            break;
+        }
+        n_y ++;
+    }
     cout<<ans<<endl;
+
+
     return 0;
 }
-

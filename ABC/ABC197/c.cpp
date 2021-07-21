@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/27.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,40 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    ll n;
+    cin>>n;
+    vector<vector<ll>> log(n,vector<ll>(n,0));
+
+    for (int i = 0; i < n; ++i) {
+        cin>>log[i][i];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            log[i][j] = log[i][j-1] | log[j][j];
+        }
+    }
+
+    ll ans = LINF;
+    queue<pair<ll,ll>> q;
+    for (int i = 0; i < n; ++i) {
+        q.push({i,log[0][i]});
+    }
+    while(!q.empty()){
+        ll now =q.front().first;
+        ll v = q.front().second;
+        q.pop();
+
+        if(now == n - 1){
+            chmin(ans,v);
+        }else{
+            for (int i = now + 1; i < n; ++i) {
+                q.push({i,v ^ log[now + 1][i]});
+            }
+        }
+    }
     cout<<ans<<endl;
+
+
     return 0;
 }
-

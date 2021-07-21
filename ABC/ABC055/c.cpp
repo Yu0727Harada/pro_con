@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/30.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,21 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    ll n,m;
+    cin>>n>>m;
+
+    ll ans = 0;
+
+    if(2 * n <= m){
+        ans += n;
+        m -= 2 * n;
+    }else{
+        ans += m / 2;
+        m = 0;
+    }
+    ans += m / 4;
+
     cout<<ans<<endl;
+
     return 0;
 }
-

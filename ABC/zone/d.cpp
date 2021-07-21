@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/01.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,56 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    string s;
+    cin>>s;
+
+    deque<char> d;
+    bool muki = true;
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] == 'R'){
+            muki = !muki;
+        }else{
+            if(muki){
+                if(d.empty()){
+                    d.push_back(s[i]);
+                }else{
+                    if(d.back() == s[i]){
+                        d.pop_back();
+                    }else{
+                        d.push_back(s[i]);
+                    }
+                }
+            }else{
+                if(d.empty()){
+                    d.push_front(s[i]);
+                }else{
+                    if(d.front() == s[i]){
+                        d.pop_front();
+                    }else{
+                        d.push_front(s[i]);
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
+    if(muki){
+        while(!d.empty()) {
+
+            cout<<d.front();
+            d.pop_front();
+        }
+    }else{
+            while(!d.empty()) {
+
+            cout<<d.back();
+            d.pop_back();
+        }
+    }
+    cout<<endl;
     return 0;
 }
-

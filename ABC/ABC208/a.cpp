@@ -1,3 +1,7 @@
+//
+// Created on 2021/07/04.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,18 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    double a,b;
+    cin>>a>>b;
+    if(b / a < 1){
+        cout<<"No"<<endl;
+    }else if(b / a > 6){
+        cout<<"No"<<endl;
+    }
+    else{
+        cout<<"Yes"<<endl;
+    }
+
+
     return 0;
 }
-

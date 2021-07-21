@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/20.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -33,16 +37,23 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-
-
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int a,b,c,d;
+    cin>>a>>b>>c>>d;
+
+    int ans = -INF;
+
+    for (int i = a; i <= b; ++i) {
+        for (int j = c; j <= d; ++j) {
+
+            chmax(ans,i-j);
+        }
+    }
+
     cout<<ans<<endl;
     return 0;
 }
+
+
+
 

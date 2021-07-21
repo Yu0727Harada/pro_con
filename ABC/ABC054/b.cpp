@@ -1,3 +1,8 @@
+//
+// Created on 2021/03/16.
+//
+
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +41,48 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    int n ,m;
+    cin>>n>>m;
+
+    vector<string> a(n);
+    vector<string> b(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
+    }
+    for (int i = 0; i < m; ++i) {
+        cin>>b[i];
+    }
+    if(n == m){
+        bool ok = true;
+        for (int k = 0; k < m; ++k) {
+            if(b[k] == a[k])continue;
+            else {
+                ok = false;
+            }
+        }
+        if(ok){
+            cout<<"Yes"<<endl;
+            return 0;
+        }
+    }
+    for (int i = 0; i + m < n; ++i) {
+        for (int j = 0; j + m < n; ++j) {
+
+            bool ok = true;
+            for (int k = 0; k < m; ++k) {
+                if(b[k] == a[i + k].substr(j,m))continue;
+                else {
+                    ok = false;
+                }
+            }
+            if(ok){
+                cout<<"Yes"<<endl;
+                return 0;
+            }
+        }
+    }
+
+    cout<<"No"<<endl;
     return 0;
 }
-

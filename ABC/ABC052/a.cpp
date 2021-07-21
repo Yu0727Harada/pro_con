@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/31.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,10 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    ll a,b,c,d;
+    cin>>a>>b>>c>>d;
+    ll a_s = a * b;
+    ll b_s = c * d;
+    cout<<max(a_s,b_s)<<endl;
     return 0;
 }
-

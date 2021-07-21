@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/25.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,18 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    string s;
+    cin>>s;
+    bool ok = true;
+    for (int i = 1; i < s.size(); ++i) {
+        if(s[0] != s[i]){
+            ok = false;
+        }
+    }
+    if(ok){
+        cout<<"SAME"<<endl;
+    }else{
+        cout<<"DIFFERENT"<<endl;
+    }
     return 0;
 }
-

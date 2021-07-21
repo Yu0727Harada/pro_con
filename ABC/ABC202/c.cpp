@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/22.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,29 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+
+    int n;
+    cin>>n;
+
+    vi a(n+1);
+    for (int i = 1; i <= n; ++i) {
+        cin>>a[i];
+    }
+    vi b(n+1);
+    for (int i = 1; i <= n; ++i) {
+        cin>>b[i];
+    }
+    map<int,ll>mp;
+    for (int i = 1; i <= n; ++i) {
+        int c;
+        cin>>c;
+        mp[b[c]]++;
+    }
+    ll ans = 0;
+    for (int i = 1; i <= n; ++i) {
+        ans +=mp[a[i]];
+    }
+
     cout<<ans<<endl;
     return 0;
 }
-

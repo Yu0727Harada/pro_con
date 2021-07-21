@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/30.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,34 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+
+    ll n,k;
+    cin>>n>>k;
+
+    ll now_money = k;
+    ll now_v = 0;
+    vector<pair<ll,ll>>li(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>li[i].first>>li[i].second;
+    }
+    sort(all(li));
+
+    for (int i = 0; i < n; ++i) {
+        ll a = li[i].first;
+        ll b = li[i].second;
+
+        if(a > now_v + now_money){
+            now_v += now_money;
+            cout<<now_v<<endl;
+            return 0;
+        }else{
+            now_money -= a;
+            now_money += b;
+            now_v += a;
+        }
+    }
+
+    now_v += now_money;
+    cout<<now_v<<endl;
     return 0;
 }
-

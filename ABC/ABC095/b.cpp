@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/26.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,21 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int n,x;
+    cin>>n>>x;
+    int min_v = INF;
+
+    for (int i = 0; i < n; ++i) {
+        int m;
+        cin>>m;
+        x -= m;
+        chmin(min_v,m);
+    }
+
+    int ans = n;
+
+    ans += x / min_v;
     cout<<ans<<endl;
+
     return 0;
 }
-

@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/17.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -33,16 +37,42 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-
-
-int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
-    return 0;
+vector<pair<ll,ll>>prime_factorize(ll n){
+    vector<pair<ll,ll>>ret;
+    for (ll i = 2; i * i < n ; ++i) {
+        if(n % i == 0){
+            ll ex = 0;//指数
+            while(n % i == 0){
+                ex++;
+                n /= i;
+            }
+            ret.push_back({i, ex});
+        }
+    }
+    if(n != 1){
+        ret.push_back({n,1});
+    }
+    return ret;
+    //example n = 12, ret = [[2,2],[3,1]と返す
 }
 
+int main() {
+    int n;
+    cin>>n;
+
+    ll ans = INF;
+    for (int i = 0; i < n; ++i) {
+        ll a;
+        cin>>a;
+        auto p = prime_factorize(a);
+        if(p[0].first == 2){
+            ans = min(p[0].second,ans);
+        }else{
+            ans = 0;
+        }
+    }
+
+    cout<<ans<<endl;
+
+    return 0;
+}

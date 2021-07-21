@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/15.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,44 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+
+    string s;
+    cin>>s;
+    int ans = 0;
+
+    for (int i = 0; i <= 9999; ++i) {
+        string t = to_string(i);
+
+        while(t.size() < 4){
+            t = '0' + t;
+        }
+        bool ok = true;
+        for (int j = 0; j < s.size(); ++j) {
+            bool find = false;
+            if(s[j] == 'o'){
+                for (int k = 0; k < t.size(); ++k) {
+                    if(t[k]-'0' == j){
+                        find = true;
+                    }
+                }
+                if(find)continue;
+                else ok =false;
+            }else if(s[j] == 'x') {
+                for (int k = 0; k < t.size(); ++k) {
+                    if (t[k]-'0' == j) {
+                        find = true;
+                    }
+                }
+                if (!find)continue;
+                else ok = false;
+
+            }
+        }
+        if(ok)ans ++;
+
+    }
     cout<<ans<<endl;
+
+
     return 0;
 }
-

@@ -46,18 +46,33 @@ int main() {
     double y;
     cin>>r>>x>>y;
 
-    double dis = sqrt((x * x) + (y * y));
-    int ans;
+    double dis = (x * x) + (y * y);
+    double ans;
 
-    ans = ceil((dis/(r)));
-    if(ans == 1 && dis != r){
-            ans ++;
+    if(x == 0 && y == 0){
+        cout<<0<<endl;
+        return 0;
     }
-    
+    if(dis < (r * r) ){
+        cout<<2<<endl;
+        return 0;
+    }
 
-    cout<<ans<<endl;
+    if((ll)dis % (ll)(r * r) == 0){
+        ans = sqrt(dis/(r*r));
+    }else{
+        ans = sqrt(dis/(r*r));
+        ans += 1;
+    }
 
+    string s = to_string(ans);
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] =='.'){
+            cout<<endl;
+            return 0;
+        }else{
+            cout<<s[i];
+        }
+    }
     return 0;
 }
-
-

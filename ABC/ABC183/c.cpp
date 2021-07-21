@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/26.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,38 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int N;
+    cin>>N;
+    int k;
+    cin>>k;
+    vector<int> v(N - 1);
+    iota(v.begin(), v.end(), 1);       // v に 1, 2, ... N を設定
+
+    vvi e(N,vi(N,-1));
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            cin>>e[i][j];
+        }
+    }
+
+    int ans = 0;
+    do {
+        int l = 0;
+        int now = 0;
+        int next;
+        for (int i = 0; i < N-1; ++i) {
+            next = v[i];
+            l += e[now][next];
+            now = next;
+        }
+        l += e[now][0];
+
+        if(l == k)ans ++;
+
+
+    } while( next_permutation(v.begin(), v.end()) );     // 次の順列を生成
+
     cout<<ans<<endl;
     return 0;
 }
-

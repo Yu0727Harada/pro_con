@@ -1,3 +1,7 @@
+//
+// Created on 2021/07/04.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,26 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    ll p;
+    cin>>p;
+
+    vl coin(11,0);
+    coin[1] = 1;
+    for (int i = 2; i <= 10; ++i) {
+        coin[i] = coin[i-1] * i;
+    }
+    int ans = 0;
+    for (int i = 10; i >= 1; --i) {
+        while(coin[i] <= p){
+            int mai = p/coin[i];
+            p -= mai * coin[i];
+            ans += mai;
+        }
+        if(p == 0)break;
+
+    }
+
     cout<<ans<<endl;
     return 0;
-}
 
+}

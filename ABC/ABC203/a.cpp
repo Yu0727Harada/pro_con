@@ -1,3 +1,7 @@
+//
+// Created on 2021/05/30.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,34 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    map<int,int>mp;
+    for (int i = 0; i < 3; ++i) {
+        int a;
+        cin>>a;
+        mp[a]++;
+    }
+    int same = -1;
+    int one = -1;
+
+    for(auto item:mp){
+        if(item.second == 3){
+            same = item.first;
+            one = item.first;
+        }
+        if(item.second == 2){
+            same  = item.first;
+        }
+        if(item.second == 1){
+            one = item.first;
+        }
+    }
+    if(same != -1){
+        cout<<one<<endl;
+    }else{
+        cout<<0<<endl;
+    }
+
+
+
     return 0;
 }
-

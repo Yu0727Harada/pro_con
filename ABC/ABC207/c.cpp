@@ -1,3 +1,7 @@
+//
+// Created on 2021/06/26.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,36 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
+    int n;
+    cin>>n;
+
+    vector<pair<ll,ll>> li;
+    for (int i = 0; i < n; ++i) {
+        ll t,l,r;
+        cin>>t>>l>>r;
+        if(t == 1){
+            li.push_back({l* 3,r * 3});
+        }else if(t == 2){
+            li.push_back({l * 3,r * 3 -1});
+        }else if(t == 3){
+            li.push_back({l * 3 + 1,r*3});
+        }else {
+            li.push_back({l * 3 + 1,r * 3 -1});
+        }
+
+    }
+    ll ans = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if(li[i].first <= li[j].second && li[j].first <= li[i].second){
+                ans ++;
+            }
+
+        }
+    }
+
+
     cout<<ans<<endl;
+
     return 0;
 }
-

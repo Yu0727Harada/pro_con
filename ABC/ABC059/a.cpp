@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/15.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,9 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    string s1,s2,s3;
+    cin>>s1>>s2>>s3;
+    cout<<char(s1[0] + 'A' - 'a')<<char(s2[0] + 'A' - 'a')<<char(s3[0] + 'A' - 'a')<<endl;
+
     return 0;
 }
-

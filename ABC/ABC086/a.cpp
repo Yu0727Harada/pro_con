@@ -1,3 +1,7 @@
+//
+// Created on 2021/03/23.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,13 +40,12 @@ const int INF = 1e9;
 
 
 int main() {
-    string a,s,c;
-    cin>>a>>s>>c;
-    string ans = "";
-    ans += a[0];
-    ans += s[0];
-    ans += c[0];
-    cout<<ans<<endl;
+    int a,b;
+    cin>>a>>b;
+    if(a * b % 2 == 0){
+        cout<<"Even"<<endl;
+    }else{
+        cout<<"Odd"<<endl;
+    }
     return 0;
 }
-
