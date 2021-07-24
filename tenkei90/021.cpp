@@ -133,3 +133,4 @@ int main() {
     cout<<ans<<endl;
     return 0;
 }
+//強連結成分分解SCCs
