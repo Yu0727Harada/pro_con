@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/08/26.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -20,6 +24,8 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
+//#include <atcoder/all>
+
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -36,27 +42,49 @@ const int INF = 1e9;
 
 
 int main() {
-    int n,m;
-    cin>>n>>m;
-    vvi efdgea(n,vi());
-    vvi cost_tabel(n,vi(n));
+    int n;
+    cin>>n;
 
-
-
-
-
-
-
-
-
-
-
-    '';
-    for (int i = 0; i < m; ++i) {
-        int a,b;
-        cin>>a>>b;
-
+    vl a(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
     }
 
+    ll now = 0;
+    ll now_xor = 0;
+
+    ll ans = 0;
+    int r = 0;
+    for (int l = 0; l < n; ++l) {
+        while(now + a[r] == (now ^ a[r]) && r < n){
+            now += a[r];
+            r ++;
+        }
+        ans += r - l;
+        if(l == r) r++;
+        else{
+            now -= a[l];
+        }
+    }
+
+
+    cout<<ans<<endl;
     return 0;
 }
+
+//
+//しゃくとり法
+//長さ n
+//n
+// の正の整数列 a1,a2,…,an
+//a
+//1
+//,
+//a
+//2
+//,
+//…
+//,
+//a
+//n
+// が与えられる。整数列の連続する部分列のうち、「xor 和と加算和とが等しい」という条件を満たすものを数え上げよ。

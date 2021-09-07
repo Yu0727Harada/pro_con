@@ -15,7 +15,7 @@ The CXX compiler identification is AppleClang, found in "/Users/haradayuii/CLion
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /Users/haradayuii/CLionProjects/Atcoder/other contest/disco 2020/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_ccd70/fast && /Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_ccd70.dir/build.make CMakeFiles/cmTC_ccd70.dir/build
+Run Build Command(S):/usr/bin/make cmTC_ccd70/fast && /Library/Developer/CommandLineTools/usr/bin/make -F CMakeFiles/cmTC_ccd70.dir/build.make CMakeFiles/cmTC_ccd70.dir/build
 Building CXX object CMakeFiles/cmTC_ccd70.dir/testCXXCompiler.cxx.o
 /Library/Developer/CommandLineTools/usr/bin/c++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -o CMakeFiles/cmTC_ccd70.dir/testCXXCompiler.cxx.o -c "/Users/haradayuii/CLionProjects/Atcoder/other contest/disco 2020/cmake-build-debug/CMakeFiles/CMakeTmp/testCXXCompiler.cxx"
 Linking CXX executable cmTC_ccd70
@@ -27,7 +27,7 @@ Linking CXX executable cmTC_ccd70
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /Users/haradayuii/CLionProjects/Atcoder/other contest/disco 2020/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_719dd/fast && /Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_719dd.dir/build.make CMakeFiles/cmTC_719dd.dir/build
+Run Build Command(S):/usr/bin/make cmTC_719dd/fast && /Library/Developer/CommandLineTools/usr/bin/make -F CMakeFiles/cmTC_719dd.dir/build.make CMakeFiles/cmTC_719dd.dir/build
 Building CXX object CMakeFiles/cmTC_719dd.dir/CMakeCXXCompilerABI.cpp.o
 /Library/Developer/CommandLineTools/usr/bin/c++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl,-v -o CMakeFiles/cmTC_719dd.dir/CMakeCXXCompilerABI.cpp.o -c /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp
 Apple LLVM version 10.0.1 (clang-1001.0.46.4)
@@ -92,7 +92,7 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /Users/haradayuii/CLionProjects/Atcoder/other contest/disco 2020/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make cmTC_719dd/fast && /Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_719dd.dir/build.make CMakeFiles/cmTC_719dd.dir/build]
+  ignore line: [Run Build Command(S):/usr/bin/make cmTC_719dd/fast && /Library/Developer/CommandLineTools/usr/bin/make -F CMakeFiles/cmTC_719dd.dir/build.make CMakeFiles/cmTC_719dd.dir/build]
   ignore line: [Building CXX object CMakeFiles/cmTC_719dd.dir/CMakeCXXCompilerABI.cpp.o]
   ignore line: [/Library/Developer/CommandLineTools/usr/bin/c++    -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -v -Wl,-v -o CMakeFiles/cmTC_719dd.dir/CMakeCXXCompilerABI.cpp.o -c /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.15/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Apple LLVM version 10.0.1 (clang-1001.0.46.4)]

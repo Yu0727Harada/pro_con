@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/08/23.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -20,6 +24,7 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
+//#include <atcoder/all>
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -36,27 +41,45 @@ const int INF = 1e9;
 
 
 int main() {
-    int n,m;
-    cin>>n>>m;
-    vvi efdgea(n,vi());
-    vvi cost_tabel(n,vi(n));
+    int n,k;
+    cin>>n>>k;
 
-
-
-
-
-
-
-
-
-
-
-    '';
-    for (int i = 0; i < m; ++i) {
-        int a,b;
-        cin>>a>>b;
-
+    vi a(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
     }
 
+    map<int,int>mp;
+    int ans = 0;
+
+    int i,j;
+    i = 0;
+    j = 0;
+    mp[a[j]]++;
+    while (true) {
+        if(mp.size() > k) {
+            if (i < n - 1) {
+                mp[a[i]]--;
+                if (mp[a[i]] == 0)mp.erase(a[i]);
+                i++;
+            }else{
+                break;
+            }
+        }else{
+            chmax(ans,(j - i) + 1);
+            if(j < n - 1){j++;mp[a[j]] ++;}
+            else{
+                if(i < n - 1){
+                    mp[a[i]]--;
+                    if (mp[a[i]] == 0)mp.erase(a[i]);
+                    i ++;
+                }else{
+                    break;
+                }
+            }
+        }
+    }
+
+    cout<<ans<<endl;
     return 0;
 }

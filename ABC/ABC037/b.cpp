@@ -20,6 +20,8 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
+//#include <atcoder/all>
+
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -36,27 +38,23 @@ const int INF = 1e9;
 
 
 int main() {
-    int n,m;
-    cin>>n>>m;
-    vvi efdgea(n,vi());
-    vvi cost_tabel(n,vi(n));
-
-
-
-
-
-
-
-
-
-
-
-    '';
-    for (int i = 0; i < m; ++i) {
-        int a,b;
-        cin>>a>>b;
-
+    int n,q;
+    cin>>n>>q;
+    vector<ll>v(n,0);
+    while(q){
+        q--;
+        int l,r;
+        ll t;
+        cin>>l>>r>>t;
+        l--;
+        r--;
+        for (int i = l; i <= r; ++i) {
+            v[i] = t;
+        }
     }
 
+    for (int i = 0; i < n; ++i) {
+        cout<<v[i]<<endl;
+    }
     return 0;
 }

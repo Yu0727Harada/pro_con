@@ -20,6 +20,9 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
+#include "../../atcoder/lazysegtree.hpp"
+//#include <atcoder/all>
+
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -36,27 +39,9 @@ const int INF = 1e9;
 
 
 int main() {
-    int n,m;
-    cin>>n>>m;
-    vvi efdgea(n,vi());
-    vvi cost_tabel(n,vi(n));
 
 
-
-
-
-
-
-
-
-
-
-    '';
-    for (int i = 0; i < m; ++i) {
-        int a,b;
-        cin>>a>>b;
-
-    }
+    //atcoder::lazy_segtree<
 
     return 0;
 }
