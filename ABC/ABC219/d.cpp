@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 //
 // Created by 原田 on 2021/10/26.
 //
 
+=======
+>>>>>>> origin/master
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -42,6 +45,7 @@ const int INF = 1e9;
 
 
 int main() {
+<<<<<<< HEAD
     int n;
     cin>>n;
     int x,y;
@@ -86,3 +90,11 @@ int main() {
 //高橋君がいくつかの弁当を選んで買うことで、 X 個以上のたこ焼きと Y 個以上のたい焼きを手に入れることが可能かどうか判定して下さい。また、可能な場合はそのために高橋君が購入しなければならない弁当の個数の最小値を求めて下さい。
 //
 //各種類の弁当は 1 個しか売られていないため、同じ種類の弁当を 2 個以上購入することは出来ないことに注意して下さい。
+=======
+
+    int n;
+    cin>>n;
+
+    return 0;
+}
+>>>>>>> origin/master
