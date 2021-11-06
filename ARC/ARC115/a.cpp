@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2021/09/23.
+// Created on 2021/09/22.
 //
 
 
@@ -36,7 +36,6 @@ using namespace std;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef vector<ll> vl;
-typedef vector<vl> vvl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
@@ -44,79 +43,41 @@ const int INF = 1e9;
 
 int main() {
     int n;
-    cin>>n;
+    int m;
+    cin>>n>>m;
 
-
-
-    vvl raw(n,vl(n));
-
+    ll odd = 0;
+    ll even = 0;
     for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            cin>>raw[i][j];
+        string s;
+        cin>>s;
+        int zero = 0;
+        int one = 0;
+        for (int j = 0; j < m; ++j) {
+            if(s[j] == '0')zero++;
+            else one++;
         }
-    }
-
-    if(n == 1){
-        cout<<"Yes"<<endl;
-        cout<<0<<endl;
-        cout<<raw[0][0]<<endl;
-        return 0;
-    }
-
-    vl diff(n);
-    ll min_v = LINF;
-    ll min_index = -1;
-    for (int i = 0; i < n - 1; ++i) {
-        diff[i] = raw[0][i+1] - raw[0][i];
-        if(min_v > raw[0][i]){
-            chmin(min_v,raw[0][i]);
-            min_index = i;
-        }
-        if(min_v > raw[0][i+1]){
-            chmin(min_v,raw[0][i+1]);
-            min_index = i + 1;
-        }
-    }
-
-    vl base(n);
-    base[min_index] = 0;
-    for (int i = min_index; i < n-1; ++i) {
-        base[i+1] = diff[i] + base[i];
-    }
-    for (int i = min_index; i >= 1; --i) {
-        base[i - 1] = base[i] - diff[i - 1];
+        if(one % 2 == 0)even ++;
+        else odd ++;
     }
 
 
-
-
-    vl a(n);
-    for (int i = 0; i < n; ++i) {
-        a[i] = raw[i][0] - base[0];
-    }
-
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            if(a[i] != raw[i][j] - base[j]){
-                cout<<"No"<<endl;
-                return 0;
-            }
-        }
-    }
-
-
-    cout<<"Yes"<<endl;
-    cout<<a[0];
-    for (int i = 1; i < n; ++i) {
-        cout<<" "<<a[i];
-
-    }
-    cout<<endl;
-
-    cout<<base[0];
-    for (int i = 1; i < n; ++i) {
-        cout<<" "<<base[i];
-    }
-    cout<<endl;
+    cout<<odd * even<<endl;
     return 0;
 }
+
+
+//0 か 1 で答える問題 M 問からなるテストがあり、これに N 人の生徒が取り組みました。 N 個の長さ M の文字列 S1​,S2​,…,SN​ が与えられます。 Si​ の k 文字目は 0 と 1 のいずれかであり、 i 番目の生徒の k 問目に対する解答を示しています。各生徒の各問題に対する解答は判明していますが、各問題の正解が 0 と 1 のどちらであるかはまだ判明していません。 1≤i<j≤N を満たす組 (i,j) であって、生徒 i と生徒 j の正解した問題の数が等しい可能性がないようなものはいくつあるか求めてください
+//ある二人の生徒の正解数が等しい可能性があるか考えます。（ N=2 の場合を考えているとも言えます。）
+//
+//二人の解答が等しい問題については、正解数の差に影響を与えないため考えなくて良いです。二人の解答が異なる問題が D 個あったとします。この D 問では必ずどちらか一人が正解することに注意してください。D が偶数のときは、片方が D/2 問、もう片方が残りの D/2 問を正解すれば、正解数が等しくなります。一方 D が奇数の時は、正解数が等しくなることはありません。
+//
+//よって、「二人の正解数が等しい可能性がない」ことは、「二人の解答が異なる問題が奇数個ある」ことと同値です。
+//
+//ある問題の二人の解答が異なるとき、二人の 1 と解答した問題数の差の偶奇は、その問題が無かった場合から反転します。一方、二人の解答が同じ時は、変化しません。
+//
+//よって、「二人の解答が異なる問題が奇数個ある」ことは、「二人の 1 と解答した問題数の偶奇が異なる」ことと同値です。
+//
+//したがって、「二人の正解数が等しい可能性がない」ことが、「二人の 1 と解答した問題数の偶奇が異なる」ことと同値です。
+//
+//1 と解答した問題数が奇数の生徒の人数と偶数の生徒の人数の積が答えです。
