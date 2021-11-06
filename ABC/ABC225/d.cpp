@@ -1,0 +1,105 @@
+//
+// Created by 原田 on 2021/11/04.
+//
+
+#include <iostream> // cout, endl, cin
+#include <string> // string, to_string, stoi
+#include <vector> // vector
+#include <algorithm> // min, max, swap, sort, reverse, lower_bound, upper_bound
+#include <utility> // pair, make_pair
+#include <tuple> // tuple, make_tuple
+#include <cstdint> // int64_t, int*_t
+#include <cstdio> // printf
+#include <map> // map
+#include <queue> // queue, priority_queue
+#include <set> // set
+#include <stack> // stack
+#include <deque> // deque
+#include <unordered_map> // unordered_map
+#include <unordered_set> // unordered_set
+#include <bitset> // bitset
+#include <cctype> // isupper, islower, isdigit, toupper, tolower
+#include <math.h>
+#include <ios>
+#include <iomanip>
+#include <numeric>
+//#include <atcoder/all>
+
+
+#define all(x) (x).begin(),(x).end()
+#define rall(x) (x).rbegin(),(x).rend()
+template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }
+template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
+typedef long long ll;
+using namespace std;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef vector<ll> vl;
+const long long LINF =1e18;
+const int INF = 1e9;
+
+
+struct note{
+public:
+    int prev;
+    int next;
+    note(){
+        this->prev = -1;
+        this->next = -1;
+    };
+
+};
+
+int main() {
+
+    int n;
+    cin>>n;
+    int q;
+    cin>>q;
+    vector<note>array(n+1);
+    while(q){
+        q--;
+
+        int a;
+        cin>>a;
+        if(a == 1){
+            int x,y;
+            cin>>x>>y;
+            array[x].next = y;
+            array[y].prev = x;
+        }else if(a==2){
+            int x,y;
+            cin>>x>>y;
+            array[x].next = -1;
+            array[y].prev = -1;
+        }else{
+            deque<int>out;
+            int x;
+            cin>>x;
+            out.push_back(x);
+            int next = array[x].prev;
+            int n_next;
+            while(next != -1){
+                out.push_front(next);
+                n_next = array[next].prev;
+                next= n_next;
+            }
+            next = array[x].next;
+            while(next != -1){
+                out.push_back(next);
+                n_next = array[next].next;
+                next = n_next;
+            }
+            cout<<out.size()<<endl;
+            for ( int i = 0; i < out.size(); i++ )
+            {
+            	cout << out[i] << ( i + 1 < out.size() ? ' ' : '\n' );
+            }
+            cout << flush;
+
+        }
+
+    }
+
+    return 0;
+}
