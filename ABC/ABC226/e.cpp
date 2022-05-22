@@ -1,3 +1,7 @@
+//
+// Created on 2021/11/07.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,7 +39,7 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-const int mod = 1000000007;
+const int mod = 998244353;
 
 struct mint {
     ll x; // typedef long long ll;
@@ -86,13 +90,69 @@ struct mint {
     }
 };
 
+struct UnionFind {
+    vector<int>d;//リンクの情報,子の場合は親の番号、親の場合は連結成分のsize*(-1)
+    UnionFind(int n=0):d(n,-1){} //structの初期化。デフォルトのnを0に設定してdを-1(すなわち全ての成分は親であり、サイズは1にする
+    int find(int x) {//根を探す
+        if(d[x] < 0) return x;
+        else  return d[x] = find(d[x]);//根じゃなかったら根を探しに行ってメモ化する。
+    }
+    bool unite(int x,int y) {//成分を連結する
+        x = find(x);
+        y = find(y);
+        if (x == y) return false;//すでに同じ連結成分
+        if(d[x] < d[y]) swap(x,y);//大きいのに小さいのをつける。x←y
+        //x.size > y.size
+        d[x] += d[y];//xのサイズをふやす
+        d[y] = x;//yの根をxにする
+        return true;
+    }
+    bool same(int x,int y) {return find(x)==find(y);}
+    int size(int x) {return -d[find(x)];}
+
+};
+
 int main() {
-    mint n,p;
-    cin>>n.x>>p.x;
+
+    int n,m;
+    cin>>n>>m;
+    if(m != n){
+        cout<<0<<endl;
+        return 0;
+    }
+
+    UnionFind uni(n);
+    vector<int>mp;
+    for (int i = 0; i < m; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;
+        v--;
+        if(!uni.unite(u,v)){
+            mp.push_back(u);
+        }
+    }
+    map<int,int>mm;
+    for (int i = 0; i < mp.size(); ++i) {
+        int root = uni.find(mp[i]);
+        if(mm[root] >= 1){
+            cout<<0<<endl;
+            return 0;
+        }else{
+            mm[root]++;
+        }
+
+    }
+
     mint ans;
-    ans = (p - 2);
-    ans = ans.pow(n.x-1);
-    ans *= (p - 1);
+    ans.x = 1;
+    for (int i = 0; i < uni.d.size(); ++i) {
+        if(uni.d[i] < 0){
+            ans *= 2;
+        }
+    }
+
     cout<<ans.x<<endl;
+
     return 0;
 }

@@ -1,3 +1,7 @@
+//
+// Created on 2021/11/20.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,7 +39,57 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-const int mod = 1000000007;
+const int mod = 998244353;
+const int mod_1 = 998244352;
+
+struct mint_1 {
+    ll x; // typedef long long ll;
+    mint_1(ll x=0):x((x%mod_1+mod_1)%mod_1){}
+    mint_1 operator-() const { return mint_1(-x);}
+    mint_1& operator+=(const mint_1 a) {
+        if ((x += a.x) >= mod_1) x -= mod_1;
+        return *this;
+    }
+    mint_1& operator-=(const mint_1 a) {
+        if ((x += mod_1-a.x) >= mod_1) x -= mod_1;
+        return *this;
+    }
+    mint_1& operator*=(const mint_1 a) {
+        (x *= a.x) %= mod_1;
+        return *this;
+    }
+    mint_1 operator+(const mint_1 a) const {
+        mint_1 res(*this);
+        return res+=a;
+    }
+    mint_1 operator-(const mint_1 a) const {
+        mint_1 res(*this);
+        return res-=a;
+    }
+    mint_1 operator*(const mint_1 a) const {
+        mint_1 res(*this);
+        return res*=a;
+    }
+    mint_1 pow(ll t) const {
+        if (!t) return 1;
+        mint_1 a = pow(t>>1);
+        a *= a;
+        if (t&1) a *= *this;
+        return a;
+    }
+
+    // for prime mod_1
+    mint_1 inv() const {
+        return pow(mod_1-2);
+    }
+    mint_1& operator/=(const mint_1 a) {
+        return (*this) *= a.inv();
+    }
+    mint_1 operator/(const mint_1 a) const {
+        mint_1 res(*this);
+        return res/=a;
+    }
+};
 
 struct mint {
     ll x; // typedef long long ll;
@@ -86,13 +140,52 @@ struct mint {
     }
 };
 
+mint mod_pow (mint a, ll n){
+    mint ret;
+    if(n == 0) {
+        ret.x = 1;
+        return ret;
+    }
+    if(n == 1){
+        ret = a;
+        return ret;
+    }
+    if( n % 2 == 1){
+        return (a * mod_pow(a,n - 1));
+    }
+    mint t = mod_pow(a,n / 2);
+    return t * t;
+}
+//a^nを計算する
+mint_1 mod_pow_1 (mint_1 a, ll n){
+    mint_1 ret;
+    if(n == 0) {
+        ret.x = 1;
+        return ret;
+    }
+    if(n == 1){
+        ret = a;
+        return ret;
+    }
+    if( n % 2 == 1){
+        return (a * mod_pow_1(a,n - 1));
+    }
+    mint_1 t = mod_pow_1(a,n / 2);
+    return t * t;
+}
+
 int main() {
-    mint n,p;
-    cin>>n.x>>p.x;
-    mint ans;
-    ans = (p - 2);
-    ans = ans.pow(n.x-1);
-    ans *= (p - 1);
-    cout<<ans.x<<endl;
+    ll n,k,m;
+    cin>>n>>k>>m;
+    if(m % mod == 0){
+        cout<<0<<endl;
+    }else{
+        mint_1 kn;
+        kn = mod_pow_1(k,n);
+        mint ans = mod_pow(m,kn.x);
+        cout<<ans.x<<endl;
+
+    }
+
     return 0;
 }

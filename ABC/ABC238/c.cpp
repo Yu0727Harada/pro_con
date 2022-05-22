@@ -1,3 +1,7 @@
+//
+// Created on 2022/02/05.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,7 +39,7 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-const int mod = 1000000007;
+const int mod = 998244353;
 
 struct mint {
     ll x; // typedef long long ll;
@@ -87,12 +91,41 @@ struct mint {
 };
 
 int main() {
-    mint n,p;
-    cin>>n.x>>p.x;
+    ll n;
+
+    cin>>n;
+    string s = to_string(n);
+
+
+    reverse(all(s));
     mint ans;
-    ans = (p - 2);
-    ans = ans.pow(n.x-1);
-    ans *= (p - 1);
+    ans.x = 0;
+    ll nine = 0;
+    ll nine_ten = 9;
+    for (int i = 0; i < s.size(); ++i) {
+        bool last = false;
+        if(i == s.size() - 1){
+            last = true;
+        }
+        mint a;
+
+        if(last){
+            a.x = (n - nine) % mod;
+        }else{
+            a.x = nine_ten % mod;
+        }
+        mint sum;
+        mint r;
+        r.x = a.x;
+        r += 1;
+        sum = (a * r);
+        sum /= 2;
+        ans += sum;
+        nine *= 10;
+        nine += 9;
+        nine_ten *= 10;
+    }
     cout<<ans.x<<endl;
+
     return 0;
 }
