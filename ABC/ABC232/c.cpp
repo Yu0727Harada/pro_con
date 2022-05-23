@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2021/12/19.
 //
 
 
@@ -46,46 +42,58 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
+    int n;
+    int m;
+    cin>>n>>m;
 
-    vi n(1010,0);
+    vvi edge_a(n,vi());
+    for (int i = 0; i < m; ++i) {
+        int a,b;
+        cin>>a>>b;
+        a--;b--;
+        edge_a[a].push_back(b);
+        edge_a[b].push_back(a);
+    }
+    vvi edge_b(n,vi());
+    for (int i = 0; i < m; ++i) {
+        int c,d;
+        cin>>c>>d;
+        c--;d--;
+        edge_b[c].push_back(d);
+        edge_b[d].push_back(c);
+    }
 
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
+    for (int i = 0; i < n; ++i) {
+        sort(all(edge_a[i]));
+    }
+    vector<int> v(n);
+
+    iota(v.begin(), v.end(), 0);       // v に 1, 2, ... N を設定
+    do {
+
+        vvi edge_bc(n,vi());
+
+        for (int i = 0; i < n; ++i) {
+            for(int j = 0; j < edge_b[v[i]].size();j++){
+                edge_bc[i].push_back(v[edge_b[v[i]][j]]);
             }
         }
-    }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
+        for (int i = 0; i < n; ++i) {
+            sort(all(edge_bc[i]));
+        }
+        bool ok = true;
+        for (int i = 0; i < n; ++i) {
+            if(edge_a[i] != edge_bc[i]){
+                ok = false;
+            }
+        }
+        if(ok){
+            cout<<"Yes"<<endl;
+            return 0;
+        }
 
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
+    } while( next_permutation(v.begin(), v.end()) );     // 次の順列を生成
 
-
-=======
->>>>>>> origin/master
-
+    cout<<"No"<<endl;
     return 0;
 }

@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2022/02/20.
 //
 
 
@@ -43,49 +39,60 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+vector<pair<int,int>> ans;
+vvi edge;
+int cnt;
+vi visit;
+
+pair<int,int> solve(int now){
+    visit[now] = 1;
+
+    int min_v = INF;
+    int max_v = -1;
+    int c = 0;
+    for(int i = 0; i < edge[now].size() ; i++){
+        if(visit[edge[now][i]] == INF){
+            c ++;
+            auto ret = solve(edge[now][i]);
+            chmin(min_v,ret.first);
+            chmin(min_v,ret.second);
+            chmax(max_v,ret.first);
+            chmax(max_v,ret.second);
+        }
+    }
+
+    if(c == 0){
+        min_v = cnt;
+        max_v = cnt;
+        cnt++;
+    }
+    ans[now] = {min_v,max_v};
+
+    return {min_v,max_v};
+}
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
-        }
+    int n;
+    cin>>n;
+    edge.resize(n);
+    for (int i = 0; i < n-1; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;v--;
+        edge[u].push_back(v);
+        edge[v].push_back(u);
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
+    ans.resize(n);
+
+    visit.resize(n,INF);
+    visit[0] = 1;
+    cnt = 1;
+    solve(0);
+
+    for (int i = 0; i < n; ++i) {
+        cout<<ans[i].first<<" "<<ans[i].second<<endl;
     }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
-
     return 0;
 }

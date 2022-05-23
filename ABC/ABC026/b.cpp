@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2022/01/02.
 //
 
 
@@ -43,49 +39,33 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-
+static const double pi = acos(-1);
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
+    int n;
+    cin>>n;
+    ll s = 0;
 
-    vi n(1010,0);
+    vi r(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>r[i];
+    }
+    sort(rall(r));
 
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
+    ll s_temp = 0;
+    for (int i = 0; i < n; ++i) {
+        if(i % 2 == 0){
+            s_temp = r[i] * r[i];
+        }else{
+            s_temp -= r[i] * r[i];
+            s += s_temp;
+            s_temp = 0;
         }
-    }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
 
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
     }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
+    s += s_temp;
+    double ans = double(s) * pi;
+    printf("%.10f\n", ans);
 
     return 0;
 }

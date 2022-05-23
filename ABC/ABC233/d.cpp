@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2021/12/25.
 //
 
 
@@ -46,46 +42,26 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
+    int n;
+    cin>>n;
+    ll k;
+    cin>>k;
+    map<ll,int>mp;
 
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
-        }
+    ll sum = 0;
+    mp[sum]++;
+    ll ans = 0;
+    for (int i = 0; i < n; ++i) {
+        ll a;
+        cin>>a;
+        sum += a;
+        ans += mp[sum - k];
+        mp[sum]++;
+
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
+    cout<<ans<<endl;
 
     return 0;
+
 }

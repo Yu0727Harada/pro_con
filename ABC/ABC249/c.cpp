@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2022/04/24.
 //
 
 
@@ -46,46 +42,37 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
+    int n,k;
+    cin>>n>>k;
+    vector<vector<int>> cnt(n,vi(26,0));
 
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
+    for (int i = 0; i < n; ++i) {
+        string s;
+        cin>>s;
+        for (int j = 0; j < s.size(); ++j) {
+            cnt[i][s[j] - 'a'] = 1;
         }
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
 
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
+    //n個の要素のbit全探索する
+    int ans = 0;
+    for (int bit = 0; bit < (1<<n); ++bit) {
+            vi tmp_cnt(26,0);
+            for (int i = 0; i < n; ++i) {
+                if(bit & (1<<i)){
+                    //i個目の要素にフラグが立っていた時の処理
+                    for (int j = 0; j < 26; ++j) {
+                        tmp_cnt[j] += cnt[i][j];
+                    }
+                }
+            }
+            int tmp_ans = 0;
+        for (int i = 0; i < 26; ++i) {
+            if(tmp_cnt[i] == k) tmp_ans ++;
+        }
+        chmax(ans,tmp_ans);
     }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
+    cout<<ans<<endl;
 
     return 0;
 }

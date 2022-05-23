@@ -1,11 +1,3 @@
-//
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
-//
-
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -28,8 +20,6 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
-//#include <atcoder/all>
-
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -46,46 +36,40 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
-
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
+    int t;
+    cin>>t;
+    int n;
+    cin>>n;
+    deque<int> a;
+    for (int i = 0; i < n; ++i) {
+        int temp;
+        cin>>temp;
+        a.push_back(temp);
+    }
+    int m;
+    cin>>m;
+    for (int i = 0; i < m; ++i) {
+        int temp;
+        cin>>temp;
+        bool ok = false;
+        while(!a.empty()){
+            int tako = a.front();
+            a.pop_front();
+            if(temp - tako > t || temp - tako < 0){
+                continue;
+            }else{
+                ok = true;
+                break;
             }
         }
-    }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
+        if(!ok){
+            cout<<"no"<<endl;
+            return 0;
+        }
     }
 
 
-=======
->>>>>>> origin/master
+    cout<<"yes"<<endl;
 
     return 0;
 }

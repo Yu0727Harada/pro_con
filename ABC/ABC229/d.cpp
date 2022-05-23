@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2021/11/27.
 //
 
 
@@ -46,46 +42,51 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
+    string s;
+    cin>>s;
+    int k;
+    cin>>k;
 
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
+    int k_cnt = 0;
+    int ans = 0;
+    int n_ans = 0;
+    int j = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        while(k_cnt > k){
+            if(s[j] == '.'){
+                n_ans --;
+                k_cnt --;
+                j++;
+            }else{
+                n_ans --;
+                j++;
             }
         }
-    }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
+        chmax(ans,n_ans);
 
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
+        if(s[i] == '.'){
+            k_cnt ++;
+            n_ans ++;
+        }else{
+            n_ans ++;
+        }
+
     }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
+    while(k_cnt > k){
+        if(s[j] == '.'){
+            n_ans --;
+            k_cnt --;
+            j++;
+        }else{
+            n_ans --;
+            j++;
+        }
     }
+    chmax(ans,n_ans);
 
 
-=======
->>>>>>> origin/master
+    cout<<ans<<endl;
 
     return 0;
 }

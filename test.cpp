@@ -20,8 +20,6 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
-//#include <atcoder/all>
-
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -38,13 +36,27 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int n,m;
+    cin>>n>>m;
+    vvi efdgea(n,vi());
+    vvi cost_tabel(n,vi(n));
+
+
+
+
+
+
+
+
+
+
+
+    '';
+    for (int i = 0; i < m; ++i) {
+        int a,b;
+        cin>>a>>b;
+
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
 
     return 0;
 }

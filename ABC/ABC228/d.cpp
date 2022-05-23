@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2021/11/20.
 //
 
 
@@ -43,49 +39,51 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-
+const int mod = 1048576;
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
+    vi v(mod);
+    iota(all(v),0);
+    set<int> st(all(v));
+    map<int,ll>mp;
 
-    vi n(1010,0);
+    int q;
+    cin>>q;
+    while(q){
+        q--;
+        int t;
+        ll x1;
+        cin>>t>>x1;
+        if(t == 1){
+            if(st.count(x1 % mod) == 0){
+                auto it = st.upper_bound(x1 % mod);
+                ll next;
+                if(it == st.end()){
+                    if(st.count(0) == 0){
+                        auto itt = st.upper_bound(0);
+                        next = *itt;
+                    }else{
+                        next = 0;
+                    }
 
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
+                }else{
+                    next = *it;
+                }
+                mp[next] = x1;
+                st.erase(next);
+            }else{
+                mp[x1 % mod] = x1;
+                st.erase(x1%mod);
+            }
+        }else{
+            if(st.count(x1 % mod)){
+                cout<<-1<<endl;
+            }else{
+                cout<<mp[x1 % mod]<<endl;
             }
         }
-    }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
 
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
     }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
 
     return 0;
 }

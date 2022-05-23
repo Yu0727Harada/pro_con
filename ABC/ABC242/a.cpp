@@ -1,11 +1,6 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2022/03/06.
 //
-
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -46,46 +41,18 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
-        }
-    }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
+    int a,b,c,x;
+    cin>>a>>b>>c>>x;
+    double ans;
+    if(a >= x){
+        ans = 1;
+    }else if(b >= x){
+        ans = (double)c / (double )(b - a);
     }else{
-        cout<<"Aoki"<<endl;
+        ans = 0;
     }
-
-
-=======
->>>>>>> origin/master
+    printf("%.10f\n", ans);
 
     return 0;
 }

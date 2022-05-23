@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2022/05/08.
 //
 
 
@@ -43,49 +39,51 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-
-
-int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
-
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
+std::vector<ll> Eratosthenes( const int N )
+{
+    std::vector<bool> is_prime( N + 1 );
+    for( int i = 0; i <= N; i++ )
+    {
+        is_prime[ i ] = true;
+    }
+    std::vector<ll> P;
+    for( int i = 2; i <= N; i++ )
+    {
+        if( is_prime[ i ] )
+        {
+            for( int j = 2 * i; j <= N; j += i )
+            {
+                is_prime[ j ] = false;
             }
+            P.emplace_back( i );
         }
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
+    return P;
+}
+int main()
+{
+    int N;
+    N = 10000000;
+    auto v = Eratosthenes(N);
 
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
+    ll n;
+    cin>>n;
 
+    ll ans = 0;
+    bool find = true;
+    for (int i = 0; i < N - 1 && find; ++i) {
+        for (int j = 0; j < i; ++j) {
+            ll target = v[j] * v[i] * v[i] * v[i];
+            if(target <= n)ans++;
+            else{
+                if(j == 0)find = false;
+                break;
+            }
 
-=======
->>>>>>> origin/master
+        }
+    }
+    cout<<ans<<endl;
 
     return 0;
 }
+

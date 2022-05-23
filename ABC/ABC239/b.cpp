@@ -1,5 +1,9 @@
 //
+<<<<<<< HEAD
 // Created by 原田 on 2022/02/25.
+=======
+// Created on 2022/02/12.
+>>>>>>> origin/master
 //
 
 
@@ -42,6 +46,7 @@ const int INF = 1e9;
 
 
 int main() {
+<<<<<<< HEAD
     ll n;
     cin>>n;
     if(n == 0){
@@ -53,5 +58,8 @@ int main() {
     }else{
         cout<<-1 * (((-1 * n) + 9) / 10)<<endl;
     }
+=======
+
+>>>>>>> origin/master
     return 0;
 }

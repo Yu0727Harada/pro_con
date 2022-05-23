@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2021/11/20.
 //
 
 
@@ -46,46 +42,27 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
+    int n,k;
+    cin>>n>>k;
 
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
+    vi point(n,0);
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            int t;
+            cin>>t;
+            point[i] += t;
         }
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
+    vi point_as = point;
+    sort(rall(point_as));
+    for (int i = 0; i < n; ++i) {
+        int diff = point_as[k - 1] - point[i];
+        if(diff <= 300){
+            cout<<"Yes"<<endl;
+        }else{
+            cout<<"No"<<endl;
+        }
     }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
 
     return 0;
 }

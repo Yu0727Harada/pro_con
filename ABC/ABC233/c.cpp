@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2021/12/25.
 //
 
 
@@ -43,49 +39,50 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+ll n,x;
+ll ans;
+void dfs(ll now_num, int now_box,vector<vector<ll>> box,int one_num,vl box_one){
+    if(now_num == x && now_box == n){
+        ans += one_num;
+        return;
+    }
+    if(now_box == n)return;
+    for (int i = 0; i < box[now_box].size(); ++i) {
+        if(now_num <= LINF / box[now_box][i]){
+            dfs(now_num * box[now_box][i],now_box + 1,box,one_num,box_one);
+        }
+    }
+    if(box_one[now_box] > 0){
+        dfs(now_num,now_box + 1,box,one_num * box_one[now_box],box_one);
+    }
 
+}
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
 
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
+    cin>>n>>x;
+
+    vector<vector<ll>> box(n,vl());
+    vl box_one(n,0);
+    for (int i = 0; i < n; ++i) {
+        ll l;
+        cin>>l;
+        for (int j = 0; j < l; ++j) {
+            ll a;
+            cin>>a;
+            if(a == 1){
+                box_one[i]++;
+            }else{
+                box[i].push_back(a);
             }
         }
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
 
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
+    ans = 0;
+    dfs(1,0,box,1,box_one);
 
-
-=======
->>>>>>> origin/master
+    cout<<ans<<endl;
 
     return 0;
 }

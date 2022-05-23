@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2022/02/10.
 //
 
 
@@ -46,46 +42,43 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
+    string s;
+    cin>>s;
+    int l = 0;
+    int r = s.size() - 1;
+    bool l_find = false;
+    bool r_find = false;
+    int l_cnt = 0;
+    int r_cnt = 0;
+    bool ok = true;
+    while(l <= r){
+        if(s[l] != 'a' && !l_find){
+            l_find = true;
+        }
+        if(s[r] != 'a' && !r_find){
+            r_find = true;
+        }
+        if(s[l] == 'a' && !l_find){
+            l_cnt++;
+            l++;
+        }
+        if(s[r] == 'a' && !r_find){
+            r_cnt ++;
+            r--;
+        }
+        if(l_cnt > r_cnt)ok = false;
+        if(l_find && r_find){
+            if(s[l] != s[r])ok = false;
+            l ++;
+            r --;
         }
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
     if(ok){
-        cout<<"Takahashi"<<endl;
+        cout<<"Yes"<<endl;
     }else{
-        cout<<"Aoki"<<endl;
+        cout<<"No"<<endl;
     }
-
-
-=======
->>>>>>> origin/master
 
     return 0;
 }

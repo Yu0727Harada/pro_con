@@ -1,9 +1,5 @@
 //
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
+// Created on 2022/05/08.
 //
 
 
@@ -46,46 +42,39 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
+    int n,q;
+    cin>>n>>q;
 
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
+    vector<int> v(n + 1);//i-status v=value
+    iota(v.begin(), v.end(), 0);
+
+    vector<int> r_v(n + 1);//i-value v=status
+    iota(r_v.begin(), r_v.end(), 0);
+
+    for (int i = 0; i < q; ++i) {
+        int x;
+        cin>>x;
+        if(r_v[x] == n){
+            int target = v[n - 1];
+            r_v[target] = n;
+            r_v[x] = n - 1;
+            v[n - 1] = x;
+            v[n] = target;
+        }else{
+            int x_status = r_v[x];
+            int target_v = v[x_status + 1];
+            r_v[target_v] = x_status;
+            r_v[x] = x_status + 1;
+            v[x_status] = target_v;
+            v[x_status + 1] = x;
         }
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
-    }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
+   for ( int i = 1; i < v.size(); i++ )
+   {
+   	cout << v[i] << ( i + 1 < v.size() ? ' ' : '\n' );
+   }
+   cout << flush;
 
     return 0;
 }

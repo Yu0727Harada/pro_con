@@ -1,11 +1,3 @@
-//
-<<<<<<< HEAD
-// Created by 原田 on 2022/02/21.
-=======
-// Created on 2022/02/12.
->>>>>>> origin/master
-//
-
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -46,46 +38,26 @@ const int INF = 1e9;
 
 
 int main() {
-<<<<<<< HEAD
-    int a,b;
-    cin>>a>>b;
-    int c,d;
-    cin>>c>>d;
 
-    vi n(1010,0);
-
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == 0){
-            n[i] = -1;
-            int now = i * 2;
-            for(int j = 3;now < 1010;j++){
-                n[now] = 1;
-                now = j * i;
-            }
+    map<int,int>mp_x;
+    map<int,int>mp_y;
+    for (int i = 0; i < 3; ++i) {
+        int x,y;
+        cin>>x>>y;
+        mp_x[x]++;
+        mp_y[y]++;
+    }
+    for(auto item:mp_x){
+        if(item.second != 2){
+            cout<<item.first;
         }
     }
-    vi sum(1010,0);
-    sum[1] = 0;
-    for (int i = 2; i < 1010; ++i) {
-        if(n[i] == -1)sum[i] = 1;
-        sum[i] = sum[i - 1] + sum[i];
+    cout<<" ";
+    for(auto item:mp_y){
+        if(item.second != 2){
+            cout<<item.first<<endl;
+        }
     }
-
-    bool ok = false;
-    for (int i = a; i <= b; ++i) {
-         if(sum[i + d] - sum[i + c - 1] == 0){
-             ok = true;
-         }
-    }
-    if(ok){
-        cout<<"Takahashi"<<endl;
-    }else{
-        cout<<"Aoki"<<endl;
-    }
-
-
-=======
->>>>>>> origin/master
 
     return 0;
 }
