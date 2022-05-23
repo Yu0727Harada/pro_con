@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/16.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,30 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int n,k;
+    cin>>n>>k;
+    vector<char> d(k);
+    for (int i = 0; i < k; ++i) {
+        cin>>d[i];
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    sort(all(d));
+
+    for (int i = n; i <= 1000000; ++i) {
+        string s = to_string(i);
+        bool find = false;
+        for (int j = 0; j < d.size() && !find; ++j) {
+            for (int l = 0; l < s.size() && !find; ++l) {
+                if(s[l] == d[j]){
+                    find = true;
+                }
+            }
+        }
+        if(!find){
+            cout<<i<<endl;
+            return 0;
+        }
+    }
 
     return 0;
 }
+

@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/23.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,29 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    ll n;
+    cin>>n;
+    map<int,ll>mp;
+    for (int i = 0; i < n; ++i) {
+        int t;
+        cin>>t;
+        mp[t]++;
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+
+    ll ans = (n * (n - 1) * (n - 2))/(3 * 2);
+
+    for(auto item:mp) {
+
+        if (item.second >= 2) {
+            ll tmp = (item.second * (item.second - 1) * (n - item.second)) / 2;
+            ans -= tmp;
+        }
+        if (item.second >= 3) {
+            ll tmp = (item.second * (item.second - 1) * (item.second - 2)) / (3 * 2);
+            ans -= tmp;
+        }
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

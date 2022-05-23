@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/02.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,24 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int h,w;
+    cin>>h>>w;
+
+    vi g(h * w,0);
+    vvi edge(h * w,vi());
+    for (int i = 0; i < h; ++i) {
+        string s;
+        cin>>s;
+        for (int j = 0; j < w; ++j) {
+            if(s[j] == '#'){
+                g[h * i + j] = INF;
+            }
+            if(h * i + j - 1 >= 0){
+                edge[h * i + j].push_back(h * i + j - 1)
+            }else if(h * i + j + 1)
+
+        }
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
 
     return 0;
 }

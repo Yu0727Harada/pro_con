@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/17.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,23 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int n;
+    cin>>n;
+    map<string,int>mp;
+    for (int i = 0; i < n; ++i) {
+        string s;
+        cin>>s;
+        mp[s]++;
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    int max_v = 0;
+    string max_name = "";
+    for(auto item:mp){
+        if(max_v < item.second){
+            max_v = item.second;
+            max_name = item.first;
+        }
+    }
+    cout<<max_name<<endl;
 
     return 0;
 }

@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/23.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,8 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
-    }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
-
+    int n;
+    cin>>n;
+    cout<<char(n)<<endl;
     return 0;
 }

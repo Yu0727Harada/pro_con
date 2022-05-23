@@ -38,13 +38,28 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    string s;
+    cin>>s;
+    ll all = 0;
+    ll tmp = 0;
+    vi ans;
+    for (int i = 0; i < s.size(); ++i) {
+        all += s[i] - '0';
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
-
+    int cnt = 0;
+    int len = s.size();
+    while(all != 0 || tmp != 0){
+        tmp += all;
+        ans.push_back(tmp % 10);
+        tmp /= 10;
+        if(len - 1 - cnt >= 0){
+            all -= s[len - 1 - cnt] - '0';
+            cnt ++;
+        }
+    }
+    for (int i = ans.size() - 1; i >= 0; --i) {
+        cout<<ans[i];
+    }
+    cout<<endl;
     return 0;
 }

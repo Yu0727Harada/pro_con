@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/03.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,22 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int n;
+    cin>>n;
+    if(n < 42){
+        if(n < 10){
+            cout<<"AGC00"<<n<<endl;
+
+        }else{
+            cout<<"AGC0"<<n<<endl;
+
+        }
+
+    }else{
+        cout<<"AGC0"<<n+1<<endl;
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+
+
 
     return 0;
 }

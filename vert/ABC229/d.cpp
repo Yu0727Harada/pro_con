@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/16.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,51 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    string s;
+    cin>>s;
+    int k;
+    cin>>k;
+    ll ans = 0;
+    int now_k = 0;
+    deque<int>d;
+    char last = '@';
+    ll x_cnt = 0;
+    ll now_v = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] == 'X'){
+            if(last != 'X'){
+                x_cnt = 1;
+            }else{
+                x_cnt ++;
+            }
+            last = 'X';
+        }else if(s[i] == '.'){
+
+            if(d.size() > k){
+                now_v -= d.front();
+                d.pop_front();
+            }
+            d.push_back(x_cnt);
+            now_v += x_cnt;
+            chmax(ans,now_v);
+            last = '.';
+            x_cnt = 0;
+        }
+
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    if(d.size() > k){
+        now_v -= d.front();
+        d.pop_front();
+    }
+    d.push_back(x_cnt);
+    now_v += x_cnt;
+    chmax(ans,now_v);
+    last = '.';
+    chmax(ans,x_cnt);
+    if(d.size() == 0 )cout<<ans<<endl;
+    else cout<<ans + (d.size() - 1) <<endl;
 
     return 0;
 }
+//尺取り　左をforで回してやるとバグりにくい
+//kを超えない高さで取れるところで二分探索する　尺取りは大体二分探索でかける

@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/23.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,31 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int n;
+    int k;
+    cin>>n;
+    cin>>k;
+    vi a(n,0);
+    int max_v = -1;
+    for (int i = 0; i < n; ++i) {
+        int a_v;
+        cin>>a_v;
+        chmax(max_v,a_v);
+        a[i] = a_v;
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
-
+    set<int> max_li;
+    for (int i = 0; i < n; ++i) {
+        if(a[i] == max_v)max_li.insert(i);
+    }
+    for (int i = 0; i < k; ++i) {
+        int tmp;
+        cin>>tmp;
+        tmp--;
+        if(max_li.count(tmp)>=1){
+            cout<<"Yes"<<endl;
+            return 0;
+        }
+    }
+    cout<<"No"<<endl;
     return 0;
 }

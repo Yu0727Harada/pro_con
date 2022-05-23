@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/03/09.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,16 +39,32 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+int ans = INF;
 
+void divisor(ll n) {
+
+  for(ll i = 1; i * i <= n; i++) {
+    if(n % i == 0) {
+
+      if(i * i != n) {
+
+          int len = max(to_string(i).size(),to_string(n/i).size());
+          chmin(ans,len);
+      }else{
+          int len = to_string(i).size();
+          chmin(ans,len);
+      }
+    }
+  }
+
+  return ;
+}
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
-    }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    ll n;
+    cin>>n;
 
+    divisor(n);
+    cout<<ans<<endl;
     return 0;
 }

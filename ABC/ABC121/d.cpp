@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/11/19.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,36 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    ll a, b;
+    cin>>a>>b;
+
+    vl pow_l ( 66);
+    pow_l[0] = 1;
+    for (int i = 1; i < 66; ++i) {
+        pow_l[i] = pow_l[i - 1] * 2;
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    vi mod_v_a (65);
+    vi mod_v_b(65);
+    ll now = 2;
+    ll i = 1;
+
+    while(pow_l[i] <= a * 2){
+        mod_v_a[i] = ((a - (pow_l[i - 1] - 1) + (pow_l[i] - 1)) / pow_l[i]) * pow_l[i - 1];
+        now *= 2;
+        i++;
+    }
+    i = 1;
+    while(pow_l[i] <= b * 2){
+        mod_v_b[i] = ((b - (pow_l[i - 1] - 1) + (pow_l[i] - 1)) / pow_l[i]) * pow_l[i - 1];
+        now *= 2;
+        i++;
+    }
+    ll ans = 0;
+    for (int j = 1; j <= 65; ++j) {
+        if(mod_v_b[i] - mod_v_a[i] % 2 == 1){
+            ans += pow_l[i - 1];
+        }
+    }
 
     return 0;
 }

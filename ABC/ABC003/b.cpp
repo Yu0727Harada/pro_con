@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/11.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,39 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
-    }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    string s;
+    string t;
+    cin>>s>>t;
+    vector<char> at = {'a','t','c','o','d','e','r'};
+    bool ok = true;
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] != t[i]){
+            if(s[i] == '@' && t[i] == '@'){
+                continue;
+            }else if(s[i] == '@'){
+                bool find = false;
+                for (int j = 0; j < at.size(); ++j) {
+                    if(t[i] == at[j])find = true;
+                }
+                if(find)continue;
+                else ok = false;
+            }else if(t[i] == '@'){
+                bool find = false;
+                for (int j = 0; j < at.size(); ++j) {
+                    if(s[i] == at[j])find = true;
+                }
+                if(find)continue;
+                else ok = false;
+            }else{
+                ok = false;
+            }
 
+        }
+    }
+    if(ok){
+        cout<<"You can win"<<endl;
+    }else{
+        cout<<"You will lose"<<endl;
+    }
     return 0;
 }

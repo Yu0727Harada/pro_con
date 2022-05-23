@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/06.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,16 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int a;
+    cin>>a;
+    int ans = 0;
+    for (int i = 0; i <= 100; ++i) {
+        for (int j = 0; j <= 100; ++j) {
+            if(i + j == a){
+                chmax(ans,i * j);
+            }
+        }
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
-
+    cout<<ans<<endl;
     return 0;
 }

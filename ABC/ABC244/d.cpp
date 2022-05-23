@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/03/21.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,46 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    vector<char>s(3);
+    vector<char>t(3);
+
+    map<vector<char>,int>mp_1;
+    map<vector<char>,int>mp_2;
+    vector<pair<int,int>>swap_a = {{0,1},{0,2},{1,2}};
+
+    for (int i = 0; i < 3; ++i) {
+        cin>>s[i];
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    for (int i = 0; i < 3; ++i) {
+        cin>>t[i];
+    }
+    queue<pair<vector<char>,int>>q;
+    q.push({s,0});
+    while(!q.empty()){
+        vector<char>s_tmp = q.front().first;
+        int cnt = q.front().second;
+        q.pop();
+        for (int i = 0; i < swap_a.size(); ++i) {
+            auto t_tmp = s_tmp;
+            swap(t_tmp[swap_a[i].first],t_tmp[swap_a[i].second]);
+            if((cnt + 1) % 2 == 0){
+                if(mp_2[t_tmp] == 0){
+                    mp_2[t_tmp]++;
+                    q.push({t_tmp,cnt + 1});
+                }
+            }else{
+                if(mp_1[t_tmp] == 0){
+                    mp_1[t_tmp]++;
+                    q.push({t_tmp,cnt + 1});
+                }
+            }
+        }
+    }
+    if(mp_2[t] == 0){
+        cout<<"No"<<endl;
+    }else{
+        cout<<"Yes"<<endl;
+    }
 
     return 0;
 }

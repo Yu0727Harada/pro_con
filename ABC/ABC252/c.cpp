@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/23.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,45 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
-    }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
 
+    int n;
+    cin>>n;
+    vector<string> vs(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>vs[i];
+    }
+    int fi_ans = INF;
+    for (int i = 0; i <= 9; ++i) {
+        map<int,int>mp;//iが現れるまでの位置が同じものがいくつあるか
+        for (int j = 0; j < n; ++j) {
+            for (int k = 0; k < vs[j].size(); ++k) {
+                if(vs[j][k] - '0' == i){
+                    mp[k] ++;
+                }
+            }
+        }
+        int max_rotate = -1;
+        int max_i = -1;
+        int max_ii = -1;
+        for(auto item:mp){
+            if(item.second > 1){
+                if(max_rotate <= item.second){
+                    chmax(max_rotate,item.second);
+                    chmax(max_i,item.first);
+                }
+            }else if(item.second == 1){
+                chmax(max_ii,item.first);
+            }
+        }
+        int ans;
+        if(max_i != -1){
+            ans = max_i + ((max_rotate - 1) * 10);
+        }else{
+            ans = max_ii;
+        }
+        chmin(fi_ans,ans);
+
+    }
+    cout<<fi_ans<<endl;
     return 0;
 }

@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/20.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,25 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int w,n;
+    cin>>w>>n;
+    vector<pair<pair<int,int>,ll>> spice;
+    for (int i = 0; i < n; ++i) {
+        int l,r;
+        ll v;
+        cin>>l>>r>>v;
+        spice.push_back({{l,r},v});
+
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    vvi dp(n + 1,vi(w+10,-INF));
+
+    dp[0][0] = 0;
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < w+10; ++j) {
+            if()
+        }
+    }
 
     return 0;
 }

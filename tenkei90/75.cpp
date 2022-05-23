@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/11/30.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,16 +39,42 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+vector<pair<ll,ll>>prime_factorize(ll n){
+    vector<pair<ll,ll>>ret;
+    for (ll i = 2; i * i <= n ; ++i) {
+        if(n % i == 0){
+            ll ex = 0;//指数
+            while(n % i == 0){
+                ex++;
+                n /= i;
+            }
+            ret.push_back({i, ex});
+        }
+    }
+    if(n != 1){
+        ret.push_back({n,1});
+    }
+    return ret;
+    //example n = 12, ret = [[2,2],[3,1]と返す
+}
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    ll n;
+    cin>>n;
+    auto p = prime_factorize(n);
+    ll cnt = 0;
+    for(auto item:p){
+        cnt += item.second;
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+
+    int now = 1;
+    int ans = 0;
+    while(cnt > now){
+        now *= 2;
+        ans++;
+    }
+    cout<<ans<<endl;
 
     return 0;
 }

@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/16.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,28 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int n,w;
+    cin>>n>>w;
+    vector<pair<ll,ll>>v;
+    for (int i = 0; i < n; ++i) {
+        ll a,b;
+        cin>>a>>b;
+        v.push_back({a,b});
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
-
+    sort(rall(v));
+    ll now_w = 0;
+    int i = 0;
+    ll ans = 0;
+    while(now_w < w && i < n){
+        if(now_w + v[i].second > w){
+            ans += v[i].first * (w - now_w);
+            now_w += w - (now_w - 1);
+        }else{
+            now_w += v[i].second;
+            ans += v[i].second * v[i].first;
+        }
+        i++;
+    }
+    cout<<ans<<endl;
     return 0;
 }

@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/10.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,41 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int h,w;
+    cin>>h>>w;
+    vvi grid(h,vi(w));
+    for (int i = 0; i < h; ++i) {
+        for (int j = 0; j < w; ++j) {
+            cin>>grid[i][j];
+        }
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    ll ans = 0;
+    //n個の要素のbit全探索する
+    for (int bit = 0; bit < (1<<h); ++bit) {
+            vi cnt(h*w+5);
+        for (int j = 0; j < w; ++j) {
+            int v = -1;
+            bool ok = true;
+            int c = 0;
+            for (int i = 0; i < h; ++i) {
+                if(bit & (1<<i)){
+                    //i個目の要素にフラグが立っていた時の処理
+                    c++;
+                    if(v != grid[i][j]){
+                        if(v == -1)v = grid[i][j];
+                        else ok = false;
+                    }else{
+
+                    }
+                }
+            }
+            if(ok)cnt[v] += c;
+        }
+        ll max_v = *max_element(all(cnt));
+        chmax(ans,max_v);
+    }
+
+    cout<<ans<<endl;
 
     return 0;
 }

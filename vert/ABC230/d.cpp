@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/05/09.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,26 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    ll n,d;
+    cin>>n>>d;
+    vector<pair<ll,ll>>kabe(n);//{r,l}
+    for (int i = 0; i < n; ++i) {
+        ll l,r;
+        cin>>l>>r;
+        kabe[i]={r,l};
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
-
+    sort(all(kabe));
+    int ans = 0;
+    ll dist_l = 0;
+    ll dist_r = 0;
+    for (int i = 0; i < n; ++i) {
+        if((kabe[i].second <= dist_l && dist_l <= kabe[i].first) || (kabe[i].second <= dist_r && dist_r <= kabe[i].first) ||(dist_l <= kabe[i].second && kabe[i].first <= dist_r))continue;
+        else{
+            dist_l = kabe[i].first;
+            dist_r = kabe[i].first + d - 1;
+            ans++;
+        }
+    }
+    cout<<ans<<endl;
     return 0;
 }

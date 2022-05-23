@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/02.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,16 +39,32 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+ll gcd(ll a,ll b){
+    if(b == 0){
+        return a;
+    }
+    return gcd(b,a %b);
+}
+//2つの自然数の最大公約数を求める関数
 
+ll lcm(ll a,ll b){
+    return a*b/gcd(a,b);
+}
+//2つの自然数の最大公約数から最小公倍数を求める関数
 
 int main() {
-    int a,b,c;
+    ll a,b,c;
     cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    ll ans = lcm(a,b);
+
+    int i = 1;
+    ll t_ans;
+    while(true){
+        t_ans = ans * i;
+        if(t_ans >= c)break;
+        i++;
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    cout<<t_ans<<endl;
 
     return 0;
 }

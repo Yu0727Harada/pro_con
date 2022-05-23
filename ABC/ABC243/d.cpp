@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/03/15.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,50 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
-    }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    int a;
+    cin>>a;
+    ll n;
+    cin>>n;
 
+
+    string s;
+    cin>>s;
+    bool mode = 0;
+    int cnt = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if(mode == 0) {
+
+            if (s[i] == 'U') {
+                n /= 2;
+            } else if (s[i] == 'L') {
+                if (n >= LINF / 2){
+                    mode = 1;
+                    cnt ++;
+                }else{
+                    n = n + n;
+                }
+
+            }else{
+                if(n >= LINF / 2){
+                    mode = 1;
+                    cnt ++;
+                }else{
+                    n = n+n+1;
+                }
+            }
+        }else{
+            if(s[i] == 'U'){
+                cnt --;
+                if(cnt == 0)mode = 0;
+            }else if(s[i] == 'L'){
+                cnt ++;
+                if(cnt == 0)mode = 0;
+            }else{
+                cnt++;
+                if(cnt == 0)mode = 0;
+            }
+        }
+    }
+    cout<<n<<endl;
     return 0;
 }

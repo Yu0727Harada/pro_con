@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/02/04.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,52 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    int a;
+    int n;
+
+    cin>>a;
+    cin>>n;
+    vector<int>dp(n*10,INF);
+
+    dp[n] = 0;
+    vector<int> ten = {1,10,100,1000,10000,100000,1000000,10000000};
+
+    queue<int>q;
+    q.push(n);
+    while(!q.empty()) {
+        int now = q.front();
+        q.pop();
+        if(now % a == 0){
+            if(dp[now / a] > dp[now] + 1){
+                dp[now / a] = dp[now] + 1;
+                int p = now/a;
+                q.push(now/a);
+            }
+
+        }
+        string s = to_string(now);
+        reverse(all(s));
+        for (int j = 1; j < 2; ++j) {
+            int next = 0;
+
+            bool ok = true;
+            for (int k = s.size(); k < s.size() * 2; ++k) {
+                if(k == 2 * s.size() - 1 && s[(k - 1) % s.size()] == '0')ok = false;
+                next += (s[(k - 1) % s.size()] - '0') * ten[k - s.size()];
+            }
+            if(next == 0 || ok == false)continue;
+            if(dp[next] > dp[now]+ j){
+                dp[next] = dp[now] + j;
+                q.push(next);
+            }
+
+        }
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
+    if(dp[1] == INF){
+        cout<<-1<<endl;
+    }else{
+        cout<<dp[1]<<endl;
+    }
 
     return 0;
 }

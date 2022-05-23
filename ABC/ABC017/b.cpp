@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/12/10.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,13 +42,32 @@ const int INF = 1e9;
 
 
 int main() {
-    int a,b,c;
-    cin>>a>>b>>c;
-    while(a > b * c){
-        a--;
+    string s;
+    cin>>s;
+    bool ok = true;
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] == 'c'){
+            if(i + 1 < s.size()){
+                if(s[i + 1] == 'h'){
+                    i++;
+                    continue;
+                }else{
+                    ok = false;
+                }
+            }else{
+                ok = false;
+            }
+        }else if(s[i] == 'o'){
+            continue;
+        }else if(s[i] == 'k'){
+            continue;
+        }else if(s[i] == 'u'){
+            continue;
+        }else{
+            ok = false;
+        }
     }
-    double ans = (double)a / (double)b;
-    printf("%.10f\n", ans);
-
+    if(ok)cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
     return 0;
 }
