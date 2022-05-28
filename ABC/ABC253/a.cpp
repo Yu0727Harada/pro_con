@@ -1,3 +1,7 @@
+//
+// Created on 2022/05/28.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,24 +42,19 @@ const int INF = 1e9;
 
 
 int main() {
-    string s;
-    cin>>s;
-    ll l,r;
-    cin>>l>>r;
-    if(s[0] == '0' && s.size() > 1){
-        cout<<"No"<<endl;
-    }else{
-        if(s.size() >= 10){
-            cout<<"No"<<endl;
-        }else {
 
-            auto a = stoll(s);
-            if (l <= a && a <= r) {
-                cout << "Yes" << endl;
-            } else {
-                cout << "No" << endl;
-            }
-        }
+    int a,b,c;
+    cin>>a>>b>>c;
+
+    if(a <= b && b <= c){
+        cout<<"Yes"<<endl;
+    }else if(c <= b && b <= a){
+        cout<<"Yes"<<endl;
     }
+    else{
+        cout<<"No"<<endl;
+    }
+
+
     return 0;
 }

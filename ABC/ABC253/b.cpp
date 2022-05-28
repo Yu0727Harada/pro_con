@@ -1,3 +1,7 @@
+//
+// Created on 2022/05/28.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,24 +42,21 @@ const int INF = 1e9;
 
 
 int main() {
-    string s;
-    cin>>s;
-    ll l,r;
-    cin>>l>>r;
-    if(s[0] == '0' && s.size() > 1){
-        cout<<"No"<<endl;
-    }else{
-        if(s.size() >= 10){
-            cout<<"No"<<endl;
-        }else {
-
-            auto a = stoll(s);
-            if (l <= a && a <= r) {
-                cout << "Yes" << endl;
-            } else {
-                cout << "No" << endl;
+    int h,w;
+    cin>>h>>w;
+    vector<pair<int,int>> v;
+    for (int i = 0; i < h; ++i) {
+        string s;
+        cin>>s;
+        for (int j = 0; j < w; ++j) {
+            if(s[j] == 'o'){
+                v.push_back({i,j});
             }
         }
     }
+
+    int ans = abs(v[1].first - v[0].first) + abs(v[1].second - v[0].second);
+    cout<<ans<<endl;
+
     return 0;
 }

@@ -1,3 +1,7 @@
+//
+// Created on 2022/05/28.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,27 +39,43 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+ll gcd(ll a,ll b){
+    if(b == 0){
+        return a;
+    }
+    return gcd(b,a %b);
+}
+//2つの自然数の最大公約数を求める関数
 
+ll lcm(ll a,ll b){
+    return a*b/gcd(a,b);
+}
+//2つの自然数の最大公約数から最小公倍数を求める関数
 
 int main() {
-    string s;
-    cin>>s;
-    ll l,r;
-    cin>>l>>r;
-    if(s[0] == '0' && s.size() > 1){
-        cout<<"No"<<endl;
-    }else{
-        if(s.size() >= 10){
-            cout<<"No"<<endl;
-        }else {
+    ll n,a,b;
+    cin>>n>>a>>b;
 
-            auto a = stoll(s);
-            if (l <= a && a <= r) {
-                cout << "Yes" << endl;
-            } else {
-                cout << "No" << endl;
-            }
-        }
+    if(a > b)swap(a,b);
+    ll all_sum = (n * (1 + n))/2;
+    ll a_cnt = n / a;
+    ll a_sum = (a_cnt *(2 * a + (a_cnt - 1) * a)) / 2;
+
+    ll b_sum =0;
+
+    ll ab_sum = 0;
+
+    if(b % a != 0){
+        ll b_cnt = n / b;
+        b_sum = ((b_cnt *(2 * b + (b_cnt - 1) * b)) / 2);
+        ll ab = lcm(a,b);
+        ll ab_cnt = n / ab;
+        ab_sum = (ab_cnt *(2 * ab + (ab_cnt - 1) * ab)) / 2;
     }
+    all_sum -= a_sum;
+    all_sum -= b_sum;
+    all_sum += ab_sum;
+    cout<<all_sum<<endl;
+
     return 0;
 }

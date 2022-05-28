@@ -1,3 +1,7 @@
+//
+// Created on 2022/05/28.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,24 +42,41 @@ const int INF = 1e9;
 
 
 int main() {
-    string s;
-    cin>>s;
-    ll l,r;
-    cin>>l>>r;
-    if(s[0] == '0' && s.size() > 1){
-        cout<<"No"<<endl;
-    }else{
-        if(s.size() >= 10){
-            cout<<"No"<<endl;
-        }else {
 
-            auto a = stoll(s);
-            if (l <= a && a <= r) {
-                cout << "Yes" << endl;
-            } else {
-                cout << "No" << endl;
-            }
+    map<int,int>mp;
+
+    int q;
+    cin>>q;
+
+
+    for (int i = 0; i < q; ++i) {
+        int o;
+        cin>>o;
+        if(o == 1){
+            int x;
+            cin>>x;
+
+            mp[x]++;
+        }else if(o == 2){
+            int x;
+            int c;
+            cin>>x>>c;
+
+                if(mp[x] > c){
+                    mp[x] -= c;
+                }else{
+                    mp.erase(x);
+
+
+                }
+
+        }else if(o == 3){
+            int max_v = mp.rbegin()->first;
+            int min_v = mp.begin()->first;
+
+            cout<<max_v - min_v<<endl;
         }
     }
+
     return 0;
 }
