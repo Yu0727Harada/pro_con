@@ -24,7 +24,7 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
-#include <atcoder/all>
+//#include <atcoder/all>
 
 
 #define all(x) (x).begin(),(x).end()

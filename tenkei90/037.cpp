@@ -24,7 +24,7 @@
 #include <ios>
 #include <iomanip>
 #include <numeric>
-//#include <atcoder/all>
+#include <atcoder/all>
 
 
 #define all(x) (x).begin(),(x).end()
@@ -52,9 +52,9 @@ int main() {
         spice.push_back({{l,r},v});
 
     }
-    vvi dp(n + 1,vi(w+10,-INF));
 
-    dp[0][0] = 0;
+    atcoder::
+    //dp[0][0] = 0;
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < w+10; ++j) {
