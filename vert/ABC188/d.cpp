@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/06/13.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,48 +42,43 @@ const int INF = 1e9;
 
 
 int main() {
-
-    int n;
-    cin>>n;
-    int m;
-    cin>>m;
-    vvi v(m,vi());
-
-    for (int i = 0; i < m; ++i) {
-        int a,b,c;
-        cin>>a>>b>>c;
-        a--;b--;c--;
-        v[i] = {a,b,c};
+    ll n,C;
+    cin>>n>>C;
+    vector<pair<int,pair<int,int>>>e;
+    vl cost_l(n);
+    for (int i = 0; i < n; ++i) {
+        ll a,b,cost;
+        cin>>a>>b>>cost;
+        e.push_back({a,{i,1}});
+        e.push_back({b + 1,{i,-1}});
+        cost_l[i] = cost;
     }
-    int ans = 0;
+    sort(all(e));
+    ll ans = 0;
+    ll all_cost = 0;
+    ll now_date = 0;
+    for (int i = 0; i < e.size(); ++i) {
 
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<n); ++bit) {
-        vi l(n,0);
-        for (int i = 0; i < m; ++i) {
-            int cnt = 0;
-            int num = -1;
-            for (int j = 0; j < 3; ++j) {
-                if(bit & (1<<v[i][j])){
-                    cnt++;
-                }else{
-                    num = v[i][j];
-                }
-            }
-            if(cnt == 3)continue;
-            else if(cnt == 2){
-                l[num] = 1;
-            }
+        ll next_date = e[i].first;
+        ll target_cost = cost_l[e[i].second.first];
+        if(all_cost > C){
+            //すぬけに加入すると安い時
+            ans += (next_date - now_date) * C;
+        }else{
+            //個別に払うとき
+            ans += (next_date - now_date) * all_cost;
         }
-        int ans_t = 0;
-        for (int i = 0; i < n; ++i) {
-            if(l[i] == 1)ans_t++;
+        if (e[i].second.second == 1) {
+            //サービスを使う時
+            all_cost += target_cost;
+        } else {
+            //サービスを使わない時
+            all_cost -= target_cost;
         }
+        now_date = next_date;
 
-        chmax(ans,ans_t);
     }
 
     cout<<ans<<endl;
-
     return 0;
 }

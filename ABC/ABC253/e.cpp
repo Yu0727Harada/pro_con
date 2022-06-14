@@ -102,13 +102,18 @@ int main() {
     }
     for (int i = 1; i < n; ++i) {
         for (int j = 1; j <= m; ++j) {
-            mint upper = sum[max(0,j - k)] - sum[0];
-            mint lower = sum[m] - sum[min(m,(j + k) - 1)];
-            dp[i][j] = upper + lower;
+            if(k == 0){
+                dp[i][j] = sum[m] - sum[0];
+            }else {
+                mint upper = sum[max(0, j - k)] - sum[0];
+                mint lower = sum[m] - sum[min(m, (j + k) - 1)];
+                dp[i][j] = upper + lower;
+            }
             sum_2[j] = sum_2[j - 1] + dp[i][j];
         }
         sum = sum_2;
         sum_2.clear();
+        sum_2.resize(m+5,0);
     }
     mint ans;
     ans.x = 0;

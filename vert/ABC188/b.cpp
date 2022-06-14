@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/06/13.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,48 +42,24 @@ const int INF = 1e9;
 
 
 int main() {
-
     int n;
     cin>>n;
-    int m;
-    cin>>m;
-    vvi v(m,vi());
-
-    for (int i = 0; i < m; ++i) {
-        int a,b,c;
-        cin>>a>>b>>c;
-        a--;b--;c--;
-        v[i] = {a,b,c};
+    vl a(n);
+    vl b(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
     }
-    int ans = 0;
-
-    //n個の要素のbit全探索する
-    for (int bit = 0; bit < (1<<n); ++bit) {
-        vi l(n,0);
-        for (int i = 0; i < m; ++i) {
-            int cnt = 0;
-            int num = -1;
-            for (int j = 0; j < 3; ++j) {
-                if(bit & (1<<v[i][j])){
-                    cnt++;
-                }else{
-                    num = v[i][j];
-                }
-            }
-            if(cnt == 3)continue;
-            else if(cnt == 2){
-                l[num] = 1;
-            }
-        }
-        int ans_t = 0;
-        for (int i = 0; i < n; ++i) {
-            if(l[i] == 1)ans_t++;
-        }
-
-        chmax(ans,ans_t);
+    for (int i = 0; i < n; ++i) {
+        cin>>b[i];
     }
-
-    cout<<ans<<endl;
-
+    ll ans = 0;
+    for (int i = 0; i < n; ++i) {
+      ans += a[i] * b[i];
+    }
+    if(ans == 0){
+        cout<<"Yes"<<endl;
+    }else{
+        cout<<"No"<<endl;
+    }
     return 0;
 }
