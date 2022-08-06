@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2022/07/08.
+// Created by 原田 on 2022/07/25.
 //
 
 
@@ -44,55 +44,32 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-
-    vector<vector<pair<int,int>>> edge(n,vector<pair<int,int>>());
-    vi x(n);
-    vi c(n);
-    for (int i = 0; i < n; ++i) {
+    int m;
+    cin>>m;
+    vl x(n + 1);
+    for (int i = 1; i <= n; ++i) {
         cin>>x[i];
-        x[i]--;
     }
-    for (int i = 0; i < n; ++i) {
-        cin>>c[i];
+    vi mp(n + 1,0);
+    for (int i = 0; i < m; ++i) {
+        int c,y;
+       cin>>c>>y;
+        mp[c] = y;
     }
+    vector<vector<ll>>dp(n + 1,vl(n+10,-LINF));
+    dp[0][0] = 0;
     for (int i = 0; i < n; ++i) {
-        edge[i].push_back({x[i],c[i]});
-    }
-
-    vi state(n,0);
-    //0 not visit
-    //1 visited calculating
-    //2 visited calculated
-    ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vl vs;
-        if(state[i] == 0){
-            auto dfs = [&](auto f,int v) -> int{
-                if(state[v] == 2)return - 1;
-                if(state[v] == 1)return v;
-                state[v] = 1;
-                int r = f(f,edge[v][0].first);
-                state[v] = 2;
-                if(r == -1)return - 1;
-                vs.push_back(edge[v][0].second);
-                if(r == v)return - 1;
-                return r;
-            };
-            dfs(dfs,i);
-            if(vs.size() >= 1){
-                ll tmp = LINF + 100000;
-                for (int j = 0; j < vs.size(); ++j) {
-                    chmin(tmp,vs[j]);
-                }
-                ans += tmp;
-            }
-
+        for (int j = 0; j <= n; ++j) {
+            chmax(dp[i + 1][0],dp[i][j]);
+            chmax(dp[i + 1][j + 1],dp[i][j] + x[i + 1] + mp[j + 1]);
         }
+    }
+    ll ans = 0;
+    for (int i = 0; i <= n; ++i) {
+        chmax(ans,dp[n][i]);
     }
     cout<<ans<<endl;
 
+
     return 0;
 }
-
-//閉路検出
-//出次数が1 の有向グラフを Functional Graphとよぶ

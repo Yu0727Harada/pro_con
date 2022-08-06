@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2022/07/08.
+// Created by 原田 on 2022/07/11.
 //
 
 
@@ -44,55 +44,32 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-
-    vector<vector<pair<int,int>>> edge(n,vector<pair<int,int>>());
-    vi x(n);
-    vi c(n);
+    int k;
+    cin>>k;
+    vector<string>vs(n);
     for (int i = 0; i < n; ++i) {
-        cin>>x[i];
-        x[i]--;
+        cin>>vs[i];
     }
-    for (int i = 0; i < n; ++i) {
-        cin>>c[i];
-    }
-    for (int i = 0; i < n; ++i) {
-        edge[i].push_back({x[i],c[i]});
-    }
-
-    vi state(n,0);
-    //0 not visit
-    //1 visited calculating
-    //2 visited calculated
-    ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vl vs;
-        if(state[i] == 0){
-            auto dfs = [&](auto f,int v) -> int{
-                if(state[v] == 2)return - 1;
-                if(state[v] == 1)return v;
-                state[v] = 1;
-                int r = f(f,edge[v][0].first);
-                state[v] = 2;
-                if(r == -1)return - 1;
-                vs.push_back(edge[v][0].second);
-                if(r == v)return - 1;
-                return r;
-            };
-            dfs(dfs,i);
-            if(vs.size() >= 1){
-                ll tmp = LINF + 100000;
-                for (int j = 0; j < vs.size(); ++j) {
-                    chmin(tmp,vs[j]);
+    int fi_ans = 0;
+    //n個の要素のbit全探索する
+    for (int bit = 0; bit < (1<<n); ++bit) {
+            map<char,int>mp;
+            int ans = 0;
+            for (int i = 0; i < n; ++i) {
+                if(bit & (1<<i)){
+                    //i個目の要素にフラグが立っていた時の処理
+                    unique(all(vs[i]));
+                    for (int j = 0; j < vs[i].size(); ++j) {
+                        mp[vs[i][j]]++;
+                    }
                 }
-                ans += tmp;
             }
+            for(auto item:mp){
+                if(item.second == k)ans++;
+            }
+            chmax(fi_ans,ans);
 
-        }
     }
-    cout<<ans<<endl;
-
+    cout<<fi_ans<<endl;
     return 0;
 }
-
-//閉路検出
-//出次数が1 の有向グラフを Functional Graphとよぶ

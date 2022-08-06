@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2021/11/19.
+// Created by 原田 on 2022/07/20.
 //
 
 
@@ -42,42 +42,25 @@ const int INF = 1e9;
 
 
 int main() {
-    ll a, b;
-    cin>>a>>b;
-    b++;
+    ll n;
+    cin>>n;
+    ll x,y;
+    cin>>x>>y;
 
-    vl pow_l ( 66);
-    pow_l[0] = 1;
-    for (int i = 1; i < 66; ++i) {
-        pow_l[i] = pow_l[i - 1] * 2;
-    }
-    vl mod_v_a (65);
-    vl mod_v_b(65);
-    ll i = 0;
+    vl red(11,0);
+    vl blue(11,0);
 
-    while(pow_l[i] < a){
-        ll interval = pow_l[i] * 2;
-        mod_v_a[i] += ((a - pow_l[i]) / interval) * pow_l[i];
-        if((a - pow_l[i]) % interval <= pow_l[i])mod_v_a[i] += (a - pow_l[i]) % interval;
-        else mod_v_a[i] += pow_l[i];
-        i++;
+    blue[1] = 1;
+    red[1] = 0;
+
+    for (int i = 2; i <= 10; ++i) {
+        blue[i] = red[i - 1] + blue[i - 1] * y;
+        red[i] = red[i - 1] + blue[i] * x;
     }
-    i = 0;
-    while(pow_l[i] <= b){
-        ll interval = pow_l[i] * 2;
-        mod_v_b[i] += ((b - pow_l[i]) / interval) * pow_l[i];
-        if((b - pow_l[i]) % interval <= pow_l[i])mod_v_b[i] += (b - pow_l[i]) % interval;
-        else mod_v_b[i] += pow_l[i];
-        i++;
-    }
-    ll ans = 0;
-    for (int j = 0; j <= 65; ++j) {
-        if((mod_v_b[j] - mod_v_a[j]) % 2 == 1){
-            ans += pow_l[j];
-        }
-    }
-    cout<<ans<<endl;
+    //blue[2] = red[1] + blue[1] * y;
+    //red[2] = red[1] + blue[2] * x;
+
+    cout<<red[n]<<endl;
 
     return 0;
 }
-

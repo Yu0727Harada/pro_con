@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2022/07/08.
+// Created by 原田 on 2022/06/20.
 //
 
 
@@ -45,54 +45,44 @@ int main() {
     int n;
     cin>>n;
 
-    vector<vector<pair<int,int>>> edge(n,vector<pair<int,int>>());
-    vi x(n);
-    vi c(n);
+    vl xl(n + 1,LINF + 10);
+    vl xr(n + 1,-LINF - 10);
+    xl[0] = 0;
+    xr[0] = 0;
+    ll maxv = 0;
     for (int i = 0; i < n; ++i) {
-        cin>>x[i];
-        x[i]--;
+        ll x,c;
+        cin>>x>>c;
+        chmin(xl[c],x);
+        chmax(xr[c],x);
+        chmax(maxv,c);
     }
-    for (int i = 0; i < n; ++i) {
-        cin>>c[i];
-    }
-    for (int i = 0; i < n; ++i) {
-        edge[i].push_back({x[i],c[i]});
-    }
+    vl dpl(n + 5,LINF + 10);
+    vl dpr(n + 5,LINF + 10);
+    dpl[0] = 0;
+    dpr[0] = 0;
 
-    vi state(n,0);
-    //0 not visit
-    //1 visited calculating
-    //2 visited calculated
-    ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vl vs;
-        if(state[i] == 0){
-            auto dfs = [&](auto f,int v) -> int{
-                if(state[v] == 2)return - 1;
-                if(state[v] == 1)return v;
-                state[v] = 1;
-                int r = f(f,edge[v][0].first);
-                state[v] = 2;
-                if(r == -1)return - 1;
-                vs.push_back(edge[v][0].second);
-                if(r == v)return - 1;
-                return r;
-            };
-            dfs(dfs,i);
-            if(vs.size() >= 1){
-                ll tmp = LINF + 100000;
-                for (int j = 0; j < vs.size(); ++j) {
-                    chmin(tmp,vs[j]);
-                }
-                ans += tmp;
-            }
+    //l -> next_r -> next_l
+    //r -> next_l -> next_r
+    //l -> next_l -> next_r
+    //r -> next_r -> next_l
+    // 3 2 1 2 3
+    int last = 0;
+    for (int i = 0; i < maxv; ++i) {
+        if(xl[i + 1] == LINF + 10){
+            dpl[i + 1] = dpl[i];
+            dpr[i + 1] = dpr[i];
+        }else {
 
+            chmin(dpl[i + 1], dpl[i] + abs(xr[i + 1] - xl[last]) + abs(xl[i + 1] - xr[i + 1]));
+            chmin(dpr[i + 1], dpr[i] + abs(xl[i + 1] - xr[last]) + abs(xr[i + 1] - xl[i + 1]));
+            chmin(dpr[i + 1], dpl[i] + abs(xl[i + 1] - xl[last]) + abs(xr[i + 1] - xl[i + 1]));
+            chmin(dpl[i + 1], dpr[i] + abs(xr[i + 1] - xr[last]) + abs(xl[i + 1] - xr[i + 1]));
+            last = i + 1;
         }
     }
-    cout<<ans<<endl;
+    cout<<min(dpl[maxv] + abs(xl[maxv]),dpr[maxv] + abs(xr[maxv]))<<endl;
+
 
     return 0;
 }
-
-//閉路検出
-//出次数が1 の有向グラフを Functional Graphとよぶ
