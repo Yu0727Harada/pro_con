@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/04/25.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,77 +39,40 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-int bit_s(int n,double c,vl a){
-    int ok = 0;
-    int ng = n + 1;
-    int mid;
-    while(abs(ng - ok) > 1){
-        mid = (ok + ng) / 2;
-        if(2 * c >= (double)a[mid]){
-            ok = mid;
-        }else{
-            ng = mid;
-        }
+vector< ll > divisor(ll n) {
+  vector< ll > ret;
+  for(ll i = 1; i * i <= n; i++) {
+    if(n % i == 0) {
+      ret.push_back(i);
+      if(i * i != n) ret.push_back(n / i);
     }
-    return ok;
+  }
+  sort(begin(ret), end(ret));
+  return (ret);
 }
 
 int main() {
     int n;
     cin>>n;
 
-    vl a(n + 1);
-    vl sum(n + 2,0);
-    sum[0] = 0;
-    for (int i = 1; i <= n; ++i) {
-        cin>>a[i];
-    }
-    sort(all(a));
+    vl a(n);
+    vl a_cnt(2 * 1e5 + 3,0);
+    ll ans = 0;
+    ll maxv = 0;
     for (int i = 0; i < n; ++i) {
-        sum[i + 1] = sum[i] + a[i + 1];
+        cin>>a[i];
+        a_cnt[a[i]]++;
+        chmax(maxv,a[i]);
     }
-    sum[n + 1] = LINF;
-
-
-
-
-    double l = 0;
-    double r = INF;
-    double c1;
-    double c2;
-
-    int q = 1000;
-    while(q){
-        q--;
-        c1 = (l * 2 + r)/3;
-        c2 = (l + r * 2)/3;
-
-        double c1ans;
-        double c2ans;
-
-        int min_v1 = bit_s(n,c1,a);
-        int min_v2 = bit_s(n,c2,a);
-
-        c1ans = c1 * n + sum[n] - (sum[min_v1] + (2 * c1) * (n - ( min_v1)));
-        c2ans = c2 * n + sum[n] - (sum[min_v2] + (2 * c2) * (n - (min_v2)));
-
-        if(c1ans > c2ans){
-            l = c1;
-        }else{
-            r = c2;
+    for (int i = 0; i <= maxv; ++i) {
+        vl div = divisor(i);
+        for (int j = 0; j < div.size(); ++j) {
+            ans += a_cnt[i] * a_cnt[div[j]] * a_cnt[i / div[j]];
         }
-
     }
+    cout<<ans<<endl;
 
-
-    int min_ans = bit_s(n,l,a);
-    double ans = l * n + sum[n] - (sum[min_ans] + (2 * l) * (n - ( min_ans)));
-    ans /= n;
-
-
-    printf("%.20f\n",ans);
 
     return 0;
 }
 
-//三分探索

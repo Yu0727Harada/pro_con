@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2022/05/11.
+// Created by 原田 on 2021/12/03.
 //
 
 
@@ -42,51 +42,23 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    vi va_c(n,0);//そこの添字までで出てきた種類の数
-    vi vb_c(n,0);
-
-    vi va_d(n+1,0);//この種類までの時の値の最大値
-    vi vb_d(n+1,0);
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int a;
-        cin>>a;
-        if(mp[a] == 0){
-            mp[a] = mp.size() ;
-            va_c[i] = mp[a];
-            va_d[mp[a]] = mp[a];
-        }else{
-            va_c[i] = mp.size();
+    string s;
+    cin>>s;
+    string t = "oxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxxoxx";
+    for (int i = 0; i < 5; ++i) {
+        bool ok = true;
+        for (int j = 0; j < s.size(); ++j) {
+            if(t[i + j] == s[j])continue;
+            else{
+                ok =false;
+                break;
+            }
         }
-    }
-    set<int>st;
-    for (int i = 0; i < n; ++i) {
-        int b;
-        cin>>b;
-        st.insert(b);
-        if(mp[b] == 0){
-            mp[b] = INF;
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }else{
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }
-    }
-    int q;
-    cin>>q;
-    for (int i = 0; i < q; ++i) {
-        int x,y;
-        cin>>x>>y;
-        x--;y--;
-        if(va_c[x] == vb_c[y] && va_d[va_c[x]] == vb_d[vb_c[y]]){
+        if(ok){
             cout<<"Yes"<<endl;
-        }else{
-            cout<<"No"<<endl;
+            return 0;
         }
     }
-
+    cout<<"No"<<endl;
     return 0;
 }

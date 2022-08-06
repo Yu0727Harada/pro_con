@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/11/11.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,7 +39,7 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-const int mod = 998244353;
+const int mod = 4;
 
 struct mint {
     ll x; // typedef long long ll;
@@ -86,41 +90,50 @@ struct mint {
     }
 };
 
+
+mint mod_pow (mint a, ll n){
+    mint ret;
+    if(n == 0) {
+        ret.x = 1;
+        return ret;
+    }
+    if(n == 1){
+        ret = a;
+        return ret;
+    }
+    if( n % 2 == 1){
+        return (a * mod_pow(a,n - 1));
+    }
+    mint t = mod_pow(a,n / 2);
+    return t * t;
+}
+//a^nを計算する
+
 int main() {
+    ll a;
+    mint b;
+    ll c;
+    cin>>a>>b.x>>c;
 
-    int n,m,k;
-    cin>>n>>m>>k;
-    vector<vector<mint>>dp(n,vector<mint>(m+5));
+    map<ll,int>a_mp;
+    vl a_v;
+    a_v.push_back(a % 10);
+    a_mp[a%10]++;
+    for (int i = 1; i < 4; ++i) {
+        a_mp[a_v[i-1] * a % 10]++;
+        a_v.push_back(a_v[i-1] * a % 10);
+    }
 
-    vector<mint>sum(m + 5);
-    vector<mint>sum_2(m + 5);
-    sum[0] = 0;
-    sum_2[0] = 0;
-    for (int i = 1; i <= m; ++i) {
-        dp[0][i] = 1;
-        sum[i] = sum[i - 1] + dp[0][i];
+    mint bc_m;
+    bc_m = mod_pow(b,c);
+    ll ans;
+    bc_m.x %= 4;
+    if(bc_m.x == 0){
+        ans =a_v[a_v.size()-1] % 10;
+    }else{
+        ans = a_v[bc_m.x - 1] % 10;
     }
-    for (int i = 1; i < n; ++i) {
-        for (int j = 1; j <= m; ++j) {
-            if(k == 0){
-                dp[i][j] = sum[m] - sum[0];
-            }else {
-                mint upper = sum[max(0, j - k)] - sum[0];
-                mint lower = sum[m] - sum[min(m, (j + k) - 1)];
-                dp[i][j] = upper + lower;
-            }
-            sum_2[j] = sum_2[j - 1] + dp[i][j];
-        }
-        sum = sum_2;
-        sum_2.clear();
-        sum_2.resize(m+5,0);
-    }
-    mint ans;
-    ans.x = 0;
-    for (int i = 1; i <= m; ++i) {
-        ans += dp[n - 1][i];
-    }
-    cout<<ans.x<<endl;
+    cout<<ans<<endl;
 
 
 

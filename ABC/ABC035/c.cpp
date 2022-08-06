@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2022/05/11.
+// Created by 原田 on 2021/12/15.
 //
 
 
@@ -42,51 +42,28 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    vi va_c(n,0);//そこの添字までで出てきた種類の数
-    vi vb_c(n,0);
-
-    vi va_d(n+1,0);//この種類までの時の値の最大値
-    vi vb_d(n+1,0);
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int a;
-        cin>>a;
-        if(mp[a] == 0){
-            mp[a] = mp.size() ;
-            va_c[i] = mp[a];
-            va_d[mp[a]] = mp[a];
-        }else{
-            va_c[i] = mp.size();
-        }
-    }
-    set<int>st;
-    for (int i = 0; i < n; ++i) {
-        int b;
-        cin>>b;
-        st.insert(b);
-        if(mp[b] == 0){
-            mp[b] = INF;
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }else{
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }
-    }
-    int q;
-    cin>>q;
+    int n,q;
+    cin>>n>>q;
+    vector<int> a(n);
     for (int i = 0; i < q; ++i) {
-        int x,y;
-        cin>>x>>y;
-        x--;y--;
-        if(va_c[x] == vb_c[y] && va_d[va_c[x]] == vb_d[vb_c[y]]){
-            cout<<"Yes"<<endl;
-        }else{
-            cout<<"No"<<endl;
-        }
+        int l,r;
+        cin>>l>>r;
+        l--;
+        r--;
+        r ++;
+        a[l]++;
+        a[r]--;
     }
+
+    for (int i = 1; i < n; ++i) {
+        a[i] = a[i - 1] + a[i];
+    }
+
+    for (int i = 0; i < n; ++i) {
+        if(a[i] % 2 == 0)cout<<0;
+        else cout<<1;
+    }
+    cout<<endl;
 
     return 0;
 }

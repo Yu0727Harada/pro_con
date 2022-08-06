@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/03/07.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -87,42 +91,25 @@ struct mint {
 };
 
 int main() {
+    int n;
+    cin>>n;
 
-    int n,m,k;
-    cin>>n>>m>>k;
-    vector<vector<mint>>dp(n,vector<mint>(m+5));
-
-    vector<mint>sum(m + 5);
-    vector<mint>sum_2(m + 5);
-    sum[0] = 0;
-    sum_2[0] = 0;
-    for (int i = 1; i <= m; ++i) {
+    vector<vector<mint>> dp(n,vector<mint>(11));
+    for (int i = 1; i < 10; ++i) {
         dp[0][i] = 1;
-        sum[i] = sum[i - 1] + dp[0][i];
     }
-    for (int i = 1; i < n; ++i) {
-        for (int j = 1; j <= m; ++j) {
-            if(k == 0){
-                dp[i][j] = sum[m] - sum[0];
-            }else {
-                mint upper = sum[max(0, j - k)] - sum[0];
-                mint lower = sum[m] - sum[min(m, (j + k) - 1)];
-                dp[i][j] = upper + lower;
-            }
-            sum_2[j] = sum_2[j - 1] + dp[i][j];
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 1; j < 10; ++j) {
+            dp[i + 1][j - 1] += dp[i][j];
+            dp[i + 1][j] += dp[i][j];
+            dp[i + 1][j + 1] += dp[i][j];
         }
-        sum = sum_2;
-        sum_2.clear();
-        sum_2.resize(m+5,0);
     }
     mint ans;
     ans.x = 0;
-    for (int i = 1; i <= m; ++i) {
+    for (int i = 1; i < 10; ++i) {
         ans += dp[n - 1][i];
     }
     cout<<ans.x<<endl;
-
-
-
     return 0;
 }

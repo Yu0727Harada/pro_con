@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2022/03/21.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,77 +39,49 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-int bit_s(int n,double c,vl a){
-    int ok = 0;
-    int ng = n + 1;
-    int mid;
-    while(abs(ng - ok) > 1){
-        mid = (ok + ng) / 2;
-        if(2 * c >= (double)a[mid]){
-            ok = mid;
-        }else{
-            ng = mid;
-        }
-    }
-    return ok;
-}
+
 
 int main() {
-    int n;
-    cin>>n;
+    vector<char>s(3);
+    vector<char>t(3);
 
-    vl a(n + 1);
-    vl sum(n + 2,0);
-    sum[0] = 0;
-    for (int i = 1; i <= n; ++i) {
-        cin>>a[i];
+    map<vector<char>,int>mp_1;
+    map<vector<char>,int>mp_2;
+    vector<pair<int,int>>swap_a = {{0,1},{0,2},{1,2}};
+
+    for (int i = 0; i < 3; ++i) {
+        cin>>s[i];
     }
-    sort(all(a));
-    for (int i = 0; i < n; ++i) {
-        sum[i + 1] = sum[i] + a[i + 1];
+    for (int i = 0; i < 3; ++i) {
+        cin>>t[i];
     }
-    sum[n + 1] = LINF;
-
-
-
-
-    double l = 0;
-    double r = INF;
-    double c1;
-    double c2;
-
-    int q = 1000;
-    while(q){
-        q--;
-        c1 = (l * 2 + r)/3;
-        c2 = (l + r * 2)/3;
-
-        double c1ans;
-        double c2ans;
-
-        int min_v1 = bit_s(n,c1,a);
-        int min_v2 = bit_s(n,c2,a);
-
-        c1ans = c1 * n + sum[n] - (sum[min_v1] + (2 * c1) * (n - ( min_v1)));
-        c2ans = c2 * n + sum[n] - (sum[min_v2] + (2 * c2) * (n - (min_v2)));
-
-        if(c1ans > c2ans){
-            l = c1;
-        }else{
-            r = c2;
+    queue<pair<vector<char>,int>>q;
+    q.push({s,0});
+    while(!q.empty()){
+        vector<char>s_tmp = q.front().first;
+        int cnt = q.front().second;
+        q.pop();
+        for (int i = 0; i < swap_a.size(); ++i) {
+            auto t_tmp = s_tmp;
+            swap(t_tmp[swap_a[i].first],t_tmp[swap_a[i].second]);
+            if((cnt + 1) % 2 == 0){
+                if(mp_2[t_tmp] == 0){
+                    mp_2[t_tmp]++;
+                    q.push({t_tmp,cnt + 1});
+                }
+            }else{
+                if(mp_1[t_tmp] == 0){
+                    mp_1[t_tmp]++;
+                    q.push({t_tmp,cnt + 1});
+                }
+            }
         }
-
     }
-
-
-    int min_ans = bit_s(n,l,a);
-    double ans = l * n + sum[n] - (sum[min_ans] + (2 * l) * (n - ( min_ans)));
-    ans /= n;
-
-
-    printf("%.20f\n",ans);
+    if(mp_2[t] == 0){
+        cout<<"No"<<endl;
+    }else{
+        cout<<"Yes"<<endl;
+    }
 
     return 0;
 }
-
-//三分探索

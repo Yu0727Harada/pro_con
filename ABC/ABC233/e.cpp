@@ -1,7 +1,3 @@
-//
-// Created on 2021/12/25.
-//
-
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -39,55 +35,31 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-int add_r;
-
-void ageri(vi &target,int i,int d){
-    if(add_r < i)add_r = i;
-    if(target[i] + d >= 10){
-        target[i] += d % 10;
-        ageri(target,i+1,1);
-    }else{
-        target[i] += d;
-    }
-    return;
-}
 
 
 int main() {
     string s;
     cin>>s;
     ll all = 0;
+    ll tmp = 0;
+    vi ans;
     for (int i = 0; i < s.size(); ++i) {
         all += s[i] - '0';
     }
-    reverse(all(s));
-    vi add(600000,0);
-    vi ans;
-    add_r = 0;
-    string t = to_string(all);
-    reverse(all(t));
-    ans.push_back(t[0] - '0');
-    for (int i = 1; i < t.size(); ++i) {
-        ageri(add,i,t[i] - '0');
-    }
-    all -= int(s[0] - '0');
-
-    for (int i = 1; i < s.size(); ++i) {
-        t = to_string(all + add[i]);
-        reverse(all(t));
-        ans.push_back(t[0] - '0');
-        for (int j = 1; j < t.size(); ++j) {
-            ageri(add,i + j,t[j] - '0');
+    int cnt = 0;
+    int len = s.size();
+    while(all != 0 || tmp != 0){
+        tmp += all;
+        ans.push_back(tmp % 10);
+        tmp /= 10;
+        if(len - 1 - cnt >= 0){
+            all -= s[len - 1 - cnt] - '0';
+            cnt ++;
         }
-        all -= s[i] - '0';
     }
-    for (int i = s.size(); i < add_r; ++i) {
-        ans.push_back(add[i]);
-    }
-    for (int i = ans.size()-1; i >= 0; --i) {
+    for (int i = ans.size() - 1; i >= 0; --i) {
         cout<<ans[i];
     }
     cout<<endl;
-
     return 0;
 }

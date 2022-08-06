@@ -1,3 +1,7 @@
+//
+// Created by 原田 on 2021/11/19.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,77 +39,39 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-int bit_s(int n,double c,vl a){
-    int ok = 0;
-    int ng = n + 1;
-    int mid;
-    while(abs(ng - ok) > 1){
-        mid = (ok + ng) / 2;
-        if(2 * c >= (double)a[mid]){
-            ok = mid;
-        }else{
-            ng = mid;
-        }
-    }
-    return ok;
-}
+
 
 int main() {
-    int n;
-    cin>>n;
+    ll a, b;
+    cin>>a>>b;
 
-    vl a(n + 1);
-    vl sum(n + 2,0);
-    sum[0] = 0;
-    for (int i = 1; i <= n; ++i) {
-        cin>>a[i];
+    vl pow_l ( 66);
+    pow_l[0] = 1;
+    for (int i = 1; i < 66; ++i) {
+        pow_l[i] = pow_l[i - 1] * 2;
     }
-    sort(all(a));
-    for (int i = 0; i < n; ++i) {
-        sum[i + 1] = sum[i] + a[i + 1];
+    vi mod_v_a (65);
+    vi mod_v_b(65);
+    ll now = 2;
+    ll i = 1;
+
+    while(pow_l[i] <= a * 2){
+        mod_v_a[i] = ((a - (pow_l[i - 1] - 1) + (pow_l[i] - 1)) / pow_l[i]) * pow_l[i - 1];
+        now *= 2;
+        i++;
     }
-    sum[n + 1] = LINF;
-
-
-
-
-    double l = 0;
-    double r = INF;
-    double c1;
-    double c2;
-
-    int q = 1000;
-    while(q){
-        q--;
-        c1 = (l * 2 + r)/3;
-        c2 = (l + r * 2)/3;
-
-        double c1ans;
-        double c2ans;
-
-        int min_v1 = bit_s(n,c1,a);
-        int min_v2 = bit_s(n,c2,a);
-
-        c1ans = c1 * n + sum[n] - (sum[min_v1] + (2 * c1) * (n - ( min_v1)));
-        c2ans = c2 * n + sum[n] - (sum[min_v2] + (2 * c2) * (n - (min_v2)));
-
-        if(c1ans > c2ans){
-            l = c1;
-        }else{
-            r = c2;
+    i = 1;
+    while(pow_l[i] <= b * 2){
+        mod_v_b[i] = ((b - (pow_l[i - 1] - 1) + (pow_l[i] - 1)) / pow_l[i]) * pow_l[i - 1];
+        now *= 2;
+        i++;
+    }
+    ll ans = 0;
+    for (int j = 1; j <= 65; ++j) {
+        if(mod_v_b[i] - mod_v_a[i] % 2 == 1){
+            ans += pow_l[i - 1];
         }
-
     }
-
-
-    int min_ans = bit_s(n,l,a);
-    double ans = l * n + sum[n] - (sum[min_ans] + (2 * l) * (n - ( min_ans)));
-    ans /= n;
-
-
-    printf("%.20f\n",ans);
 
     return 0;
 }
-
-//三分探索

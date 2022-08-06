@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2022/05/11.
+// Created by 原田 on 2021/12/02.
 //
 
 
@@ -39,54 +39,32 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+ll gcd(ll a,ll b){
+    if(b == 0){
+        return a;
+    }
+    return gcd(b,a %b);
+}
+//2つの自然数の最大公約数を求める関数
 
+ll lcm(ll a,ll b){
+    return a*b/gcd(a,b);
+}
+//2つの自然数の最大公約数から最小公倍数を求める関数
 
 int main() {
-    int n;
-    cin>>n;
-    vi va_c(n,0);//そこの添字までで出てきた種類の数
-    vi vb_c(n,0);
+    ll a,b,c;
+    cin>>a>>b>>c;
+    ll ans = lcm(a,b);
 
-    vi va_d(n+1,0);//この種類までの時の値の最大値
-    vi vb_d(n+1,0);
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int a;
-        cin>>a;
-        if(mp[a] == 0){
-            mp[a] = mp.size() ;
-            va_c[i] = mp[a];
-            va_d[mp[a]] = mp[a];
-        }else{
-            va_c[i] = mp.size();
-        }
+    int i = 1;
+    ll t_ans;
+    while(true){
+        t_ans = ans * i;
+        if(t_ans >= c)break;
+        i++;
     }
-    set<int>st;
-    for (int i = 0; i < n; ++i) {
-        int b;
-        cin>>b;
-        st.insert(b);
-        if(mp[b] == 0){
-            mp[b] = INF;
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }else{
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }
-    }
-    int q;
-    cin>>q;
-    for (int i = 0; i < q; ++i) {
-        int x,y;
-        cin>>x>>y;
-        x--;y--;
-        if(va_c[x] == vb_c[y] && va_d[va_c[x]] == vb_d[vb_c[y]]){
-            cout<<"Yes"<<endl;
-        }else{
-            cout<<"No"<<endl;
-        }
-    }
+    cout<<t_ans<<endl;
 
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created on 2022/03/12.
+// Created by 原田 on 2022/03/15.
 //
 
 
@@ -42,19 +42,50 @@ const int INF = 1e9;
 
 
 int main() {
-    ll n,x;
-    cin>>n>>x;
+    int a;
+    cin>>a;
+    ll n;
+    cin>>n;
+
+
     string s;
     cin>>s;
-
-    int u = 0;
-    int d = 0;
-    int r = 0;
+    bool mode = 0;
+    int cnt = 0;
     for (int i = 0; i < s.size(); ++i) {
-        if(s[i] == 'U'){
-            if()
+        if(mode == 0) {
+
+            if (s[i] == 'U') {
+                n /= 2;
+            } else if (s[i] == 'L') {
+                if (n >= LINF / 2){
+                    mode = 1;
+                    cnt ++;
+                }else{
+                    n = n + n;
+                }
+
+            }else{
+                if(n >= LINF / 2){
+                    mode = 1;
+                    cnt ++;
+                }else{
+                    n = n+n+1;
+                }
+            }
+        }else{
+            if(s[i] == 'U'){
+                cnt --;
+                if(cnt == 0)mode = 0;
+            }else if(s[i] == 'L'){
+                cnt ++;
+                if(cnt == 0)mode = 0;
+            }else{
+                cnt++;
+                if(cnt == 0)mode = 0;
+            }
         }
     }
-
+    cout<<n<<endl;
     return 0;
 }

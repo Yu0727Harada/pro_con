@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2022/05/11.
+// Created by 原田 on 2022/05/16.
 //
 
 
@@ -42,51 +42,51 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    vi va_c(n,0);//そこの添字までで出てきた種類の数
-    vi vb_c(n,0);
+    string s;
+    cin>>s;
+    int k;
+    cin>>k;
+    ll ans = 0;
+    int now_k = 0;
+    deque<int>d;
+    char last = '@';
+    ll x_cnt = 0;
+    ll now_v = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if(s[i] == 'X'){
+            if(last != 'X'){
+                x_cnt = 1;
+            }else{
+                x_cnt ++;
+            }
+            last = 'X';
+        }else if(s[i] == '.'){
 
-    vi va_d(n+1,0);//この種類までの時の値の最大値
-    vi vb_d(n+1,0);
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int a;
-        cin>>a;
-        if(mp[a] == 0){
-            mp[a] = mp.size() ;
-            va_c[i] = mp[a];
-            va_d[mp[a]] = mp[a];
-        }else{
-            va_c[i] = mp.size();
+            if(d.size() > k){
+                now_v -= d.front();
+                d.pop_front();
+            }
+            d.push_back(x_cnt);
+            now_v += x_cnt;
+            chmax(ans,now_v);
+            last = '.';
+            x_cnt = 0;
         }
+
     }
-    set<int>st;
-    for (int i = 0; i < n; ++i) {
-        int b;
-        cin>>b;
-        st.insert(b);
-        if(mp[b] == 0){
-            mp[b] = INF;
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }else{
-            vb_c[i] = st.size();
-            chmax(vb_d[st.size()],max(vb_d[st.size()-1],mp[b]));
-        }
+    if(d.size() > k){
+        now_v -= d.front();
+        d.pop_front();
     }
-    int q;
-    cin>>q;
-    for (int i = 0; i < q; ++i) {
-        int x,y;
-        cin>>x>>y;
-        x--;y--;
-        if(va_c[x] == vb_c[y] && va_d[va_c[x]] == vb_d[vb_c[y]]){
-            cout<<"Yes"<<endl;
-        }else{
-            cout<<"No"<<endl;
-        }
-    }
+    d.push_back(x_cnt);
+    now_v += x_cnt;
+    chmax(ans,now_v);
+    last = '.';
+    chmax(ans,x_cnt);
+    if(d.size() == 0 )cout<<ans<<endl;
+    else cout<<ans + (d.size() - 1) <<endl;
 
     return 0;
 }
+//尺取り　左をforで回してやるとバグりにくい
+//kを超えない高さで取れるところで二分探索する　尺取りは大体二分探索でかける

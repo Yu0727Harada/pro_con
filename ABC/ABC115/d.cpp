@@ -37,12 +37,50 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+vector<pair<ll,ll>> b;
+ll ans;
+void cnt(ll m,ll n){//m=>階層数,n=>バーガーのレベル
+    if(m == 1 && n > 0){
+        ans += 0;
+        return ;
+    }else if(m == 1 && n == 0){
+        ans += 1;
+        return ;
+    }
+    else if(m == b[n - 1].first + 1){
+        ans += b[n - 1].second;
+        return ;
+    }else if(m < b[n - 1].first + 1){
+        cnt(m - 1,n - 1);
+    }else if(m == b[n - 1].first + 2){
+        ans += b[n - 1].second + 1;
+        return ;
+    }else if(m == b[n - 1].first + b[n - 1].first + 3){
+        ans += b[ n - 1].second + 1 + b[n - 1].second;
+        return ;
+    }else if(m > b[n - 1].first + 2){
+        ans += b[n - 1].second + 1;
+        cnt(m - b[n - 1].first - 2,n - 1);
+    }
 
+}
 
 int main() {
 
-    int n;
+    ll n;
     cin>>n;
+    ll x;
+    cin>>x;
+    ans = 0;
+    b.resize(51,{0,0});
+
+    b[0] = {1,1};//all,patty
+    for (int i = 1; i <= 50; ++i) {
+        b[i] = {2 * b[i - 1].first + 3,2 * b[i - 1].second + 1};
+    }
+
+    cnt(x,n);
+    cout<<ans<<endl;
 
 
 
