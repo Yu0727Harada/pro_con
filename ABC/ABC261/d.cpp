@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2021/11/19.
+// Created by 原田 on 2022/07/25.
 //
 
 
@@ -42,42 +42,34 @@ const int INF = 1e9;
 
 
 int main() {
-    ll a, b;
-    cin>>a>>b;
-    b++;
-
-    vl pow_l ( 66);
-    pow_l[0] = 1;
-    for (int i = 1; i < 66; ++i) {
-        pow_l[i] = pow_l[i - 1] * 2;
+    int n;
+    cin>>n;
+    int m;
+    cin>>m;
+    vl x(n + 1);
+    for (int i = 1; i <= n; ++i) {
+        cin>>x[i];
     }
-    vl mod_v_a (65);
-    vl mod_v_b(65);
-    ll i = 0;
-
-    while(pow_l[i] < a){
-        ll interval = pow_l[i] * 2;
-        mod_v_a[i] += ((a - pow_l[i]) / interval) * pow_l[i];
-        if((a - pow_l[i]) % interval <= pow_l[i])mod_v_a[i] += (a - pow_l[i]) % interval;
-        else mod_v_a[i] += pow_l[i];
-        i++;
+    vi mp(n + 1,0);
+    for (int i = 0; i < m; ++i) {
+        int c,y;
+       cin>>c>>y;
+        mp[c] = y;
     }
-    i = 0;
-    while(pow_l[i] <= b){
-        ll interval = pow_l[i] * 2;
-        mod_v_b[i] += ((b - pow_l[i]) / interval) * pow_l[i];
-        if((b - pow_l[i]) % interval <= pow_l[i])mod_v_b[i] += (b - pow_l[i]) % interval;
-        else mod_v_b[i] += pow_l[i];
-        i++;
+    vector<vector<ll>>dp(n + 1,vl(n+10,-LINF));
+    dp[0][0] = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j <= n; ++j) {
+            chmax(dp[i + 1][0],dp[i][j]);
+            chmax(dp[i + 1][j + 1],dp[i][j] + x[i + 1] + mp[j + 1]);
+        }
     }
     ll ans = 0;
-    for (int j = 0; j <= 65; ++j) {
-        if((mod_v_b[j] - mod_v_a[j]) % 2 == 1){
-            ans += pow_l[j];
-        }
+    for (int i = 0; i <= n; ++i) {
+        chmax(ans,dp[n][i]);
     }
     cout<<ans<<endl;
 
+
     return 0;
 }
-

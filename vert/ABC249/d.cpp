@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2021/11/19.
+// Created by 原田 on 2022/07/11.
 //
 
 
@@ -39,45 +39,40 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+vector< ll > divisor(ll n) {
+  vector< ll > ret;
+  for(ll i = 1; i * i <= n; i++) {
+    if(n % i == 0) {
+      ret.push_back(i);
+      if(i * i != n) ret.push_back(n / i);
+    }
+  }
+  sort(begin(ret), end(ret));
+  return (ret);
+}
+
 
 
 int main() {
-    ll a, b;
-    cin>>a>>b;
-    b++;
+    int n;
+    cin>>n;
 
-    vl pow_l ( 66);
-    pow_l[0] = 1;
-    for (int i = 1; i < 66; ++i) {
-        pow_l[i] = pow_l[i - 1] * 2;
-    }
-    vl mod_v_a (65);
-    vl mod_v_b(65);
-    ll i = 0;
-
-    while(pow_l[i] < a){
-        ll interval = pow_l[i] * 2;
-        mod_v_a[i] += ((a - pow_l[i]) / interval) * pow_l[i];
-        if((a - pow_l[i]) % interval <= pow_l[i])mod_v_a[i] += (a - pow_l[i]) % interval;
-        else mod_v_a[i] += pow_l[i];
-        i++;
-    }
-    i = 0;
-    while(pow_l[i] <= b){
-        ll interval = pow_l[i] * 2;
-        mod_v_b[i] += ((b - pow_l[i]) / interval) * pow_l[i];
-        if((b - pow_l[i]) % interval <= pow_l[i])mod_v_b[i] += (b - pow_l[i]) % interval;
-        else mod_v_b[i] += pow_l[i];
-        i++;
+    vl cnt(200100,0);
+    ll max_v = 0;
+    for (int i = 0; i < n; ++i) {
+        ll a;
+        cin>>a;
+        cnt[a]++;
+        chmax(max_v,a);
     }
     ll ans = 0;
-    for (int j = 0; j <= 65; ++j) {
-        if((mod_v_b[j] - mod_v_a[j]) % 2 == 1){
-            ans += pow_l[j];
+
+    for(int j = 0; j <= max_v;j++){
+        auto ret = divisor(j);
+        for (int i = 0; i < ret.size(); ++i) {
+            ans += cnt[j] * cnt[ret[i]] * cnt[j / ret[i]];
         }
     }
     cout<<ans<<endl;
-
     return 0;
 }
-

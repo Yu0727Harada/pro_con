@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2021/11/19.
+// Created by 原田 on 2022/06/20.
 //
 
 
@@ -42,42 +42,47 @@ const int INF = 1e9;
 
 
 int main() {
-    ll a, b;
-    cin>>a>>b;
-    b++;
+    int n;
+    cin>>n;
 
-    vl pow_l ( 66);
-    pow_l[0] = 1;
-    for (int i = 1; i < 66; ++i) {
-        pow_l[i] = pow_l[i - 1] * 2;
+    vl xl(n + 1,LINF + 10);
+    vl xr(n + 1,-LINF - 10);
+    xl[0] = 0;
+    xr[0] = 0;
+    ll maxv = 0;
+    for (int i = 0; i < n; ++i) {
+        ll x,c;
+        cin>>x>>c;
+        chmin(xl[c],x);
+        chmax(xr[c],x);
+        chmax(maxv,c);
     }
-    vl mod_v_a (65);
-    vl mod_v_b(65);
-    ll i = 0;
+    vl dpl(n + 5,LINF + 10);
+    vl dpr(n + 5,LINF + 10);
+    dpl[0] = 0;
+    dpr[0] = 0;
 
-    while(pow_l[i] < a){
-        ll interval = pow_l[i] * 2;
-        mod_v_a[i] += ((a - pow_l[i]) / interval) * pow_l[i];
-        if((a - pow_l[i]) % interval <= pow_l[i])mod_v_a[i] += (a - pow_l[i]) % interval;
-        else mod_v_a[i] += pow_l[i];
-        i++;
-    }
-    i = 0;
-    while(pow_l[i] <= b){
-        ll interval = pow_l[i] * 2;
-        mod_v_b[i] += ((b - pow_l[i]) / interval) * pow_l[i];
-        if((b - pow_l[i]) % interval <= pow_l[i])mod_v_b[i] += (b - pow_l[i]) % interval;
-        else mod_v_b[i] += pow_l[i];
-        i++;
-    }
-    ll ans = 0;
-    for (int j = 0; j <= 65; ++j) {
-        if((mod_v_b[j] - mod_v_a[j]) % 2 == 1){
-            ans += pow_l[j];
+    //l -> next_r -> next_l
+    //r -> next_l -> next_r
+    //l -> next_l -> next_r
+    //r -> next_r -> next_l
+    // 3 2 1 2 3
+    int last = 0;
+    for (int i = 0; i < maxv; ++i) {
+        if(xl[i + 1] == LINF + 10){
+            dpl[i + 1] = dpl[i];
+            dpr[i + 1] = dpr[i];
+        }else {
+
+            chmin(dpl[i + 1], dpl[i] + abs(xr[i + 1] - xl[last]) + abs(xl[i + 1] - xr[i + 1]));
+            chmin(dpr[i + 1], dpr[i] + abs(xl[i + 1] - xr[last]) + abs(xr[i + 1] - xl[i + 1]));
+            chmin(dpr[i + 1], dpl[i] + abs(xl[i + 1] - xl[last]) + abs(xr[i + 1] - xl[i + 1]));
+            chmin(dpl[i + 1], dpr[i] + abs(xr[i + 1] - xr[last]) + abs(xl[i + 1] - xr[i + 1]));
+            last = i + 1;
         }
     }
-    cout<<ans<<endl;
+    cout<<min(dpl[maxv] + abs(xl[maxv]),dpr[maxv] + abs(xr[maxv]))<<endl;
+
 
     return 0;
 }
-

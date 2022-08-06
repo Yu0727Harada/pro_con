@@ -1,5 +1,5 @@
 //
-// Created by 原田 on 2021/11/19.
+// Created by 原田 on 2022/07/08.
 //
 
 
@@ -42,38 +42,51 @@ const int INF = 1e9;
 
 
 int main() {
-    ll a, b;
-    cin>>a>>b;
-    b++;
+    int n;
+    cin>>n;
 
-    vl pow_l ( 66);
-    pow_l[0] = 1;
-    for (int i = 1; i < 66; ++i) {
-        pow_l[i] = pow_l[i - 1] * 2;
+    vector<vector<pair<int,int>>> edge(n,vector<pair<int,int>>());
+    vi x(n);
+    vi c(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>x[i];
+        x[i]--;
     }
-    vl mod_v_a (65);
-    vl mod_v_b(65);
-    ll i = 0;
+    for (int i = 0; i < n; ++i) {
+        cin>>c[i];
+    }
+    for (int i = 0; i < n; ++i) {
+        edge[i].push_back({x[i],c[i]});
+    }
 
-    while(pow_l[i] < a){
-        ll interval = pow_l[i] * 2;
-        mod_v_a[i] += ((a - pow_l[i]) / interval) * pow_l[i];
-        if((a - pow_l[i]) % interval <= pow_l[i])mod_v_a[i] += (a - pow_l[i]) % interval;
-        else mod_v_a[i] += pow_l[i];
-        i++;
-    }
-    i = 0;
-    while(pow_l[i] <= b){
-        ll interval = pow_l[i] * 2;
-        mod_v_b[i] += ((b - pow_l[i]) / interval) * pow_l[i];
-        if((b - pow_l[i]) % interval <= pow_l[i])mod_v_b[i] += (b - pow_l[i]) % interval;
-        else mod_v_b[i] += pow_l[i];
-        i++;
-    }
+    vi state(n,0);
+    //0 not visit
+    //1 visited calculating
+    //2 visited calculated
     ll ans = 0;
-    for (int j = 0; j <= 65; ++j) {
-        if((mod_v_b[j] - mod_v_a[j]) % 2 == 1){
-            ans += pow_l[j];
+    for (int i = 0; i < n; ++i) {
+        vl vs;
+        if(state[i] == 0){
+            auto dfs = [&](auto f,int v) -> int{
+                if(state[v] == 2)return - 1;
+                if(state[v] == 1)return v;
+                state[v] = 1;
+                int r = f(f,edge[v][0].first);
+                state[v] = 2;
+                if(r == -1)return - 1;
+                vs.push_back(edge[v][0].second);
+                if(r == v)return - 1;
+                return r;
+            };
+            dfs(dfs,i);
+            if(vs.size() >= 1){
+                ll tmp = LINF + 100000;
+                for (int j = 0; j < vs.size(); ++j) {
+                    chmin(tmp,vs[j]);
+                }
+                ans += tmp;
+            }
+
         }
     }
     cout<<ans<<endl;
@@ -81,3 +94,5 @@ int main() {
     return 0;
 }
 
+//閉路検出
+//出次数が1 の有向グラフを Functional Graphとよぶ

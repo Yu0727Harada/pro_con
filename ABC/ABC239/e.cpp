@@ -43,5 +43,82 @@ const int INF = 1e9;
 
 int main() {
 
+    int n;
+    cin>>n;
+
+    int q;
+    cin>>q;
+    vvi max_v(n,vi());
+    vi x(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>x[i];
+        max_v[i].push_back(x[i]);
+    }
+
+    vvi v(n,vi());
+
+    for (int i = 0; i < n - 1; ++i) {
+        int a,b;
+        cin>>a>>b;
+        a--;
+        b--;
+        v[a].push_back(b);
+        v[b].push_back(a);
+    }
+    vector<int> terminal_visit(n,0);
+    queue<int>que;
+    stack<int>que_1;
+    que.push(0);
+    vi visit(n,0);
+
+    while(!que.empty()){
+        int u = que.front();
+        que.pop();
+
+        if(visit[u] == 1)continue;
+        visit[u] = 1;
+        que_1.push(u);
+
+        for (int i = 0; i < v[u].size(); ++i) {
+            if(visit[v[u][i]] == 0){
+
+                que.push(v[u][i]);
+            }
+        }
+//        if(ok){
+//            terminal_visit[u] = 1;
+//
+//        }
+    }
+
+    while(!que_1.empty()){
+        int u = que_1.top();
+        que_1.pop();
+        if(terminal_visit[u] == 1)continue;
+        vi tmp = max_v[u];
+        for (int i = 0; i < v[u].size(); ++i) {
+            if(terminal_visit[v[u][i]] == 1){
+                for (int j = 0; j < max_v[v[u][i]].size(); ++j) {
+                    tmp.push_back(max_v[v[u][i]][j]);
+                }
+            }
+        }
+        terminal_visit[u] = 1;
+
+        sort(rall(tmp));
+        if(tmp.size() > 20)tmp.resize(20);
+        max_v[u] = tmp;
+    }
+
+
+    for (int i = 0; i < q; ++i) {
+        int l,p;
+        cin>>l>>p;
+        l--;
+        p--;
+        cout<<max_v[l][p]<<endl;
+    }
+
+
     return 0;
 }
