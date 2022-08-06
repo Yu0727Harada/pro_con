@@ -1,3 +1,7 @@
+//
+// Created on 2022/08/06.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,22 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
+    map<int,int>mp;
+    for (int i = 0; i < 5; ++i) {
+        int t;
+        cin>>t;
+        mp[t]++;
     }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+    bool three = false;
+    bool two = false;
+    for(auto item:mp){
+        if(item.second == 3)three = true;
+        if(item.second == 2)two = true;
     }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
+    if(three && two){
+        cout<<"Yes"<<endl;
+    }else{
+        cout<<"No"<<endl;
     }
-    cout<<max(0,ans - 1)<<endl;
-
     return 0;
 }

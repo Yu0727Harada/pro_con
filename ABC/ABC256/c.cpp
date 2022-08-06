@@ -1,3 +1,7 @@
+//
+// Created on 2022/06/18.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,39 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
-    }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
-    }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
-    }
-    cout<<max(0,ans - 1)<<endl;
 
+    vector<int>h(3);
+    vi w(3);
+    for (int i = 0; i < 3; ++i) {
+        cin>>h[i];
+    }
+    for (int i = 0; i < 3; ++i) {
+        cin>>w[i];
+    }
+
+    //ij
+    //kl
+    int ans=  0;
+    for (int i = 1; i <= 30; ++i) {
+        for (int j = 1; j <= 30; ++j) {
+            for (int k = 1; k <= 30; ++k) {
+                for (int l = 1; l <= 30; ++l) {
+
+                    if(i + j >= h[0])continue;
+                    if(i + k >= w[0])continue;
+                    if(j + l >= w[1])continue;
+                    if(k + l >= h[1])continue;
+                    if((h[0] - (i + j)) + (h[1] - (k + l)) >= w[2])continue;
+                    if((w[0] - (i + k)) + (w[1] - (j + l)) >= h[2])continue;
+                    if(((w[2] - ((h[0] - (i + j)) + (h[1] - (k + l))) ) != (h[2] - ((w[0] - (i + k)) + (w[1] - (j + l))))))continue;
+                    ans++;
+
+
+                }
+            }
+        }
+    }
+
+    cout<<ans<<endl;
     return 0;
 }

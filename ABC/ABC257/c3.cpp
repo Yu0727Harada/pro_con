@@ -1,3 +1,7 @@
+//
+// Created on 2022/06/25.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,39 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
-    }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
-    }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
-    }
-    cout<<max(0,ans - 1)<<endl;
+int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    vector<ll> child;
+    vector<ll> adult;
 
+    for (int i = 0; i < n; ++i) {
+        int w;
+        cin>>w;
+        if(s[i] == '0')child.push_back(w);
+        else adult.push_back(w);
+    }
+
+
+
+    vector<pair<int,int>> event;
+    for (int i = 0; i < child.size(); ++i) {
+        event.push_back({child[i] + 1,+1});
+    }
+    for (int i = 0; i < adult.size(); ++i) {
+        event.push_back({adult[i] + 1,-1});
+    }
+    sort(all(event));
+
+    int now = adult.size();
+    int x = 0;
+    int ans = adult.size();
+    for (int i = 0; i < event.size(); ++i) {
+        x = event[i].first;
+        now += event[i].second;
+        chmax(ans,now);
+    }
+    cout<<ans<<endl;
     return 0;
 }

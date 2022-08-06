@@ -1,3 +1,7 @@
+//
+// Created on 2022/06/18.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,46 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
+
+    int n;
+    cin>>n;
+
+    vector<pair<int,int>>v(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>v[i].first>>v[i].second;
     }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+
+    sort(all(v));
+
+    int n_l = -1;
+    int n_r = -1;
+    vector<pair<int,int>>ans;
+    for (int i = 0; i < n; ++i) {
+        int lt, rt;
+        lt = v[i].first;
+        rt = v[i].second;
+        if(n_l == -1){
+            n_l = lt;
+            n_r = rt;
+        }else{
+            if(lt > n_r){
+                ans.push_back({n_l,n_r});
+                n_l = lt;
+                n_r = rt;
+                continue;
+            }
+            if(rt <= n_r){
+                continue;
+            }else if(rt > n_r){
+                n_r = rt;
+            }
+        }
     }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
+    ans.push_back({n_l,n_r});
+    sort(all(ans));
+    for (int i = 0; i < ans.size(); ++i) {
+        cout<<ans[i].first<<" "<<ans[i].second<<endl;
     }
-    cout<<max(0,ans - 1)<<endl;
 
     return 0;
 }

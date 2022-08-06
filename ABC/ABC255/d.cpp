@@ -38,20 +38,58 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
+    int n,q;
+    cin>>n>>q;
+    vl a(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
     }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+
+    sort(all(a));
+    vl posi_a_sum(n+1);
+    posi_a_sum[0] = 0;
+    for (int i = 0; i < n; ++i) {
+        posi_a_sum[i + 1] = posi_a_sum[i] + a[i];
     }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
+    vl nega_a_sum(n + 1);
+    nega_a_sum[n] = 0;
+    for (int i = n - 1; i >= 0; --i) {
+        nega_a_sum[i] = nega_a_sum[i + 1] + (INF - a[i]);
     }
-    cout<<max(0,ans - 1)<<endl;
+
+    for (int i = 0; i < q; ++i) {
+        ll x;
+        cin>>x;
+
+        int ok = -1;
+        int ng = n;
+        int mid;
+        while(abs(ok - ng) > 1){
+            mid = (ok + ng)/2;
+            if(a[mid] <= x){
+                ok = mid;
+            }else{
+                ng = mid;
+            }
+        }
+        ll r = ok;
+        ok = -1;
+        ng = n;
+        mid;
+        while(abs(ok - ng) > 1){
+            mid = (ok + ng)/2;
+            if(a[mid] < x){
+                ok = mid;
+            }else{
+                ng = mid;
+            }
+        }
+        ll l = ng;
+        ll ans = 0;
+        ans += posi_a_sum[n] - posi_a_sum[r + 1] - ((n - (r + 1)) * x);
+        ans += nega_a_sum[0] - nega_a_sum[l] - (l * (INF - x));
+        cout<<ans<<endl;
+    }
 
     return 0;
 }

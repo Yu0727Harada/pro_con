@@ -1,3 +1,7 @@
+//
+// Created on 2022/06/11.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,47 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
+
+    int n,k;
+    cin>>n>>k;
+
+    vl a(n,0);
+    for (int i = 0; i < k; ++i) {
+        int t;
+        cin>>t;
+        t--;
+        a[t] = 1;
     }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+    vector<pair<ll,ll>>b;
+    vector<pair<ll,ll>>c;
+    for (int i = 0; i < n; ++i) {
+        if(a[i] == 1){
+            ll x,y;
+            cin>>x>>y;
+            b.push_back({x,y});
+        }else{
+            ll x,y;
+            cin>>x>>y;
+            c.push_back({x,y});
+        }
+
     }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
+
+
+    vl max_v(c.size(),LINF);
+    for (int i = 0; i < b.size(); ++i) {
+        for (int j = 0; j < c.size(); ++j) {
+
+            ll dis = (c[j].first - b[i].first) * (c[j].first - b[i].first) + ((c[j].second - b[i].second)) * (c[j].second - b[i].second);
+            max_v[j] = min(max_v[j],dis);
+        }
     }
-    cout<<max(0,ans - 1)<<endl;
+    ll ans = 0;
+    for (int i = 0; i < c.size(); ++i) {
+        chmax(ans,max_v[i]);
+    }
+
+    printf("%.10f\n", sqrt((double)ans));
 
     return 0;
 }

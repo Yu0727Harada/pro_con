@@ -1,3 +1,7 @@
+//
+// Created on 2022/07/31.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,38 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
-    }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+    int n,m;
+    cin>>n>>m;
+    vvi edge(n,vi());
+    for (int i = 0; i < m; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;v--;
+        edge[u].push_back(v);
+        edge[v].push_back(u);
     }
     int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
-    }
-    cout<<max(0,ans - 1)<<endl;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            for (int k = j + 1; k < n; ++k) {
 
+                bool ac_find = false;
+                bool ab_find = false;
+                bool bc_find = false;
+
+                for (int l = 0; l < edge[i].size(); ++l) {
+                    if(edge[i][l] == j)ab_find = true;
+                    if(edge[i][l] == k)ac_find = true;
+                }
+                for (int l = 0; l < edge[j].size(); ++l) {
+                    if(edge[j][l] == k)bc_find = true;
+                }
+                if(ac_find && ab_find && bc_find)ans++;
+
+            }
+        }
+    }
+
+    cout<<ans<<endl;
     return 0;
 }

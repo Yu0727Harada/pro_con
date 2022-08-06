@@ -1,3 +1,7 @@
+//
+// Created on 2022/07/09.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,55 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
-    }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
-    }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
-    }
-    cout<<max(0,ans - 1)<<endl;
+    string s;
+    string t;
+    cin>>s>>t;
 
+    vector<pair<char,int>> s2;
+    vector<pair<char,int>> t2;
+
+    char now = s[0];
+    int cnt = 1;
+    for (int i = 1; i < s.size(); ++i) {
+        if(s[i - 1] == s[i]){
+            cnt++;
+        }else{
+            s2.push_back({now,cnt});
+            cnt = 1;
+            now = s[i];
+        }
+    }
+    s2.push_back({now,cnt});
+
+    now = t[0];
+    cnt = 1;
+    for (int i = 1; i < t.size(); ++i) {
+        if(t[i - 1] == t[i]){
+            cnt++;
+        }        else{
+            t2.push_back({now,cnt});
+            cnt = 1;
+            now = t[i];
+        }
+    }
+    t2.push_back({now,cnt});
+    bool ok = true;
+    if(t2.size() == s2.size()){
+        for (int i = 0; i < s2.size(); ++i) {
+            if(s2[i].first == t2[i].first && s2[i].second == t2[i].second){
+                continue;
+            }else if(s2[i].first == t2[i].first && s2[i].second >= 2 && s2[i].second < t2[i].second){
+                continue;
+            }
+            else{
+                ok = false;
+            }
+        }
+    }else{
+        ok = false;
+    }
+
+    if(ok)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
     return 0;
 }

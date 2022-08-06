@@ -1,3 +1,7 @@
+//
+// Created on 2022/07/09.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -21,7 +25,7 @@
 #include <iomanip>
 #include <numeric>
 //#include <atcoder/all>
-
+#include <complex>
 
 #define all(x) (x).begin(),(x).end()
 #define rall(x) (x).rbegin(),(x).rend()
@@ -38,20 +42,22 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
-    }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
-    }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
-    }
-    cout<<max(0,ans - 1)<<endl;
+    int a,b;
+    double d;
+    cin>>a>>b>>d;
+
+    complex<double> P_zero;
+
+    P_zero.real(a);
+    P_zero.imag(b);
+
+
+    double PI = acos(-1);
+    double rad = 2 * PI * (d / 360);
+    complex<double> r(cos(rad),sin(rad));
+    complex<double> ans = P_zero * r;
+
+    printf("%.10f %.10f\n",ans.real(),ans.imag() );
 
     return 0;
 }

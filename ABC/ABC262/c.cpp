@@ -1,3 +1,7 @@
+//
+// Created on 2022/07/31.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,32 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
+    int n;
+    cin>>n;
+    vi v(n);
+
+    ll correct_num = 0;
+    for (int i = 0; i < n; ++i) {
+        int a;
+        cin>>a;
+        a--;
+        v[i] = a;
+        if(i == a)correct_num++;
     }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+    ll ans = 0;
+    ans += (correct_num * (correct_num - 1))/2;
+
+    for (int i = 0; i < n; ++i) {
+        if(v[i] == i)continue;
+        else{
+            int target = v[i];
+            if(i == v[target] && i < target){
+                ans ++;
+
+            }
+        }
     }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
-    }
-    cout<<max(0,ans - 1)<<endl;
+    cout<<ans<<endl;
 
     return 0;
 }

@@ -1,3 +1,7 @@
+//
+// Created on 2022/07/09.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,48 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
+    int n;
+    cin>>n;
+
+    vector<vector<pair<int,int>>>v(n);
+
+    map<int,int>max_v;
+    map<int,int>max_index_cnt;
+    map<int,int>max_index_num;
+
+    for (int i = 0; i < n; ++i) {
+        int m;
+        cin>>m;
+        for (int j = 0; j < m; ++j) {
+
+            int p,e;
+            cin>>p>>e;
+            v[i].push_back({p,e});
+            if(max_v[v[i][j].first] < v[i][j].second){
+                max_v[v[i][j].first] = v[i][j].second;
+                max_index_cnt[v[i][j].first] = 1;
+                max_index_num[v[i][j].first] = i;
+            }else if(max_v[v[i][j].first] == v[i][j].second){
+                max_index_cnt[v[i][j].first] ++;
+            }
+        }
     }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+    ll ans = 0;
+    vi check(n,0);
+    for(auto item:max_index_cnt){
+        if(item.second == 1){
+            check[max_index_num[item.first]] = 1;
+        }
     }
-    int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
+    bool find = false;
+    for (int i = 0; i < n; ++i) {
+        ans += check[i];
+        if(check[i] == 0)find = true;
     }
-    cout<<max(0,ans - 1)<<endl;
+    if(find)ans++;
+
+    cout<<ans<<endl;
+
 
     return 0;
 }

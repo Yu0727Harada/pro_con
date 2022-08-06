@@ -1,3 +1,7 @@
+//
+// Created on 2022/08/06.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -38,20 +42,28 @@ const int INF = 1e9;
 
 
 int main() {
-    int l1,r1,l2,r2;
-    cin>>l1>>r1>>l2>>r2;
-    vi line(101,0);
-    for (int i = l1; i <= r1; ++i) {
-        line[i]++;
-    }
-    for (int i = l2; i <= r2; ++i) {
-        line[i]++;
+    int n;
+    cin>>n;
+    vi p(n,-1);
+    for (int i = 1; i < n; ++i) {
+        int tmp;
+        cin>>tmp;
+        tmp--;
+        p[i] = tmp;
     }
     int ans = 0;
-    for (int i = 0; i < 101; ++i) {
-        ans += max(0,line[i] - 1);
+    queue<pair<int,int>>q;
+    q.push({0,0});
+    while(!q.empty()){
+        int u = q.front().first;
+        int cnt = q.front().second;
+        q.pop();
+        for (int i = u + 1; i < n; ++i) {
+            if(p[i] == u)q.push({i,cnt+1});
+        }
+        if(u == n - 1)ans = cnt;
     }
-    cout<<max(0,ans - 1)<<endl;
+    cout<<ans<<endl;
 
     return 0;
 }
