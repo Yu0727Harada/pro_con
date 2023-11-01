@@ -1,7 +1,3 @@
-//
-// Created by 原田 on 2021/10/30.
-//
-
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -42,61 +38,60 @@ const int INF = 1e9;
 
 
 int main() {
+
     int h,w;
     cin>>h>>w;
-
-    vvi a(h,vi(w));
-    for (int i = 0; i < h; ++i) {
-        for (int j = 0; j < w; ++j) {
+    vvi a(h+2,vi(w+2,-1));
+    for (int i = 1; i <= h; ++i) {
+        for (int j = 1; j <= w; ++j) {
             cin>>a[i][j];
         }
     }
+    vector<vector<int>>ans;
 
-    int i = 0;
-    int j = 0;
-    int nx = 1;
-    int ny = 0;
-
-    vector<string> ans;
-
-    while(true){
-        if(a[i][j] % 2 == 1){
-            ans.push_back(to_string(j + 1)+" "+to_string(i + 1)+" "+to_string(ny + 1)+" "+to_string(nx + 1));
-            a[ny][nx] ++;
-            a[i][j] --;
-        }
-        if(i % 2 == 0 && j < w - 1){
-            j++;
-        }else if(i % 2 == 1 && j > 0){
-            j--;
-        }else{
-            if(i < h){
-                i++;
+    for (int i = 1; i <= h; ++i) {
+        if(i % 2 == 1){
+            for (int j = 1; j <= w; ++j) {
+                if(a[i][j] % 2 == 1){
+                    if(j == w){
+                        if(i + 1 <= h) {
+                            a[i][j]--;
+                            a[i + 1][j]++;
+                            ans.push_back({i, j, i + 1, j});
+                        }
+                    }else{
+                        a[i][j]--;
+                        a[i][j+1]++;
+                        ans.push_back({i,j,i,j+1});
+                    }
+                }
             }
-        }
-
-        if(nx < w - 1 && ny % 2 == 0){
-            nx++;
-        }else if(ny % 2 == 1 && nx > 0){
-            nx--;
         }else{
-            if(ny < h){
-                ny++;
-            }
-        }
-        if(ny == h - 1){
-            if(ny % 2 == 0 && nx == w - 1){
-                break;
-            }else if(ny % 2 == 1 && nx == 0){
-                break;
+            for (int j = w; j >= 0; --j) {
+                if(a[i][j] % 2 == 1){
+                    if(j == 1){
+                        if(i + 1 <= h) {
+                            a[i][j]--;
+                            a[i + 1][j]++;
+                            ans.push_back({i, j, i + 1, j});
+                        }
+                    }else{
+                        a[i][j]--;
+                        a[i][j-1]++;
+                        ans.push_back({i,j,i,j-1});
+                    }
+                }
             }
         }
     }
     cout<<ans.size()<<endl;
-    for (int k = 0; k < ans.size(); ++k) {
-        cout<<ans[i]<<endl;
+    for (int j = 0; j < ans.size(); ++j) {
+        for ( int i = 0; i < ans[j].size(); i++ )
+        {
+            cout << ans[j][i] << ( i + 1 < ans[j].size() ? ' ' : '\n' );
+        }
+        cout << flush;
     }
 
     return 0;
-
 }

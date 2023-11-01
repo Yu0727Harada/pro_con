@@ -1,3 +1,7 @@
+//
+// Created on 2023/07/05.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -35,57 +39,54 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+vvi g(2100,vi(2100,0));
 
 
-
-vector<vector<pair<int,int>>> edge;
-
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+void bfs(int& ret, int x, int y){
+    vector<pair<int,int>> m = {{-1,-1},
+                               {-1,0},
+                               {0,-1},
+                               {0,+1},
+                               {+1,0},
+                               {+1,+1}};
+    ret++;
+    g[x][y] = 2;
+    for (int i = 0; i < m.size(); ++i) {
+        int next_x = x + m[i].first;
+        int next_y = y + m[i].second;
+        if(g[next_x][next_y] == 1){
+            bfs(ret, next_x, next_y);
         }
     }
 
 }
 
+
 int main() {
-    int n,m;
-    cin>>n>>m;
+    int n;
+    cin>>n;
 
-    edge.resize(n);
+    vector<pair<int,int>> l(n);
 
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    for (int i = 0; i < n; ++i) {
+        int x,y;
+        cin>>x>>y;
+        x += 1010;
+        y += 1010;
+        g[x][y] = 1;
+        l[i] = {x,y};
     }
-
     int ans = 0;
     for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
+        if(g[l[i].first][l[i].second] == 1){
+            int r = 0;
+            bfs(r, l[i].first, l[i].second);
+            ans++;
+        }
 
-
-        chmax(ans,t_ans);
     }
-
     cout<<ans<<endl;
+
+
     return 0;
 }

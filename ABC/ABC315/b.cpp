@@ -1,3 +1,7 @@
+//
+// Created on 2023/08/19.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,34 @@ const int INF = 1e9;
 
 
 
+int main() {
+    int m;
+    cin>>m;
 
-vector<vector<pair<int,int>>> edge;
+    vi d(m);
+    for (int i = 0; i < m; ++i) {
+        cin>>d[i];
+    }
 
+    int sum = 0;
+    for (int i = 0; i < m; ++i) {
+        sum += d[i];
+    }
 
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+    int tar = (sum + 1) / 2;
+    pair<int,int> ans;
+    for (int i = 0; i < m; ++i) {
+        if(tar > d[i]){
+            tar -= d[i];
+        }else{
+            ans.first = i + 1;
+            ans.second = tar;
+            break;
         }
     }
 
-}
-
-int main() {
-    int n,m;
-    cin>>n>>m;
-
-    edge.resize(n);
+    cout<<ans.first<<" "<<ans.second<<endl;
 
 
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
-    }
-
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
-
-
-        chmax(ans,t_ans);
-    }
-
-    cout<<ans<<endl;
     return 0;
 }

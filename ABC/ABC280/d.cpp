@@ -36,56 +36,66 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 
-
-
-vector<vector<pair<int,int>>> edge;
-
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+vector<pair<ll,ll>>prime_factorize(ll n){
+    vector<pair<ll,ll>>ret;
+    for (ll i = 2; i * i <= n ; ++i) {
+        if(n % i == 0){
+            ll ex = 0;//指数
+            while(n % i == 0){
+                ex++;
+                n /= i;
+            }
+            ret.push_back({i, ex});
         }
     }
+    if(n != 1){
+        ret.push_back({n,1});
+    }
+    return ret;
+    //example n = 12, ret = [[2,2],[3,1]と返す
+}
+
+ll solve(ll x, ll y){
+    ll ret = y / x;
+
+    if(ret >= 2){
+        ret += solve(x,ret);
+    }
+    return ret;
 
 }
 
 int main() {
-    int n,m;
-    cin>>n>>m;
 
-    edge.resize(n);
+    ll k;
+    cin>>k;
 
+    auto v = prime_factorize(k);
 
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    ll ng = 0;
+    ll ok = LINF;
+    ll mid;
+
+    while(abs(ok - ng) > 1){
+        mid = (ok + ng) / 2;
+        bool judge = true;
+        for (int i = 0; i < v.size(); ++i) {
+            if(v[i].second <= solve(v[i].first,mid)){
+                continue;
+            }else{
+                judge = false;
+                break;
+            }
+        }
+        if(judge){
+            ok = mid;
+        }else{
+            ng = mid;
+        }
     }
-
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
+    cout<<ok<<endl;
 
 
-        chmax(ans,t_ans);
-    }
 
-    cout<<ans<<endl;
     return 0;
 }

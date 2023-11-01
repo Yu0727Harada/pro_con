@@ -1,3 +1,7 @@
+//
+// Created on 2023/08/04.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,40 @@ const int INF = 1e9;
 
 
 
+int main() {
+    int n;
+    cin>>n;
 
-vector<vector<pair<int,int>>> edge;
+    vvi edge(n,vi());
+    for (int i = 0; i < n; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;
+        v--;
+        edge[u].push_back(v);
+        edge[v].push_back(u);
+    }
 
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+    queue<pair<int,int>>q;
+    for (int i = 0; i < n; ++i) {
+        if(edge[i].size() == 1){
+            q.push({i,0});
+            break;
         }
     }
 
-}
+    vi star(n,0);
+    vi p(n,0);
 
-int main() {
-    int n,m;
-    cin>>n>>m;
+    while(!q.empty()){
+        int u = q.front().first;
+        int p = q.front().second;
+        q.pop();
 
-    edge.resize(n);
 
 
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+
     }
 
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
-
-
-        chmax(ans,t_ans);
-    }
-
-    cout<<ans<<endl;
     return 0;
 }

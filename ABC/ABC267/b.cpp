@@ -1,3 +1,7 @@
+//
+// Created on 2022/09/03.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,40 @@ const int INF = 1e9;
 
 
 
-
-vector<vector<pair<int,int>>> edge;
-
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
-        }
-    }
-
-}
-
 int main() {
-    int n,m;
-    cin>>n>>m;
+    string s;
+    cin>>s;
 
-    edge.resize(n);
+    vi col(7,0);
+    col[0] += s[6] - '0';
+    col[1] += (s[3] - '0');
+    col[2] += (s[7] - '0') + (s[1] - '0');
+    col[3] += (s[4] - '0') + (s[0] - '0');
+    col[4] += (s[8] - '0') + (s[2] - '0');
+    col[5] += (s[5] - '0');
+    col[6] += (s[9] - '0');
 
+    if(s[0] == '0'){
+        for (int i = 1; i < 6; ++i) {
+            bool find_l = false;
+            bool find_r = false;
+            if(col[i] == 0){
+                for (int j = 0; j < i; ++j) {
+                    if(col[j] >= 1)find_l = true;
+                }
+                for (int j = i + 1; j < 7; ++j) {
+                    if(col[j] >= 1)find_r = true;
+                }
+                if(find_l && find_r){
+                    cout<<"Yes"<<endl;
+                    return 0;
+                }
+            }
+        }
 
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
     }
-
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
+    cout<<"No"<<endl;
 
 
-        chmax(ans,t_ans);
-    }
-
-    cout<<ans<<endl;
     return 0;
 }

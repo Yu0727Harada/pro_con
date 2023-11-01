@@ -1,3 +1,7 @@
+//
+// Created on 2023/08/04.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,43 @@ const int INF = 1e9;
 
 
 
+int main() {
+    int n;
+    cin>>n;
+    vector<pair<string,int>>s(n);
 
-vector<vector<pair<int,int>>> edge;
+    for (int i = 0; i < n; ++i) {
+        cin>>s[i].first;
+        s[i].second = i;
+    }
+    s.push_back({"@",-1});
+    s.push_back({"|",-1});
 
+    sort(all(s));
 
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
+    vi ans(n,0);
+    for (int i = 1; i <= n; ++i) {
+        int ok = 0;
+        for (int j = 0; j < max(s[i - 1].first.size(),s[i].first.size()); ++j) {
+            if(s[i - 1].first[j] == s[i].first[j]){
+                ok++;
+            }else{
+                break;
+            }
 
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+        }
+        if(s[i].second != -1){
+            chmax(ans[s[i].second],ok);
+        }
+        if(s[i - 1].second != -1){
+            chmax(ans[s[i - 1].second],ok);
         }
     }
 
-}
-
-int main() {
-    int n,m;
-    cin>>n>>m;
-
-    edge.resize(n);
-
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    for (int i = 0; i < ans.size(); ++i) {
+        cout<<ans[i]<<endl;
     }
 
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
 
-
-        chmax(ans,t_ans);
-    }
-
-    cout<<ans<<endl;
     return 0;
 }

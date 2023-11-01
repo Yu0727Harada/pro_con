@@ -37,55 +37,29 @@ const int INF = 1e9;
 
 
 
-
-vector<vector<pair<int,int>>> edge;
-
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
-        }
-    }
-
-}
-
 int main() {
-    int n,m;
-    cin>>n>>m;
+    int n;
+    cin>>n;
 
-    edge.resize(n);
-
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
-    }
-
-    int ans = 0;
+    vector<ll>a(n);
+    vector<ll>b(n);
     for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
+        cin>>a[i];
+        cin>>b[i];
+    }
+    vi ans(n);
+    iota(all(ans),0);
 
 
-        chmax(ans,t_ans);
+    //ラムダ式
+    // []キャプチャ　＆と入れるとそのスコープ内の変数が全て使える。
+    //一般的には使用する変数を宣言する
+    stable_sort(all(ans),[&](int i, int j){
+        return a[i]*b[j] > a[j]*b[i];
+    });
+    for (int i = 0; i < n; ++i) {
+        cout<<ans[i] + 1<<endl;
     }
 
-    cout<<ans<<endl;
     return 0;
 }

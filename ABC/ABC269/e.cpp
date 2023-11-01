@@ -1,3 +1,7 @@
+//
+// Created on 2023/07/11.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,61 @@ const int INF = 1e9;
 
 
 
+int main() {
 
-vector<vector<pair<int,int>>> edge;
+    int n;
+    cin>>n;
 
+    int col = 1;
+    int raw = 1;
 
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
+    //col
+    int ok = 1;
+    int ng = n;
+    int mid = (ok + ng) / 2;
 
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+    int t;
+
+    while(abs(ok - ng) > 1){
+        mid = (ok + ng) / 2;
+        cout<<'?'<<" "<<ok<<" "<<mid<<" "<<1<<" "<<n<<endl;
+        cin>>t;
+        if(t == mid - ok + 1){
+            ok = mid + 1;
+        }else{
+            ng = mid;
         }
     }
+    mid = (ok + ng) / 2;
+    cout<<'?'<<" "<<ok<<" "<<mid<<" "<<1<<" "<<n<<endl;
+    cin>>t;
+    if(t == 1)col = ng;
+    else if(t == 0)col = ok;
 
-}
+    ok = 1;
+    ng = n;
 
-int main() {
-    int n,m;
-    cin>>n>>m;
-
-    edge.resize(n);
-
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    while(abs(ok - ng) > 1){
+        mid = (ok + ng) / 2;
+        cout<<'?'<<" "<<1<<" "<<n<<" "<<ok<<" "<<mid<<endl;
+        cin>>t;
+        if(t == mid - ok + 1){
+            ok = mid + 1;
+        }else{
+            ng = mid;
+        }
     }
-
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
+    mid = (ok + ng) / 2;
+    cout<<'?'<<" "<<1<<" "<<n<<" "<<ok<<" "<<mid<<endl;
+    cin>>t;
+    if(t == 1)raw = ng;
+    else if(t == 0)raw = ok;
 
 
-        chmax(ans,t_ans);
-    }
+    cout<<"!"<<" "<<col<<" "<<raw<<endl;
 
-    cout<<ans<<endl;
+
     return 0;
 }
+
+//二分探索きっちりかく

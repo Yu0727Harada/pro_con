@@ -1,3 +1,7 @@
+//
+// Created on 2022/08/17.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,49 @@ const int INF = 1e9;
 
 
 
-
-vector<vector<pair<int,int>>> edge;
-
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+int main() {
+    int h1,w1;
+    cin>>h1>>w1;
+    vvi a(h1,vi(w1,0));
+    for (int i = 0; i < h1; ++i) {
+        for (int j = 0; j < w1; ++j) {
+            cin>>a[i][j];
+        }
+    }
+    int h2,w2;
+    cin>>h2>>w2;
+    vvi b(h2,vi(w2,0));
+    for (int i = 0; i < h2; ++i) {
+        for (int j = 0; j < w2; ++j) {
+            cin>>b[i][j];
         }
     }
 
-}
+    //n個の要素のbit全探索する
+    for (int bit = 0; bit < (1<<h1); ++bit) {
+        for (int bit_w = 0; bit_w < (1<<w1); ++bit_w) {
+            vvi tmp;
+            for (int i = 0; i < h1; ++i) {
+                vi tmp2;
+                for (int j = 0; j < w1; ++j) {
+                    if (bit & (1 << i) || bit_w & (1<<j)) {
+                        continue;
+                    }else{
+                        tmp2.push_back(a[i][j]);
+                    }
+                }
+                if(tmp2.size() != 0)tmp.push_back(tmp2);
+            }
 
-int main() {
-    int n,m;
-    cin>>n>>m;
+            if(tmp == b){
+                cout<<"Yes"<<endl;
+                return 0;
+            }
 
-    edge.resize(n);
-
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+        }
     }
 
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
+    cout<<"No"<<endl;
 
-
-        chmax(ans,t_ans);
-    }
-
-    cout<<ans<<endl;
     return 0;
 }

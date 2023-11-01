@@ -1,3 +1,7 @@
+//
+// Created on 2023/08/19.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,36 @@ const int INF = 1e9;
 
 
 
+int main() {
+    int n;
+    cin>>n;
 
-vector<vector<pair<int,int>>> edge;
+    map<int,multiset<ll>>mp;
 
+    for (int i = 0; i < n; ++i) {
+        ll f,s;
+        cin>>f>>s;
+        mp[f].insert(-s);
+    }
 
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+    vl dis_li;
+    ll same_ans = -LINF;
+    for(auto ice:mp){
+        auto it = ice.second.begin();
+        dis_li.push_back(*it);
+        if(ice.second.size() >= 2){
+            ll one = *it;
+            it++;
+            ll two = *it;
+            chmax(same_ans,(one + (two / 2)) * -1);
         }
     }
-
-}
-
-int main() {
-    int n,m;
-    cin>>n>>m;
-
-    edge.resize(n);
-
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    ll ans = -LINF;
+    if(dis_li.size() >= 2){
+        sort(all(dis_li));
+        ans = (dis_li[0] + dis_li[1]) * -1;
     }
+    cout<<max(ans,same_ans)<<endl;
 
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
-
-
-        chmax(ans,t_ans);
-    }
-
-    cout<<ans<<endl;
     return 0;
 }

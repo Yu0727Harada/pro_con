@@ -1,3 +1,7 @@
+//
+// Created on 2023/07/09.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,65 @@ const int INF = 1e9;
 
 
 
+int main() {
+    int n,x,y;
+    cin>>n>>x>>y;
+    x--;
+    y--;
 
-vector<vector<pair<int,int>>> edge;
+    vvi g(n,vi());
+    vi visit(n,-1);
+    vi route_x;
+    vi route_y;
+
+    for (int i = 0; i < n - 1; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;
+        v--;
+        g[u].push_back(v);
+        g[v].push_back(u);
+    }
+
+    queue<int> q;
+
+    q.push(y);
 
 
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
+    while(!q.empty()){
+        int now = q.front();
 
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
+        q.pop();
+
+        if(now == x){
+
+            break;
+        }
+
+        for (int i = 0; i < g[now].size(); ++i) {
+            int next = g[now][i];
+            if(visit[next] == -1){
+                visit[next] = now;
+                q.push(next);
+            }
         }
     }
 
-}
-
-int main() {
-    int n,m;
-    cin>>n>>m;
-
-    edge.resize(n);
-
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    queue<int>qq;
+    qq.push(x);
+    while(!qq.empty()){
+        cout<<qq.front() + 1<<endl;
+        if(qq.front() == y)break;
+        if(visit[qq.front()] != -1)qq.push(visit[qq.front()]);
+        qq.pop();
     }
 
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
 
 
-        chmax(ans,t_ans);
-    }
 
-    cout<<ans<<endl;
+
+
+
+
     return 0;
 }

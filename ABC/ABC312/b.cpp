@@ -1,3 +1,7 @@
+//
+// Created on 2023/07/29.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -37,55 +41,50 @@ const int INF = 1e9;
 
 
 
-
-vector<vector<pair<int,int>>> edge;
-
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
-        }
-    }
-
-}
-
 int main() {
-    int n,m;
-    cin>>n>>m;
 
-    edge.resize(n);
+    int h,w;
+    cin>>h>>w;
 
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    vector<string>s(h);
+    for (int i = 0; i < h; ++i) {
+        cin>>s[i];
     }
 
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
+    for (int i = 0; i + 9 <= h; ++i) {
+        for (int j = 0; j + 9 <= w; ++j) {
 
+            bool ok = true;
+            for (int k = i; k < i + 3; ++k) {
+                for (int l = j; l < j + 3; ++l) {
+                    if(s[k][l] == '.')ok = false;
+                }
+            }
+            for (int k = i + 6; k < i + 9; ++k) {
+                for (int l = j + 6; l < j + 9; ++l) {
+                    if(s[k][l] == '.')ok = false;
+                }
+            }
 
-        chmax(ans,t_ans);
+            for (int k = i; k < i + 4; ++k) {
+                if(s[k][j + 3] == '#')false;
+            }
+            for (int k = j; k < j + 4; ++k) {
+                if(s[i + 3][k] == '#')false;
+            }
+            for (int k = i + 5; k < i + 9; ++k) {
+                if(s[k][j + 5] == '#')ok = false;
+            }
+            for (int k = j + 5; k < j + 9; ++k) {
+                if(s[i + 5][k] == '#')ok = false;
+            }
+            if(ok){
+                cout<<i + 1<<" "<<j+1<<endl;
+            }
+
+        }
+
     }
 
-    cout<<ans<<endl;
     return 0;
 }

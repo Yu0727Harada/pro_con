@@ -1,3 +1,7 @@
+//
+// Created on 2023/07/07.
+//
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -36,56 +40,29 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 
-
-
-vector<vector<pair<int,int>>> edge;
-
-
-void walk(int now, int cnt, vi log, vector<bool> visit,int &t_ans){
-    visit[now] = true;
-    for (int i = 0; i < edge[now].size(); ++i) {
-        int next = edge[now][i].first;
-        int next_cost = edge[now][i].second;
-
-        if(log[next] <= cnt + next_cost && !visit[next]){
-            log[next] = cnt + next_cost;
-            chmax(t_ans,cnt + next_cost);
-            walk(next, cnt + next_cost, log,visit,t_ans);
-        }
-    }
-
-}
-
 int main() {
-    int n,m;
-    cin>>n>>m;
+    ll n;
+    cin>>n;
+    //n個の要素のbit全探索する
 
-    edge.resize(n);
-
-
-    for (int i = 0; i < m; ++i) {
-        int a;
-        int b;
-        int c;
-        cin>>a>>b>>c;
-        a--;
-        b--;
-        edge[a].push_back({b,c});
-        edge[b].push_back({a,c});
+    vi a;
+    for (int i = 0; i < 60; ++i) {
+        if(n & (1ll<<i))a.push_back(i);
     }
 
-    int ans = 0;
-    for (int i = 0; i < n; ++i) {
-        vector<bool> visit(n);
-        visit[i] = true;
-        vi log(n,0);
-        int t_ans = 0;
-        walk(i,0,log,visit,t_ans);
-
-
-        chmax(ans,t_ans);
+    vl res;
+    for (ll bit = 0; bit < (1ll<<a.size()); ++bit) {
+        ll tmp = 0;
+        for (int i = 0; i < a.size(); ++i) {
+            if(bit & (1<<i)){
+                //i個目の要素にフラグが立っていた時の処理
+                tmp |= (1ll<<a[i]);
+            }
+        }
+        cout<<tmp<<endl;
     }
 
-    cout<<ans<<endl;
+
+    
     return 0;
 }
