@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2024/05/03.
 //
 
 #include <iostream> // cout, endl, cin
@@ -43,32 +43,25 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    int q;
+    cin>>q;
+    vi t(n,1);
+
+    for (int i = 0; i < q; ++i) {
+        int tmp;
+        cin>>tmp;
+        tmp--;
+        if(t[tmp]){
+            t[tmp] = 0;
+        }else{
+            t[tmp] = 1;
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    int ans = 0;
+    for (int i = 0; i < n; ++i) {
+        ans += t[i];
     }
+    cout<<ans<<endl;
+
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/21.
 //
 
 #include <iostream> // cout, endl, cin
@@ -42,33 +42,31 @@ const int INF = 1e9;
 
 int main() {
     int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    cin>>n;;
+    int m;
+    cin>>m;
+    vector<deque<char>>q(n+5);
+    string s;
+    cin>>s;
+    vi c_l(n);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        int c;
+        cin>>c;
+        c_l[i] = c;
+        q[c].push_back(s[i]);
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    for (int i = 0; i < n+5; ++i) {
+        if(!q[i].empty()){
+            char tmp = q[i].back();
+            q[i].pop_back();
+            q[i].push_front(tmp);
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+
+    for (int i = 0; i < n; ++i) {
+        cout<<q[c_l[i]].front();
+        q[c_l[i]].pop_front();
     }
+    cout<<endl;
     return 0;
 }

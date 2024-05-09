@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/28.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,39 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    int n,k,q;
+    cin>>n>>k>>q;
+    vi koma(k,0);
+    vi masu(n,0);
+    for (int i = 0; i < k; ++i) {
+        int a;
+        cin>>a;
+        a--;
+        koma[i] = a;
+        masu[a]++;
+    }
+    for (int i = 0; i < q; ++i) {
+        int l;
+        cin>>l;
+        l--;
+
+            if(koma[l] == n - 1)continue;
+            else{
+                if(masu[koma[l] + 1] == 0){
+                    masu[koma[l]] = 0;
+                    masu[koma[l] + 1] ++;
+                    koma[l] = koma[l]+1;
+
+                }else{
+                    continue;
+                }
+            }
+
+    }
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+        if(masu[i]){
+            cout<<i+1<<endl;
         }
-        prev = item.first;
-    }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
     }
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/29.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,48 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+
+    ll n,m;
+    cin>>n>>m;
+    m--;
+    vl words(n);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        cin>>words[i];
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+
+    ll ok = LINF;
+    ll ng = 0ull;
+    ll mid;
+    while(ok - ng > 1){
+        mid = (ok + ng)/2;
+
+        bool check = true;
+        ll now_w = 0;
+        ll now_h = 0;
+        for (int i = 0; i < n; ++i) {
+            if(now_w == 0){
+                //先頭だったらスペースを入れない
+                if(mid > now_w + words[i])now_w += words[i];
+                else check = false;
+            }else{
+                if(mid > now_w + words[i] + 1){
+                    now_w += (words[i]);
+                    now_w ++;
+                }else if(mid <= words[i]){
+                    check = false;
+                }else{
+                    //入らない場合は次の行へ
+                    now_h++;
+                    now_w = 0;
+                    now_w += words[i];
+                }
+            }
         }
-        prev = item.first;
+        if(now_h > m)check = false;
+        if(check)ok = mid;
+        else ng = mid;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    cout<<ok - 1<<endl;
+
     return 0;
 }

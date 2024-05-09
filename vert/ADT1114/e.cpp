@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/14.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,31 @@ const int INF = 1e9;
 
 
 int main() {
+    string x;
+
     int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    cin>>x>>n;
+    map<char,char>trans;
+    for (int i = 0; i < x.size(); ++i) {
+        trans[x[i]] = char('a' + i);
+    }
+    vector<pair<string,string>>name(n);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        cin>>name[i].second;
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    for (int i = 0; i < n; ++i) {
+        string tmp = "";
+        for (int j = 0; j < name[i].second.size(); ++j) {
+            tmp += trans[name[i].second[j]];
         }
-        prev = item.first;
+        name[i].first = tmp;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    sort(all(name));
+    for (int i = 0; i < n; ++i) {
+        cout<<name[i].second<<endl;
     }
+
+
+
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/16.
 //
 
 #include <iostream> // cout, endl, cin
@@ -39,36 +39,49 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 
+ll bfs(int u,vvi &edge,vector<bool> &visit){
+    int cnt = 1;
+    for (int i = 0; i < edge[u].size(); ++i) {
+        if(visit[edge[u][i]] == false){
+            visit[edge[u][i]] = true;
+            cnt += bfs(edge[u][i],edge,visit);
+        }
+    }
+    return cnt;
+}
+
 
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+    vvi edge(n,vi());
+    for (int i = 0; i < n -1; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;
+        v--;
+        edge[u].push_back(v);
+        edge[v].push_back(u);
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
-        }
-        prev = item.first;
+    vector<bool>visit(n,false);
+    visit[0]=true;
+    if(edge[0].size() == 1){
+        cout<<1<<endl;
+        return 0;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    vector<ll>ans(edge[0].size());
+    for (int i = 0; i < edge[0].size(); ++i) {
+        visit[edge[0][i]] = true;
+        ans[i] =bfs(edge[0][i],edge,visit);
+
     }
+    sort(all(ans));
+    ll out = 0;
+    for (int i = 0; i < ans.size()-1; ++i) {
+        out += ans[i];
+    }
+    cout<<out + 1<<endl;
+
+
     return 0;
 }

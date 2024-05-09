@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/20.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,22 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
+    ll n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    vector<char> ans;
+    while(n != 0){
+        if(n & (1<<(ll)0)){
+            //i個目の要素にフラグが立っていた時の処理
+            ans.push_back('A');
+            n -= (ll)1;
+        }else{
+            ans.push_back('B');
+            n /= (ll)2;
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    for (int i = ans.size()- 1; i >= 0; --i) {
+        cout<<ans[i];
     }
+    cout<<endl;
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/29.
 //
 
 #include <iostream> // cout, endl, cin
@@ -43,29 +43,45 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    vector<string> masu(n);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        cin>>masu[i];
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    bool find = false;
+    for (int i = 0; i <= n - 6; ++i) {
+        for (int j = 0; j <= n - 6; ++j) {
+            //縦の判定
+            for (int k = i; k < i + 6; ++k) {
+                int cnt = 0;
+                for (int l = j; l < j + 6; ++l) {
+                    if(masu[k][l] == '#')cnt++;
+                }
+                if(cnt >= 4)find = true;
+            }
+
+            //横の判定
+            for (int l = j; l < j + 6; ++l) {
+                int cnt = 0;
+                for (int k = i; k < i + 6; ++k) {
+                    if(masu[k][l] == '#')cnt++;
+                }
+                if(cnt >= 4)find = true;
+            }
+            //斜めの判定
+            int cnt = 0;
+            for (int m = 0; m < 6; ++m) {
+                if(masu[i + m][j + m] == '#')cnt++;
+            }
+            if(cnt >= 4)find = true;
+            cnt = 0;
+            for (int m = 0; m < 6; ++m) {
+                if(masu[i + (5 - m)][j + m] == '#')cnt++;
+            }
+            if(cnt >= 4)find = true;
+
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
+    if(find){
         cout<<"Yes"<<endl;
     }else{
         cout<<"No"<<endl;

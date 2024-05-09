@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/20.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,38 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
+    ll a,b;
     cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    ll l = 0;
+    ll r = LINF / b;
+    ll c1 = 0;
+    ll c2 = INF ;
+
+    while(abs(c2 - c1) > 1){
+
+        c1 = (l * 2 + r)/3;
+        c2 = (l + r * 2)/3;
+
+        long double c1ans;
+        long double c2ans;
+        c1ans = (a / sqrt(1 + c1)) + b * c1;
+        c2ans = (a / sqrt(1 + c2)) + b * c2;
+
+
+        if(c1ans > c2ans){
+            l = c1;
+        }else{
+            r = c2;
         }
-        prev = item.first;
+
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    double ans = LINF;
+
+        chmin(ans, max((double)0,a / sqrt(1 + c1) + b * c1));
+        chmin(ans, max((double)0,a / sqrt(1 + 0)));
+        chmin(ans, max((double)0,a / sqrt(1 + c2) + b * c2));
+
+    printf("%.10f\n", ans);
+
     return 0;
 }

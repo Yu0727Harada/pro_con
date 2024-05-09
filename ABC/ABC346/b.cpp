@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2024/05/08.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,32 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    int w,b;
+    cin>>w>>b;
+    string s = "wbwbwwbwbwbw";
+
+    vi w_l(500,0);
+    vi b_l(500,0);
+
+    for (int i = 0; i < 30; ++i) {
+        for (int j = 0; j < s.size(); ++j) {
+            if(s[j] == 'w'){
+                w_l[i * 12 + j + 1] = w_l[i * 12 + j] + 1;
+                b_l[i * 12 + j + 1] = b_l[i * 12 + j];
+            }else{
+                w_l[i * 12 + j + 1] = w_l[i * 12 + j];
+                b_l[i * 12 + j + 1] = b_l[i * 12 + j]+1;
+            }
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    for (int i = 0; i < 29 * 12; ++i) {
+        for (int j = 0; j < 29 * 12; ++j) {
+            if(w == w_l[j] - w_l[i] && b == b_l[j] - b_l[i]){
+                cout<<"Yes"<<endl;
+                return 0;
+            }
+        }
     }
+cout<<"No"<<endl;
     return 0;
 }

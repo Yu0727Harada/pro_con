@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/02.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,22 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
+    ll n;
+    ll s,m,l;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    cin>>s>>m>>l;
+    ll ans = LINF;
+    for (ll i = 0;  i <= n; ++i) {
+        for (ll j = 0;  j <= n; ++j) {
+            for (ll k = 0;  k <= n; ++k) {
+                if((6 * i) + (8 * j) + (12 * k) >= n){
+                    ll amount = i * s + j * m + k * l;
+                    chmin(ans,amount);
+                }
+            }
+
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    cout<<ans<<endl;
     return 0;
 }
