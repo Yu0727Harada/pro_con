@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yuha2114 on 2024/05/09.
 //
 
 #include <iostream> // cout, endl, cin
@@ -38,40 +38,55 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
-ll bit_count(ll i){
-    //数字iを二進数表記にした際の1の数を調べる
-    if (i==0) return 0;
-    return bit_count(i>>1ull) + (i & 1ull);
-}
+
 
 int main() {
-    ll a,b,c;
-    cin>>a>>b>>c;
-    ll c_cnt = bit_count(c);
+    int h,w,m;
+    cin>>h>>w>>m;
+    set<int> h_st;
+    set<int> w_st;
+    map<int,ll>mp;
+    
+    stack<vi>q;
+    for (int i = 0; i < m; ++i) {
+        int t,a,x;
+        cin>>t>>a>>x;
+        a--;
+        q.push({t,a,x});
+    }
+    int zero_cnt = w*h;
+    while(!q.empty()){
+        int t,a,x;
+        t = q.top()[0];
+        a = q.top()[1];
+        x = q.top()[2];
+        q.pop();
 
-    if(a > b)    ll sub = b - a;
-
-    ll ans_a = 0;
-    ll ans_b = 0;
-    for (ll i = 0; i < 60; ++i) {
-        if(c & (1ull<<i)){
-            if(sub > 0){
-                sub--;
-                b |= (1ull<<i);
-            }else if(a >= b && a > 0){
-                a--;
-                a |= (1ull<<i);
-            }else if(b > 0){
-                b |= (1ull<<i);
-            }else{
-                if(a == 0 && b == 0){
-                    cout<<ans_a<<" "<<ans_b<<endl;
-                }else{
-                    cout<<"No"<<endl;
-                    return 0;
-                }
+        if(t == 1){
+            //row ->h
+            if(h_st.count(a) == 1)continue;
+            if(w - w_st.size()){
+                h_st.insert(a);
+                zero_cnt -= w - w_st.size();
+                mp[x] += w - w_st.size();
+            }
+        }else{
+            //col ->w
+            if(w_st.count(a) == 1) continue;
+            if(h - h_st.size()){
+                w_st.insert(a);
+                zero_cnt -= h - h_st.size();
+                mp[x] += h - h_st.size();
             }
         }
+    }
+    mp[0] = mp[0] + zero_cnt;
+    if(mp[0] == 0){
+        mp.erase(0);
+    }
+    cout<<mp.size()<<endl;
+    for(auto item:mp){
+        cout<<item.first<<" "<<item.second<<endl;
     }
 
     return 0;
