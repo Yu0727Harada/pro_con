@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/16.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,44 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    int n,k;
+    cin>>n>>k;
+    vi va(n,0);
+    for (int i = 0; i < k; ++i) {
+        int a;
+        cin>>a;
+        a--;
+        va[a] = 1;
+    }
+    vector<pair<ll,ll>> light;
+    vector<pair<ll,ll>> dark;
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+        ll x,y;
+        cin>>x>>y;
+        if(va[i]) {
+            light.push_back({x, y});
+        }else {
+            dark.push_back({x,y});
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+
+    ll max_l = 0;
+
+    vector<ll>distance(dark.size(),LINF);
+
+    for (int i = 0; i < light.size(); ++i) {
+        for (int j = 0; j < dark.size(); ++j) {
+            ll tmp_l = ((dark[j].first - light[i].first) * (dark[j].first - light[i].first)) + ((dark[j].second - light[i].second) * (dark[j].second - light[i].second));
+
+            chmin(distance[j],tmp_l);
+        }
     }
+
+    for (int i = 0; i < dark.size(); ++i) {
+        chmax(max_l,distance[i]);
+    }
+    double ans = sqrt(max_l);
+    printf("%.10f\n", ans);
+
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/22.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,35 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+   ll n,m;
+    cin>>n>>m;
+    vl a(n);
+    vl b(m);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        cin>>a[i];
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    for (int i = 0; i < m; ++i) {
+        cin>>b[i];
+    }
+    sort(all(a));
+    sort(all(b));
+    ll ans = LINF;
+    for (int i = 0; i < n; ++i) {
+        ll ok = 0;
+        ll ng = m;
+        ll mid;
+        while(ng - ok > 1){
+            mid = (ok + ng) / 2;
+            if(b[mid] <= a[i])ok = mid;
+            else ng = mid;
         }
-        prev = item.first;
+        chmin(ans,abs(a[i] - b[ok]));
+
+        chmin(ans,abs(a[i] - b[max(ll(0),ok -2)]));
+        chmin(ans,abs(a[i] - b[max(ll(0),ok -1)]));
+        chmin(ans,abs(a[i] - b[min(m - 1,ok +1)]));
+        chmin(ans,abs(a[i] - b[min(m-1,ok +2)]));
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    cout<<ans<<endl;
     return 0;
 }

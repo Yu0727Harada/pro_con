@@ -1,6 +1,3 @@
-//
-// Created by yu on 2024/04/26.
-//
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -41,34 +38,31 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    int n,q;
+    cin>>n>>q;
+    vi dis_to_num(n);
+    vi num_to_dis(n);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        dis_to_num[i] = i;
+        num_to_dis[i] = i;
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    for (int i = 0; i < q; ++i) {
+        int x;
+        cin>>x;
+        x--;
+        int u = num_to_dis[x];
+
+        if(u == n - 1){
+            u--;
         }
-        prev = item.first;
+        int x_target = dis_to_num[u];
+        int x_next = dis_to_num[u + 1];
+        swap(dis_to_num[u],dis_to_num[u + 1]);
+        swap(num_to_dis[x_target],num_to_dis[x_next]);
+
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    for (int i = 0; i < n; ++i) {
+        cout<<dis_to_num[i]+1<<endl;
     }
     return 0;
 }

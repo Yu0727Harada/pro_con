@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2024/04/30.
 //
 
 #include <iostream> // cout, endl, cin
@@ -43,32 +43,42 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    string s;
+    cin>>s;
+    vl cost(n);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        cin>>cost[i];
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    vl zero_one(n,0);
+    vl one_zero(n,0);
+    if(s[0] == '0')one_zero[0] = cost[0];
+    else if(s[0] == '1')zero_one[0] = cost[0];
+    for (int i = 1; i < n; ++i) {
+        if(i % 2 == 0){
+            if(s[i] == '0'){
+                one_zero[i] = one_zero[i - 1] + cost[i];
+                zero_one[i] = zero_one[i - 1];
+            }else{
+                zero_one[i] = zero_one[i - 1] + cost[i];
+                one_zero[i] = one_zero[i - 1];
+            }
+        }else{
+            if(s[i] == '1'){
+                one_zero[i] = one_zero[i - 1] + cost[i];
+                zero_one[i] = zero_one[i - 1];
+            }else{
+                zero_one[i] = zero_one[i - 1] + cost[i];
+                one_zero[i] = one_zero[i - 1];
+            }
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    ll ans = LINF;
+
+    for (int i = 1; i < n; ++i) {
+        chmin(ans,one_zero[i - 1] + (zero_one[n - 1] - zero_one[i - 1]));
+        chmin(ans,zero_one[i-1] + (one_zero[n-1] - one_zero[i - 1]));
     }
+
+    cout<<ans<<endl;
     return 0;
 }

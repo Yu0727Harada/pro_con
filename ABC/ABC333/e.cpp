@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/16.
 //
 
 #include <iostream> // cout, endl, cin
@@ -43,32 +43,38 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    vector<pair<int,int>>event(n);
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        cin>>event[i].first>>event[i].second;
+        event[i].second--;
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    vi item(n,0);
+    vi ans(n,0);
+    int l_ans = 0;
+    int ll_ans = 0;
+    for (int i = n-1; 0 <= i; --i) {
+        if(event[i].first == 2){
+            item[event[i].second]++;
+            l_ans++;
+            chmax(ll_ans,l_ans);
+        }else{
+            if(item[event[i].second] > 0){
+                l_ans--;
+                ans[i] = 1;
+                item[event[i].second]--;
+            }
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+
+    for (int i = 0; i < n; ++i) {
+        if(item[i] != 0){
+            cout<<-1<<endl;
+            return 0;
+        }
+    }
+    cout<<ll_ans<<endl;
+    for (int i = 0; i < n; ++i) {
+        cout<<ans[i]<<endl;
     }
     return 0;
 }

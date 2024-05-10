@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2024/04/25.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,42 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+    int n,m;
+    cin>>n>>m;
+    vvi edge(n,vi());
+    for (int i = 0; i < m; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;v--;
+        edge[u].push_back(v);
+        edge[v].push_back(u);
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    vector<bool> visit(n,false);
+    queue<int>q;
+    q.push(0);
+    visit[0]=true;
+    while(!q.empty()){
+        int u =q.front();
+        q.pop();
+        for (int i = 0; i < edge[u].size(); ++i) {
+            if(!visit[edge[u][i]]) {
+                q.push(edge[u][i]);
+                visit[edge[u][i]] = true;
+            }
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    bool ok = true;
+    for (int i = 0; i < n; ++i) {
+        if(!visit[i])ok = false;
     }
+
+    for (int i = 0; i < n; ++i) {
+        if(edge[i].size() > 2)ok = false;
+
+    }
+    if(m != n - 1)ok = false;
+    if(ok)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
+
     return 0;
 }

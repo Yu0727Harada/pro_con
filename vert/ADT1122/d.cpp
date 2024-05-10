@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/22.
 //
 
 #include <iostream> // cout, endl, cin
@@ -43,32 +43,22 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    vi point(4,0);
+    int ans = 0;
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+        point[0]++;
+        int a;
+        cin>>a;
+        for (int j = 3; j >= 0; --j) {
+            if(j + a >= 4){
+                ans += point[j];
+                point[j] = 0;
+            }else{
+                point[j + a] += point[j];
+                point[j] = 0;
+            }
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    cout<<ans<<endl;
     return 0;
 }

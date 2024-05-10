@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/20.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,31 +41,31 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+    ll n,m,t;
+    cin>>n>>m>>t;
+    vi a(n,0);
+    for (ll i = 1; i < n; ++i) {
+        cin>>a[i];
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    vi bunus(n,0);
+    for (ll i = 0; i < m; ++i) {
+        ll x,y;
+        cin>>x>>y;
+        x--;
+        bunus[x] = y;
+    }
+
+    ll now_t = t;
+    bool ok = true;
+    for (ll i = 1; i < n; ++i) {
+        if(now_t - a[i] <= 0){
+            ok = false;
+        }else{
+            now_t = now_t - a[i];
+            now_t += bunus[i];
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
+    if(ok){
         cout<<"Yes"<<endl;
     }else{
         cout<<"No"<<endl;

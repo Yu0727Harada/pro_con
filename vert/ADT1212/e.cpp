@@ -1,6 +1,7 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/12.
 //
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -41,31 +42,54 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    string s;
+    string t;
+    cin>>s>>t;
+    s.push_back('@');
+    t.push_back('@');
+
+    string s_s;
+    string t_t;
+    int cnt = 0;
+    map<char,int> s_m;
+    map<char,int>t_m;
+    for (int i = 0; i < s.size() - 1; ++i) {
+        if(s[i] == s[i + 1]){
+            cnt++;
+            s_m[s[i]]++;
+            if(cnt <= 1){
+                s_s.push_back(s[i]);
+
+            }
+        }else{
+            s_s.push_back(s[i]);
+            s_m[s[i]]++;
+            cnt = 0;
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
+    for (int i = 0; i < t.size() - 1; ++i) {
+        if(t[i] == t[i + 1]){
+            cnt++;
+            t_m[t[i]]++;
+            if(cnt <= 1){
+                t_t.push_back(t[i]);
+
+            }
+        }else{
+            t_t.push_back(t[i]);
+            t_m[t[i]]++;
+            cnt = 0;
+        }
+    }
+
+
+    for(auto item:s_m){
+        if(item.second > t_m[item.first]){
+            cout<<"No"<<endl;
+            return 0;
+        }
+    }
+    if(s_s == t_t){
         cout<<"Yes"<<endl;
     }else{
         cout<<"No"<<endl;

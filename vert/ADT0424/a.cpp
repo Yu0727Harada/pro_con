@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2024/04/24.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,40 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    int n,x;
+    cin>>n>>x;
+    int max = -1;
+    int min = 101;
+    int add = 0;
+    for (int i = 0; i < n - 1; ++i) {
+        int tmp;
+        cin>>tmp;
+        if(tmp > max){
+            max = tmp;
         }
-        prev = item.first;
+        if(tmp < min){
+            min = tmp;
+        }
+            add += tmp;
+
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    add -=max;
+    add -=min;
+
+    for (int i = 0; i <= 100; ++i) {
+        int tmp_score = add;
+        if(i < min){
+            tmp_score += min;
+        }else if(i > max){
+            tmp_score += max;
+        }else{
+            tmp_score += i;
+        }
+        if(tmp_score >= x){
+            cout<<i<<endl;
+            return 0;
+        }
     }
+    cout<<-1<<endl;
     return 0;
 }

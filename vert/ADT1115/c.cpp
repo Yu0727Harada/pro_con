@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/15.
 //
 
 #include <iostream> // cout, endl, cin
@@ -43,32 +43,21 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    set<char>init_c = {'H','D','C','S'};
+    set<char>sec_c = { 'A' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' , 'T' , 'J' , 'Q' , 'K'};
+    set<string>ans;
+    bool ok = true;
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        string s;
+        cin>>s;
+        ans.insert(s);
+        if(init_c.count(s[0]) > 0 && sec_c.count(s[1]) > 0)continue;
+        else ok = false;
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
-        }
-        prev = item.first;
-    }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    if(ans.size() != n)ok = false;
+    if(ok)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
+
+
     return 0;
 }

@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/14.
 //
 
 #include <iostream> // cout, endl, cin
@@ -42,33 +42,25 @@ const int INF = 1e9;
 
 int main() {
     int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    int m;
+    cin>>n>>m;
+    multiset<int>st;
+    bool ok = true;
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+        int a;
+        cin>>a;
+        st.insert(a);
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    for (int i = 0; i < m; ++i) {
+        int b;
+        cin>>b;
+        if(st.count(b) > 0){
+            st.erase(st.find(b));
+        }else{
+            ok = false;
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    if(ok)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
     return 0;
 }

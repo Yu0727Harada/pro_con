@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/23.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,29 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
-        }
-        prev = item.first;
-    }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
+    ll a;
+    cin>>a;
+    ll m;
+    cin>>m;
+    ll l;
+    ll r;
+    cin>>l>>r;
+    ll cnt = 0;
+    if(a <= l){
+        cnt += (r - a) / m + 1;
+        cnt -= (l - a) / m + 1;
+        if((l - a) % m == 0)cnt++;
+        //lに木が生えてたら
+
+    }else if(l < a && a < r){
+        cnt += (a - l ) / m + 1;
+        cnt += (r - a ) / m + 1;
+        cnt--;
     }else{
-        cout<<"No"<<endl;
+        cnt += (a - l) / m + 1;
+        cnt -= (a - r) / m + 1;
+        if((r - a) % m == 0)cnt++;
     }
+    cout<<cnt<<endl;
     return 0;
 }

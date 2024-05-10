@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/30.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,29 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+
+    int n,m;
+    cin>>n>>m;
+    vector<set<int>> edge(n,set<int>());
+    for (int i = 0; i < m; ++i) {
+        int u,v;
+        cin>>u>>v;
+        u--;v--;
+        edge[u].insert(v);
+        edge[v].insert(u);
+    }
+    int cnt = 0;
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+        for (int j = i + 1; j < n; ++j) {
+            for (int k = j + 1; k < n; ++k) {
+                if(!edge[i].empty() && !edge[j].empty() && !edge[k].empty()){
+                    if(edge[i].count(j) && edge[j].count(k) && edge[k].count(i))cnt++;
+
+                }
+
+            }
         }
-        prev = item.first;
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    cout<<cnt<<endl;
     return 0;
 }

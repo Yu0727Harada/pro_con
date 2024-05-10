@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/16.
 //
 
 #include <iostream> // cout, endl, cin
@@ -39,36 +39,37 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 
-
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
+    string s;
+    cin>>s;
+    int state = 0;
+
+    int cnt = 0;
+    int ans = -1;
+    bool find = false;
     for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
-    }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+        if(state == 0){
+            if(s[i] == 'o'){
+                state = 1;
+                cnt++;
+            }else{
+                find = true;
+            }
+        }else if(state == 1){
+            if(s[i] == 'o'){
+                cnt++;
+            }else{
+                find = true;
+                state = 0;
+                chmax(ans,cnt);
+                cnt = 0;
+            }
         }
-        prev = item.first;
+
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
-    }
+    if(find && cnt)chmax(ans,cnt);
+    cout<<ans<<endl;
     return 0;
 }

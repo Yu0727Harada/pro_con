@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/23.
 //
 
 #include <iostream> // cout, endl, cin
@@ -42,33 +42,32 @@ const int INF = 1e9;
 
 int main() {
     int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+    int q;
+    cin>>n>>q;
+    vl sori(n + 1);
+    for (int i = 1; i <= n; ++i) {
+        cin>>sori[i];
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    sort(all(sori));
+    vl tonakai_sum(n + 4,0);
+    for (int i = 1; i < n +4; ++i) {
+        tonakai_sum[i] = tonakai_sum[i - 1] + sori[i];
+    }
+    for (int i = 0; i < q; ++i) {
+        int ng = n + 1;
+        int ok = 0;
+        int mid;
+        ll now_tonakai;
+        cin>>now_tonakai;
+        while(ng - ok > 1){
+            mid = (ok + ng) / 2;
+            if(tonakai_sum[mid] > now_tonakai){
+                ng = mid;
+            }else{
+                ok = mid;
+            }
         }
-        prev = item.first;
-    }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+        cout<<ok<<endl;
     }
     return 0;
 }

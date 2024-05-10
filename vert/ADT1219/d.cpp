@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/12/19.
 //
 
 #include <iostream> // cout, endl, cin
@@ -43,32 +43,28 @@ const int INF = 1e9;
 int main() {
     int n;
     cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+
+    vvi edge(n,vi());
+    for (int i = 1; i < n; ++i) {
+        int p;
+        cin>>p;
+        p--;
+        edge[i].push_back(p);
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    queue<pair<int,int>>q;
+    q.push({n - 1,0});
+    while(!q.empty()){
+        int v = q.front().first;
+        int cnt = q.front().second;
+        q.pop();
+        if(v == 0){
+            cout<<cnt<<endl;
+            return 0;
+        }else{
+            for (int i = 0; i < edge[v].size(); ++i) {
+                q.push({edge[v][i],cnt + 1});
+            }
         }
-        prev = item.first;
-    }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
     }
     return 0;
 }

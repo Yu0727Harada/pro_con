@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2023/11/30.
 //
 
 #include <iostream> // cout, endl, cin
@@ -38,37 +38,52 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+struct ball{
+    int number;
+    int next;
+    int prev;
+};
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+    int n,q;
+    cin>>n>>q;
+    vector<ball> line(n+2);
+    for (int i = 0; i <= n + 1; ++i) {
+        line[i].number = i;
+        line[i].prev = i - 1;
+        line[i].next = i + 1;
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
-        }
-        prev = item.first;
+    for (int i = 0; i < q; ++i) {
+        int x;
+        cin>>x;
+        if(line[x].next == n + 1)x = line[x].prev;
+
+       ball& a = line[line[x].prev];
+       ball& b = line[x];
+       ball& c = line[b.next];
+       ball& d = line[c.next];
+
+       a.next = c.number;
+       c.prev = a.number;
+       c.next = b.number;
+       b.prev = c.number;
+       b.next = d.number;
+       d.prev = b.number;
+
     }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+    int f;
+    for (int i = 1; i <= n; ++i) {
+        if(line[i].prev == 0)f = i;
+    }
+    int next = f;
+    while(true){
+        if(next == n + 1)break;
+        cout<<line[next].number<<endl;
+
+        f = next;
+        next = line[f].next;
+
     }
     return 0;
 }

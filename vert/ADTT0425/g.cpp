@@ -1,5 +1,5 @@
 //
-// Created by yu on 2024/04/26.
+// Created by yu on 2024/04/25.
 //
 
 #include <iostream> // cout, endl, cin
@@ -41,34 +41,37 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    int a,b;
-    cin>>a>>b;
-    map<int,int>mp;
-    for (int i = 0; i < n; ++i) {
-        int t;
-        cin>>t;
-        mp[t % (a + b) + 1]++;
+    int n,q;
+    cin>>n>>q;
+    vl a(n+2);
+    vl a_sum(n+2,0);
+    for (int i = 1; i <= n; ++i) {
+        cin>>a[i];
+
     }
-    int min_index = INF + 10;
-    int max_index =  -1;
-    bool blank_ok = false;
-    int prev = -1;
-    for(auto item:mp){
-        chmin(min_index,item.first);
-        chmax(max_index,item.first);
-        if(prev){
-            if(item.first - prev >b)blank_ok = true;
+    a[n + 1] = LINF;
+    sort(all(a));
+    for (int i = 1; i <= n; ++i) {
+        a_sum[i] = a_sum[i - 1] + a[i];
+    }
+    for (int i = 0; i < q; ++i) {
+        ll x;
+        cin>>x;
+        int ok = 0;
+        int ng = n + 2;
+        while(ng - ok > 1){
+            int mid = (ok + ng)/2;
+            if(a[mid] > x){
+                ng = mid;
+            }else{
+                ok = mid;
+            }
         }
-        prev = item.first;
-    }
-    if(max_index - (min_index - 1) <= a){
-        cout<<"Yes"<<endl;
-    }else if(blank_ok){
-        cout<<"Yes"<<endl;
-    }else{
-        cout<<"No"<<endl;
+        ll ans = 0;
+        ans += x * ok - a_sum[ok];
+        ans += (a_sum[n] - a_sum[ok]) - (x * (n - ok));
+        cout<<ans<<endl;
+
     }
     return 0;
 }
