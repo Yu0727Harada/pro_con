@@ -1,5 +1,5 @@
 //
-// Created by yuha2114 on 2024/05/11.
+// Created by yuha on 2024/05/11.
 //
 
 #include <iostream> // cout, endl, cin
@@ -42,6 +42,7 @@ const int INF = 1e9;
 
 int main() {
     string t;
+    cin>>t;
     int n;
     cin>>n;
     map<string,int>mp;
@@ -49,15 +50,32 @@ int main() {
     for (int i = 0; i < n; ++i) {
         int a;
         cin>>a;
+        queue<pair<string,int>>q;
         for (int j = 0; j < a; ++j) {
             string tmp;
             cin>>tmp;
+            q.push({tmp,1});
             for(auto item:mp){
+                q.push({item.first + tmp,item.second+ 1});
+            }
 
+        }
+        while(!q.empty()) {
+            string t = q.front().first;
+            int c = q.front().second;
+            q.pop();
+            if (mp[t] == 0) {
+                mp[t] = c;
+            } else if (c < mp[t]) {
+                mp[t] = c;
             }
         }
 
-
+    }
+    if(mp[t] == 0){
+        cout<<-1<<endl;
+    }else{
+        cout<<mp[t]<<endl;
     }
     return 0;
 }
