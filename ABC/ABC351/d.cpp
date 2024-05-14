@@ -39,6 +39,7 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 int h,w;
+vvi go_g;
 
 int bfs(int i,int j,vvi g,vi &visit){
     vector<pair<int,int>> move = {
@@ -59,12 +60,18 @@ int bfs(int i,int j,vvi g,vi &visit){
         q.pop();
         cnt++;
         bool go = true;
-        for (int k = 0; k <4; ++k) {
-            if(0 <= n_i + move[k].first && n_i + move[k].first < h && 0 <= n_j + move[k].second && n_j + move[k].second < w){
-                if(!g[(n_i + move[k].first)][n_j + move[k].second]){
-                    go = false;
+        if(go_g[n_i][n_j] == -1){
+            for (int k = 0; k <4; ++k) {
+                if(0 <= n_i + move[k].first && n_i + move[k].first < h && 0 <= n_j + move[k].second && n_j + move[k].second < w){
+                    if(!g[(n_i + move[k].first)][n_j + move[k].second]){
+                        go = false;
+                    }
                 }
             }
+        }else if(go_g[n_i][n_j] == 0){
+            go = false;
+        }else{
+            go = true;
         }
         if(!go)visit[n_i * w + n_j] = 0;
 
@@ -72,6 +79,7 @@ int bfs(int i,int j,vvi g,vi &visit){
             if(0 <= n_i + move[k].first && n_i + move[k].first < h && 0 <= n_j + move[k].second && n_j + move[k].second < w){
                 int v_posi = (n_i + move[k].first) * w + n_j + move[k].second;
                 if(t_visit[n_i + move[k].first][n_j + move[k].second])continue;
+                if(visit[v_posi])continue;
                 if(!g[(n_i + move[k].first)][n_j + move[k].second])continue;
 
                 if(go){
@@ -91,6 +99,7 @@ int main() {
 
     cin>>h>>w;
     vvi g(h,vi(w,1));
+    go_g.resize(h,vi(w,-1));
     for (int i = 0; i < h; ++i) {
         string s;
         cin>>s;
@@ -111,14 +120,24 @@ int main() {
                         {-1, 0},
                         {0,  -1},
                 };
-            for (int k = 0; k <4; ++k) {
-                if(0 <= i + move[k].first && i + move[k].first < h && 0 <= j + move[k].second && j + move[k].second < w){
-                    if(!g[(i + move[k].first)][j + move[k].second]){
-                        go = false;
+            if(go_g[i][j] == -1) {
+                for (int k = 0; k < 4; ++k) {
+                    if (0 <= i + move[k].first && i + move[k].first < h && 0 <= j + move[k].second &&
+                        j + move[k].second < w) {
+                        if (!g[(i + move[k].first)][j + move[k].second]) {
+                            go = false;
+                        }
                     }
                 }
+            }else if(go_g[i][j] == 0){
+                go = false;
+            }else{
+                go = true;
             }
-            if(!go)continue;
+            if(!go){
+                chmax(ans,1);
+                continue;
+            }
             if(g[i][j])chmax(ans,bfs(i,j,g,visit));
         }
     }

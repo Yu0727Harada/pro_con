@@ -39,9 +39,9 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 struct node{
-    node *prev;
-    node *next;
-    int value;
+    node *prev = nullptr;
+    node *next = nullptr;
+    ll value = 0;
     void set_next(node *_next){
         this->next = _next;
     }
@@ -73,14 +73,16 @@ int main() {
     int n;
     cin>>n;
 
-    map<int,node> array;
+    map<ll,node> array;
+
     node *last = &nil;
-    int a;
+    ll a;
     for (int i = 0; i < n; ++i) {
 
         cin>>a;
         array[a].prev = last;
         array[a].value = a;
+
         if(last != &nil){
             last->set_next(&array[a]);
         }
@@ -94,18 +96,26 @@ int main() {
         int t;
         cin>>t;
         if(t == 1){
-            int x,y;
+            ll x,y;
             cin>>x>>y;
 
             insert_node(array[x],array[y],*array[x].next);
             array[y].value = y;
         }else{
-            int x;
+            ll x;
             cin>>x;
             delete_node(*array[x].prev,array[x],*array[x].next,nil);
+            array.erase(x);
         }
     }
-    node *now = &array[a];
+
+    node *now = &nil;
+    for(auto item:array){
+        if(item.second.prev != &nil || item.second.next != &nil){
+            now = &array[item.first];
+            break;
+        }
+    }
     while(now->prev != &nil){
         now = now->prev;
     }

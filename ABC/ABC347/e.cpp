@@ -43,10 +43,10 @@ const int INF = 1e9;
 int main() {
     int n,q;
     cin>>n>>q;
-    vi sum(n+10,0);
+    vl sum(q+10,0);
     vector<vector<int>> li(n,vector<int>());
     set<int>st;
-    int size = 0;
+    ll size = 0;
     for (int i = 1; i <= q; ++i) {
         int x;
         cin>>x;
@@ -64,8 +64,9 @@ int main() {
     }
 
     for (int i = 0; i < n; ++i) {
-        int ans = 0;
-        for (int j = 0; j < li[i].size(); j += 2) {
+        ll ans = 0;
+        for (int j = 0; j < li[i].size(); j++) {
+            if(j % 2 == 1)continue;
             if(li[i].size() == j + 1){
                 ans += sum[q] - sum[li[i][j] - 1];
             }else{

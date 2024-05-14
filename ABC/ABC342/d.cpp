@@ -61,7 +61,7 @@ vector<ll>prime_factorize(ll n){
 int main() {
     int n;
     cin>>n;
-    map<vl,int>mp;
+    map<vl, ll>mp;
     int zero = 0;
     for (int i = 0; i < n; ++i) {
         ll a;
@@ -69,7 +69,7 @@ int main() {
         if(a == 0)zero++;
         else mp[prime_factorize(a)]++;
     }
-    int ans = 0;
+    ll ans = 0;
     for(auto item:mp){
         ans += (item.second * (item.second - 1))/2;
 

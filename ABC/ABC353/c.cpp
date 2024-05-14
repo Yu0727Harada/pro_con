@@ -1,6 +1,3 @@
-//
-// Created by yuha2114 on 2024/05/09.
-//
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -41,53 +38,29 @@ const int INF = 1e9;
 
 
 int main() {
-    ll h,w,m;
-    cin>>h>>w>>m;
-    set<ll> h_st;
-    set<ll> w_st;
-    map<ll,ll>mp;
-    
-    stack<vl>q;
-    for (int i = 0; i < m; ++i) {
-        ll t,a,x;
-        cin>>t>>a>>x;
-        a--;
-        q.push({t,a,x});
-    }
-    ll zero_cnt = w*h;
-    while(!q.empty()){
-        ll t,a,x;
-        t = q.top()[0];
-        a = q.top()[1];
-        x = q.top()[2];
-        q.pop();
 
-        if(t == 1){
-            //row ->h
-            if(h_st.count(a) == 1)continue;
-            if(w - w_st.size()){
-                h_st.insert(a);
-                zero_cnt -= w - w_st.size();
-                mp[x] += w - w_st.size();
-            }
-        }else{
-            //col ->w
-            if(w_st.count(a) == 1) continue;
-            if(h - h_st.size()){
-                w_st.insert(a);
-                zero_cnt -= h - h_st.size();
-                mp[x] += h - h_st.size();
-            }
+    int n;
+    cin>>n;
+    const ll M = 1e8;
+    vl a(n);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
+    }
+    sort(all(a));
+
+    ll ans = 0;
+    for (int i = 0; i < n; ++i) {
+        ans += a[i] * (n - 1);
+    }
+    ll r = n - 1;
+    for (ll i = 0; i < n; ++i) {
+        while(r > i && a[r] + a[i] >= M){
+            r--;
         }
+        ans -= (n - max(r,i) - 1) * M;
+
     }
-    mp[0] = mp[0] + zero_cnt;
-    if(mp[0] == 0){
-        mp.erase(0);
-    }
-    cout<<mp.size()<<endl;
-    for(auto item:mp){
-        cout<<item.first<<" "<<item.second<<endl;
-    }
+    cout<<ans<<endl;
 
     return 0;
 }

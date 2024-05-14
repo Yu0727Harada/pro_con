@@ -54,9 +54,18 @@ int main() {
         for (int j = 0; j < a; ++j) {
             string tmp;
             cin>>tmp;
-            q.push({tmp,1});
+            bool ok = true;
+            for (int k = 0; k < tmp.size(); ++k) {
+                if(tmp[k] != t[k])ok = false;
+            }
+            if(ok)q.push({tmp,1});
             for(auto item:mp){
-                q.push({item.first + tmp,item.second+ 1});
+                if(item.first.size()+tmp.size() > t.size())continue;
+                ok = true;
+                for (int k = 0; k <  tmp.size(); ++k) {
+                    if(tmp[k] != t[item.first.size() + k])ok =false;
+                }
+                if(ok)q.push({item.first + tmp,item.second+ 1});
             }
 
         }
