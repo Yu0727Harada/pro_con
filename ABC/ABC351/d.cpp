@@ -39,29 +39,8 @@ const long long LINF =1e18;
 const int INF = 1e9;
 
 int h,w;
-struct UnionFind {
-    vector<int>d;//リンクの情報,子の場合は親の番号、親の場合は連結成分のsize*(-1)
-    UnionFind(int n=0):d(n,-1){} //structの初期化。デフォルトのnを0に設定してdを-1(すなわち全ての成分は親であり、サイズは1にする
-    int find(int x) {//根を探す
-        if(d[x] < 0) return x;
-        else  return d[x] = find(d[x]);//根じゃなかったら根を探しに行ってメモ化する。
-    }
-    bool unite(int x,int y) {//成分を連結する
-        x = find(x);
-        y = find(y);
-        if (x == y) return false;//すでに同じ連結成分
-        if(d[x] < d[y]) swap(x,y);//大きいのに小さいのをつける。x←y
-        //x.size > y.size
-        d[x] += d[y];//xのサイズをふやす
-        d[y] = x;//yの根をxにする
-        return true;
-    }
-    bool same(int x,int y) {return find(x)==find(y);}
-    int size(int x) {return -d[find(x)];}
 
-};
-
-void bfs(int i,int j,vvi g,vi &visit,UnionFind &u){
+int bfs(int i,int j,vvi g,vi &visit){
     vector<pair<int,int>> move = {
                 {0,  1},
                 {1,  0},
@@ -71,10 +50,14 @@ void bfs(int i,int j,vvi g,vi &visit,UnionFind &u){
     queue<pair<int,int>>q;
     q.push({i,j});
     visit[i * w + j] = 1;
+    vvi t_visit(h,vi(w,0));
+    t_visit[i][j] = 1;
+    int cnt = 0;
     while(!q.empty()){
         int n_i = q.front().first;
         int n_j = q.front().second;
         q.pop();
+        cnt++;
         bool go = true;
         for (int k = 0; k <4; ++k) {
             if(0 <= n_i + move[k].first && n_i + move[k].first < h && 0 <= n_j + move[k].second && n_j + move[k].second < w){
@@ -83,21 +66,25 @@ void bfs(int i,int j,vvi g,vi &visit,UnionFind &u){
                 }
             }
         }
+        if(!go)visit[n_i * w + n_j] = 0;
 
         for (int k = 0; k <4; ++k) {
             if(0 <= n_i + move[k].first && n_i + move[k].first < h && 0 <= n_j + move[k].second && n_j + move[k].second < w){
                 int v_posi = (n_i + move[k].first) * w + n_j + move[k].second;
-                u.unite(v_posi,n_i * w + n_j);
-                if(visit[v_posi])continue;
+                if(t_visit[n_i + move[k].first][n_j + move[k].second])continue;
                 if(!g[(n_i + move[k].first)][n_j + move[k].second])continue;
 
-                visit[v_posi] = 1;
-                u.unite(v_posi,n_i * w + n_j);
-                if(go)q.push({n_i + move[k].first,n_j + move[k].second});
+                if(go){
+                    visit[v_posi] = 1;
+                    t_visit[n_i + move[k].first][n_j + move[k].second] = 1;
+                    //u.unite(v_posi,n_i * w + n_j);
+                    q.push({n_i + move[k].first,n_j + move[k].second});
+                }
             }
         }
 
     }
+    return cnt;
 };
 
 int main() {
@@ -111,20 +98,31 @@ int main() {
             if(s[j] == '#')g[i][j] = 0;
         }
     }
-    UnionFind u(h * w);
+
     vi visit(h * w,0);
-    for (int i = 0; i < h; ++i) {
-        for (int j = 0; j < w; ++j) {
-            if(visit[i * w + j])continue;
-            bfs(i,j,g,visit,u);
-        }
-    }
     int ans = 0;
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
-        chmax(ans,u.size(i * w + j));
+            if(visit[i * w + j])continue;
+            bool go = true;
+            vector<pair<int,int>> move = {
+                        {0,  1},
+                        {1,  0},
+                        {-1, 0},
+                        {0,  -1},
+                };
+            for (int k = 0; k <4; ++k) {
+                if(0 <= i + move[k].first && i + move[k].first < h && 0 <= j + move[k].second && j + move[k].second < w){
+                    if(!g[(i + move[k].first)][j + move[k].second]){
+                        go = false;
+                    }
+                }
+            }
+            if(!go)continue;
+            if(g[i][j])chmax(ans,bfs(i,j,g,visit));
         }
     }
+
     cout<<ans<<endl;
 
     return 0;
