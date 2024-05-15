@@ -74,7 +74,9 @@ int main() {
         ans += (item.second * (item.second - 1))/2;
 
     }
-    ans += zero * (n - 1);
+    for (int i = 0; i < zero; ++i) {
+        ans += zero * (n - (1 + i));
+    }
     cout<<ans<<endl;
 
     return 0;
