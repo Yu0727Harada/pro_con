@@ -1,7 +1,6 @@
 //
-// Created by yu on 2024/05/14.
+// Created by yu on 2024/05/16.
 //
-
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -39,48 +38,40 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+ll gcd(ll a,ll b){
+    if(b == 0){
+        return a;
+    }
+    return gcd(b,a %b);
+}
+//2つの自然数の最大公約数を求める関数
 
+ll lcm(ll a,ll b){
+    return a*b/gcd(a,b);
+}
+//2つの自然数の最大公約数から最小公倍数を求める関数
 
 int main() {
-    int n,k;
-    cin>>n>>k;
-    vector<pair<int,int>> p(n);
-    for (int i = 0; i < n; ++i) {
-        cin>>p[i].first;
-        p[i].second = i + 1;
-    }
-    sort(all(p));
-    if(k == 1){
-        cout<<0<<endl;
-        return 0;
-    }
-    set<int>st;
+    ll n,m,k;
+    cin>>n>>m>>k;
 
-    int min_itr = INF;
-    int max_itr = 0;
-    for (int i = 0; i < k; ++i) {
-        st.insert(p[i].second);
-        chmin(min_itr,p[i].second);
-        chmax(max_itr,p[i].second);
-    }
-    int ans = INF;
-    chmin(ans,max_itr - min_itr);
-    for (int i = k; i < n; ++i) {
-        int del_itr = p[i - k].second;
+    ll nm = lcm(n,m);
 
-        st.insert(p[i].second);
-        if(del_itr == min_itr){
-            min_itr = *st.upper_bound(del_itr);
+    ll ok = 0;
+    ll ng = LINF;
+    ll mid;
+    while(ng - ok > 1){
+        mid = (ok + ng) / 2;
+        ll cnt = 0;
+        cnt += mid / n - (mid / nm);
+        cnt += mid / m - (mid / nm);
+        if(cnt >= k){
+            ng = mid;
+        }else{
+            ok = mid;
         }
-        if(del_itr == max_itr){
-            max_itr = *(st.lower_bound(del_itr).operator--());
-        }
-        chmax(max_itr,p[i].second);
-        chmin(min_itr,p[i].second);
-        st.erase(p[i - k].second);
-        chmin(ans,max_itr - min_itr);
     }
-    cout<<ans<<endl;
+    cout<<ng<<endl;
 
     return 0;
 }

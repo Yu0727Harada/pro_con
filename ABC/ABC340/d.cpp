@@ -1,7 +1,6 @@
 //
-// Created by yu on 2024/05/14.
+// Created by yu on 2024/05/16.
 //
-
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -42,45 +41,37 @@ const int INF = 1e9;
 
 
 int main() {
-    int n,k;
-    cin>>n>>k;
-    vector<pair<int,int>> p(n);
-    for (int i = 0; i < n; ++i) {
-        cin>>p[i].first;
-        p[i].second = i + 1;
+    int n;
+    cin>>n;
+    vector<vector<pair<int,int>>> edge(n,vector<pair<int,int>>());
+    for (int i = 0; i < n - 1; ++i) {
+        int a,b,x;
+        cin>>a>>b>>x;
+        x--;
+        edge[i].push_back({i+1,a});
+        edge[i].push_back({x,b});
     }
-    sort(all(p));
-    if(k == 1){
-        cout<<0<<endl;
-        return 0;
-    }
-    set<int>st;
+     priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<pair<ll,int>>>p_que;
+    vl cost(n,LINF);
+    p_que.push({0,0});
+    cost[0] = 0;
+    while(!p_que.empty()){
+        int v = p_que.top().second;
+        ll c = p_que.top().first;
+        p_que.pop();
 
-    int min_itr = INF;
-    int max_itr = 0;
-    for (int i = 0; i < k; ++i) {
-        st.insert(p[i].second);
-        chmin(min_itr,p[i].second);
-        chmax(max_itr,p[i].second);
-    }
-    int ans = INF;
-    chmin(ans,max_itr - min_itr);
-    for (int i = k; i < n; ++i) {
-        int del_itr = p[i - k].second;
-
-        st.insert(p[i].second);
-        if(del_itr == min_itr){
-            min_itr = *st.upper_bound(del_itr);
+        if(v == n - 1){
+            cout<<c<<endl;
+            return 0;
         }
-        if(del_itr == max_itr){
-            max_itr = *(st.lower_bound(del_itr).operator--());
+        for (int i = 0; i < edge[v].size(); ++i) {
+            ll u_cost = (ll)edge[v][i].second;
+            int u = edge[v][i].first;
+            if(cost[v] + (ll)u_cost < cost[u]){
+                cost[u] = cost[v] + u_cost;
+                p_que.push({cost[u],u});
+            }
         }
-        chmax(max_itr,p[i].second);
-        chmin(min_itr,p[i].second);
-        st.erase(p[i - k].second);
-        chmin(ans,max_itr - min_itr);
     }
-    cout<<ans<<endl;
-
     return 0;
 }
