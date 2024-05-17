@@ -1,6 +1,7 @@
 //
-// Created by yu on 2023/12/16.
+// Created by yu on 2024/05/17.
 //
+
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -41,43 +42,54 @@ const int INF = 1e9;
 
 
 int main() {
-    int n;
-    cin>>n;
-    vector<pair<int,int>>event(n);
+    int n,m;
+    cin>>n>>m;
+    int l;
+    cin>>l;
+    vector<pair<int,int>>a(n);
+    set<pair<int,int>>b;
     for (int i = 0; i < n; ++i) {
-        cin>>event[i].first>>event[i].second;
-        event[i].second--;
+            cin>>a[i].first;
+            a[i].second = i;
     }
-    vi item(n,0);
-    deque<int> ans;
-    int l_ans = 0;
-    int ll_ans = 0;
-    for (int i = n-1; 0 <= i; --i) {
-        if(event[i].first == 2){
-            item[event[i].second]++;
-            l_ans++;
-            chmax(ll_ans,l_ans);
-        }else{
-            if(item[event[i].second] > 0){
-                l_ans--;
-                ans.push_front(1);
-                item[event[i].second]--;
+    for (int i = 0; i < m; ++i) {
+        int tmp;
+        cin>>tmp;
+        b.insert({tmp,i});
+    }
+    vector<set<int>>st(n);
+    for (int i = 0; i < l; ++i) {
+        int c,d;
+        cin>>c>>d;
+        c--;d--;
+        st[c].insert(d);
+    }
+
+    sort(rall(a));
+    ll ans = 0;
+    for (int i = 0; i < n; ++i) {
+        if(b.empty())break;
+        auto b_target = b.end().operator--();
+
+        while(!b.empty()){
+
+            int a_itr = a[i].second;
+            int a_v = a[i].first;
+            int b_itr = b_target->second;
+            int b_v = b_target->first;
+
+
+            if(st[a_itr].count(b_itr)){
+                b_target--;
+                if(b_target == b.begin().operator--())break;
+                continue;
             }else{
-                ans.push_front(0);
+                chmax(ans,(ll)a_v + (ll)b_v);
+                b.erase({b_v,b_itr});
+                break;
             }
         }
     }
-
-    for (int i = 0; i < n; ++i) {
-        if(item[i] != 0){
-            cout<<-1<<endl;
-            return 0;
-        }
-    }
-    cout<<ll_ans<<endl;
-    while (!ans.empty()) {
-        cout<<ans.front()<<endl;
-        ans.pop_front();
-    }
+    cout<<ans<<endl;
     return 0;
 }
