@@ -35,17 +35,46 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+vl b;
 
-
-int main() {
-    int n,l,r;
-    cin>>n>>l>>r;
-    for (int i = 1; i <= n; ++i) {
-        if(l <= i && i <= r){
-            cout<<l + r - i<<" ";
+int bi_s(ll a_v, ll d){
+    int ok = 0;
+    int ng = b.size();
+    int mid;
+    while(ng - ok > 1){
+        mid = (ok + ng) / 2;
+        if(b[mid] <= a_v + d){
+            ok = mid;
         }else{
-            cout<<i<<" ";
+            ng = mid;
         }
     }
+    return ok;
+}
+
+int main() {
+    int n,m;
+    cin>>n>>m;
+    ll d;
+    cin>>d;
+    vl a(n);
+    b.resize(m);
+    for (int i = 0; i < n; ++i) {
+        cin>>a[i];
+    }
+    for (int i = 0; i < m; ++i) {
+        cin>>b[i];
+    }
+    sort(all(a));
+    sort(all(b));
+    ll ans = -1;
+    for (int i = 0; i < n; ++i) {
+        int j = bi_s(a[i],d);
+        if(a[i] - d <= b[j] && b[j] <= a[i] + d){
+            chmax(ans,b[j] + a[i]);
+        }
+    }
+    cout<<ans<<endl;
+
     return 0;
 }

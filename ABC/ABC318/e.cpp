@@ -38,14 +38,29 @@ const int INF = 1e9;
 
 
 int main() {
-    int n,l,r;
-    cin>>n>>l>>r;
-    for (int i = 1; i <= n; ++i) {
-        if(l <= i && i <= r){
-            cout<<l + r - i<<" ";
+    int n;
+    cin>>n;
+    vector<pair<ll,ll>>sum(n+2,{0,-1});//いままでの具の数、前のindex
+    vector<pair<ll,ll>>gu(n+2,{0,0});
+    for (int i = 0; i < n; ++i) {
+        int a;
+        cin>>a;
+        if(sum[a].second == -1){
+            //まだ出てきたことのない数なら
+            sum[a].second = i;
+            gu[a].second++;
         }else{
-            cout<<i<<" ";
+            ll now_gu = i - (sum[a].second + 1);
+            sum[a].first += gu[a].first + now_gu * gu[a].second;
+            gu[a].first = gu[a].first + now_gu * gu[a].second;
+            gu[a].second ++;
+            sum[a].second = i;
         }
     }
+    ll ans = 0;
+    for (int i = 1; i <= n; ++i) {
+        ans += sum[i].first;
+    }
+    cout<<ans<<endl;
     return 0;
 }

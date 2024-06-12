@@ -35,17 +35,56 @@ typedef vector<ll> vl;
 const long long LINF =1e18;
 const int INF = 1e9;
 
+int n;
+vvi edge;
+ll ans = 0;
+vector<ll> dp;
+
+ll select(int m,int l,ll ret){
+    if(m == n){
+        chmax(dp[l],ret);
+        return ret;
+    }
+    if(l & (1<<m)){
+        select(m + 1,l,ret);
+    }else{
+        for (int i = m + 1; i < n; ++i) {
+            if(!(l & (1<<i))){
+                int l_t = l;
+                l_t |= (1<<i);
+                l_t |= (1<<m);
+                ll ret_t = ret;
+                ret_t += (ll)edge[m][i];
+                select(m + 1,l_t,ret_t);
+            }
+        }
+        select(m + 1,l,ret);
+    }
+
+    return ret;
+}
 
 
 int main() {
-    int n,l,r;
-    cin>>n>>l>>r;
-    for (int i = 1; i <= n; ++i) {
-        if(l <= i && i <= r){
-            cout<<l + r - i<<" ";
-        }else{
-            cout<<i<<" ";
+
+    cin>>n;
+    edge.resize(n,vi(n,-1));
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            cin>>edge[i][j];
         }
     }
+    int l_t = 0;
+    int bit_size=0;
+    bit_size |= (1<<n);
+    dp.resize(bit_size);
+    select(0,l_t,0);
+
+    for (int i = 0; i < bit_size; ++i) {
+        chmax(ans,dp[i]);
+    }
+    cout<<ans<<endl;
+
+
     return 0;
 }
