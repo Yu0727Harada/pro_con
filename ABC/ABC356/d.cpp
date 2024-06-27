@@ -1,6 +1,3 @@
-//
-// Created on 2023/07/29.
-//
 
 #include <iostream> // cout, endl, cin
 #include <string> // string, to_string, stoi
@@ -90,38 +87,39 @@ struct mint {
 };
 
 int main() {
-    string s;
-    cin>>s;
+    ll n,m;
+    cin>>n>>m;
 
-    vector<vector<mint>>dp(s.size()+1,vector<mint>(s.size()/2 + 20));
+    mint ans;
+    ans.x = 0;
+    for (ll i = 0; i < 64; ++i) {
+        if(n & ((ll)1<<i)){
+            if(m & (ll)1<<i){
+                ll add = 0;
+                ll cnt = n %((ll)1<<(i + 1));
+                if(cnt < (ll)1<<i){
+                    add = 0;
+                }else{
+                    add = cnt % ((ll)1<<i);
+                    add += 1;
+                }
+                ans += add;
+//                if((ll)1<<i <= n && n < (ll)1<<(i + 1)){
+//                    ans += n - (((ll)1<<i) - 1);
+//                }else{
+//                    ans += (ll)1<<i;
+//                }
+            }
 
-    if(s[0] == '('){
-        dp[0][1] = 1;
-    }else if(s[0] == ')'){
-        cout<<0<<endl;
-        return 0;
-    }else{
-        dp[0][1] = 1;
-    }
-    for (int i = 1; i < s.size(); ++i) {
-        if(s[i] == '('){
-            for (int j = 0; j < s.size()/2 +10; ++j) {
-                if(dp[i - 1][j].x != 0)dp[i][j+1] += dp[i - 1][j];
+            for (ll j = 0; j < i && i != 0; ++j) {
+                ll cnt = ((ll)1<<(i-1));
+                if(m & ((ll)1<<j))ans += cnt;
             }
-        }else if(s[i] == ')'){
-            for (int j = 0; j < s.size()/2 + 10; ++j) {
-                if(dp[i - 1][j].x != 0 && j > 0)dp[i][j - 1] += dp[i - 1][j];
-            }
-        }else{
-            for (int j = 0; j < s.size()/2 + 10; ++j) {
-                if(dp[i - 1][j].x != 0)dp[i][j + 1] += dp[i - 1][j];
-                if(dp[i - 1][j].x != 0 && j > 0)dp[i][j - 1] += dp[i - 1][j];
-            }
+
         }
     }
-    cout<<dp[s.size() - 1][0].x<<endl;
 
+    cout<<ans.x<<endl;
 
     return 0;
 }
-
